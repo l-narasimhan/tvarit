@@ -1,87 +1,40 @@
-// Order pendency, as the store TV shows it. Until the order sim (M3/M4) exists this is a small stand-in: orders
-// arrive at a q-commerce rate and move through the real stages with realistic stage times, so every number on
-// the screen agrees with every other. Marked "simulated" on screen.
+// What the pendency TV shows, read live from the simulation engine. (Until M4 this was a stand-in generator;
+// now every number is the floor's own.)
 
-export type Stage = 'queued' | 'picking' | 'ready' | 'out'
+import { clock, fmt, type SOrder, type Sim, type Stage as SimStage } from './sim/engine'
+
+export type Stage = 'queued' | 'picking' | 'ready'
 export const STAGES: Stage[] = ['queued', 'picking', 'ready']
-export const STAGE_NAME: Record<Stage, string> = { queued: 'To pick', picking: 'Picking & bagging', ready: 'In pigeon hole', out: 'Dispatched' }
+export const STAGE_NAME: Record<Stage, string> = { queued: 'To pick', picking: 'Picking & bagging', ready: 'In pigeon hole' }
+const GROUP: Record<SimStage, Stage | null> = { queued: 'queued', picking: 'picking', bagging: 'picking', ready: 'ready', collecting: 'ready', out: null }
 
-export interface Order { id: string; born: number; items: number; stage: Stage; until: number; done?: number; live?: boolean }
-
-/** Promise to the customer is 10 min door-to-door; the store's share is dispatch within 8 min of order. */
-export const SLA = 8 * 60
+export interface TVOrder { id: string; items: number; stage: Stage; live: boolean; age: number }
 
 export class Pendency {
-  orders: Order[] = []
-  dispatched: Order[] = []
-  private t = 0
-  private next = 1
-  private seq = 48213
+  /** The order being traced on screen, pinned to the top of the TV list. */
+  trace: SOrder | null = null
+  constructor(readonly sim: Sim) {}
 
-  constructor(public pickers = 8, public riders = 6) {
-    // Warm up so the screen opens mid-shift, not empty.
-    for (let i = 0; i < 900; i++) this.tick(1)
-  }
+  get now() { return this.sim.t }
+  get sla() { return this.sim.cfg.sla }
+  get pickers() { return this.sim.cfg.pickers }
+  get riders() { return this.sim.cfg.riders }
+  get open() { return this.sim.open.length }
+  count(s: Stage) { return this.sim.open.filter(o => GROUP[o.stage] === s).length }
+  breaching() { return this.sim.open.filter(o => this.sim.age(o) > this.sla).length }
+  atRisk() { return this.sim.open.filter(o => { const a = this.sim.age(o); return a > this.sla * 0.75 && a <= this.sla }).length }
+  lastHour() { return this.sim.recent(3600) }
+  avgO2D() { return this.sim.o2d(this.lastHour()) }
+  slaHit() { return this.sim.slaHit(this.lastHour()) }
+  pickersBusy() { return this.sim.pickersBusy() }
+  ridersIn() { return this.sim.ridersIn() }
 
-  get now() { return this.t }
-
-  tick(dt: number) {
-    this.t += dt
-    // Arrivals: ~1 order / 25 s, with evening-peak bursts.
-    this.next -= dt
-    while (this.next <= 0) {
-      const peak = 1 + 0.8 * Math.max(0, Math.sin(this.t / 240))
-      this.next += (-Math.log(1 - Math.random()) * 25) / peak
-      const items = 1 + Math.floor(-Math.log(1 - Math.random()) * 5)
-      this.orders.push({ id: `#${this.seq++}`, born: this.t, items, stage: 'queued', until: this.t + 20 + Math.random() * 60 })
-    }
-    const busy = (s: Stage) => this.orders.filter(o => o.stage === s).length
-    for (const o of this.orders) {
-      if (this.t < o.until) continue
-      // Pickers pick, bag and drop in the pigeon hole; a rider then collects from the pigeon hole.
-      if (o.stage === 'queued' && busy('picking') < this.pickers) { o.stage = 'picking'; o.until = this.t + 60 + o.items * (14 + Math.random() * 10) }
-      else if (o.stage === 'picking') { o.stage = 'ready'; o.until = this.t + 20 + Math.random() * 150 }
-      else if (o.stage === 'ready') { o.stage = 'out'; o.done = this.t }
-    }
-    for (const o of this.orders.filter(o => o.stage === 'out')) this.dispatched.push(o)
-    this.orders = this.orders.filter(o => o.stage !== 'out')
-    this.dispatched = this.dispatched.filter(o => this.t - o.done! < 3600)
-  }
-
-  count(s: Stage) { return this.orders.filter(o => o.stage === s).length }
-  age(o: Order) { return this.t - o.born }
-  breaching() { return this.orders.filter(o => this.age(o) > SLA).length }
-  atRisk() { return this.orders.filter(o => this.age(o) > SLA * 0.75 && this.age(o) <= SLA).length }
-  /** Live (traced) orders pinned first, then the oldest. */
-  oldest(n: number) { return [...this.orders].sort((a, b) => Number(!!b.live) - Number(!!a.live) || a.born - b.born).slice(0, n) }
-
-  /** A real order from the twin: its stages are driven by what happens on the floor, not by the stand-in. */
-  addLive(id: string, items: number): Order {
-    const o: Order = { id, born: this.t, items, stage: 'queued', until: Infinity, live: true }
-    this.orders.push(o)
-    return o
-  }
-  setStage(o: Order, s: Stage) {
-    o.stage = s
-    if (s === 'out') { o.done = this.t; this.orders = this.orders.filter(x => x !== o); this.dispatched.push(o) }
-  }
-  get nextId() { return `#${this.seq++}` }
-  /** Mean order-to-dispatch over the last hour, seconds. */
-  avgO2D() {
-    const d = this.dispatched
-    return d.length ? d.reduce((a, o) => a + (o.done! - o.born), 0) / d.length : 0
-  }
-  slaHit() {
-    const d = this.dispatched
-    return d.length ? d.filter(o => o.done! - o.born <= SLA).length / d.length : 1
+  /** The traced order first, then the oldest open orders. */
+  oldest(n: number): TVOrder[] {
+    const list = [...this.sim.open].sort((a, b) => Number(b === this.trace) - Number(a === this.trace) || a.t0 - b.t0)
+    return list.slice(0, n).map(o => ({ id: o.id, items: o.units, stage: GROUP[o.stage] ?? 'ready', live: o === this.trace, age: this.sim.age(o) }))
   }
 }
 
-const CLOCK0 = 19 * 3600 + 42 * 60
-/** Store wall-clock for a sim time, HH:MM:SS. */
-export const clockText = (t: number) => {
-  const c = CLOCK0 + t
-  return `${Math.floor(c / 3600) % 24}:${String(Math.floor(c / 60) % 60).padStart(2, '0')}:${String(Math.floor(c) % 60).padStart(2, '0')}`
-}
-
-export const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`
+export const clockText = clock
+export const mmss = fmt

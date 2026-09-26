@@ -18,7 +18,9 @@
         <button data-view="ph">Pigeon holes</button>
         <button data-view="tv">Pendency TV</button>
         <span class="sep"></span>
-        <button id="neworder" class="go" title="Run one order end to end">▶ New order</button>
+        <span class="simctl"><b id="simclock">--:--:--</b>
+          <button data-speed="0" title="Pause">⏸</button><button data-speed="1" class="on">1×</button><button data-speed="5">5×</button><button data-speed="20">20×</button><button data-speed="60">60×</button></span>
+        <button id="neworder" class="go" title="Trace one live order end to end">▶ Follow an order</button>
         <button id="walk" title="First-person walk (V)">🚶 Walk</button>
         <button id="walls" class="on" title="Toggle wall height">Walls</button>
         <button id="labels" class="on" title="Toggle barcode labels">Labels</button>
@@ -28,6 +30,7 @@
     </header>
     <aside id="left">
       <div id="summary"></div>
+      <div id="kpis"></div>
       <div id="staff"></div>
       <label class="find">
         <span>Find bin, pigeon hole, pallet or product</span>
@@ -42,7 +45,6 @@
     <aside id="order" hidden>
       <div class="obar">
         <span>Live order</span>
-        <span class="speed"><button data-speed="1" class="on">1×</button><button data-speed="2">2×</button><button data-speed="5">5×</button><button data-speed="10">10×</button></span>
         <button id="follow" class="on" title="Camera follows whoever is working the order">Follow</button>
         <button id="closeorder" aria-label="Close">×</button>
       </div>

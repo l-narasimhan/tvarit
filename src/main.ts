@@ -7,10 +7,13 @@ import { Goods } from './scene/goods'
 import { LabelAtlas } from './scene/labels'
 import { buildRacks, rackHeaders } from './scene/racks'
 import { buildShell } from './scene/shell'
-import { findSlot, renderInspector, renderPerson, renderStaff, renderSummary } from './ui'
+import { findSlot, renderInspector, renderKpis, renderPerson, renderStaff, renderSummary } from './ui'
 import { People, type Person } from './people'
-import { OrderRun } from './orders'
+import { Trace } from './orders'
 import { renderOrder } from './ui'
+import { NavGrid } from './nav'
+import { Sim, STEP, clock as simClock } from './sim/engine'
+import { Crew } from './scene/crew'
 import { Walk } from './walk'
 import { ChillerAudio } from './audio'
 import { Pendency } from './pendency'
@@ -50,7 +53,10 @@ let hits: THREE.InstancedMesh
 let coolers: Coolers
 let people: People
 let pendency: Pendency
-let orders: OrderRun
+let sim: Sim
+let crew: Crew
+let trace: Trace
+let simAcc = 0
 let speed = 1
 let follow = true
 let tv: TV
@@ -66,20 +72,27 @@ function load(layout = STORE01) {
   world.clear()
   store = buildStore(layout)
   const atlas = new LabelAtlas()
+  // The engine starts half an hour before the chosen hour and runs that warm-up headless, so the store opens
+  // mid-shift: orders flowing, riders out, stock already moved.
+  const qs0 = new URLSearchParams(location.search)
+  const startHour = Number(qs0.get('hour') ?? 19)
+  sim = new Sim(store, new NavGrid(store), { seed: Number(qs0.get('seed') ?? 1) }, startHour - 0.5)
+  sim.advance(1800)
   const goods = new Goods()
   for (const s of store.slots) if (s.kind === 'bin') goods.stockBin(s)
+  sim.onPick = s => goods.setBinQty(s)
   const shell = buildShell(store)
   walls = shell.walls
   world.add(shell.floor, walls, buildRacks(store, atlas), rackHeaders(store), buildFixtures(store, atlas, goods))
   goods.meshes().forEach(m => world.add(m))
   coolers = buildCoolers(store)
-  pendency = new Pendency()
+  pendency = new Pendency(sim)
   tv = buildTV(store, pendency)
-  people = new People(store)
-  orders = new OrderRun(store, people, goods, pendency)
-  orders.onChange = o => { renderOrder(o, pendency.now); if (selected) renderInspector(selected, store) }
-  world.add(coolers.group, tv.group, people.group, orders.group)
-  renderStaff(people.list)
+  people = new People(store, { picker: 0, rider: 0 })        // store manager and ASM; the engine runs the rest
+  crew = new Crew(sim)
+  trace = new Trace(sim)
+  world.add(coolers.group, tv.group, people.group, crew.group, trace.group)
+  renderStaff([...people.list, ...crew.members])
   labelMeshes = atlas.meshes()
   labelMeshes.forEach(m => world.add(m))
 
@@ -185,7 +198,7 @@ const tip = document.querySelector<HTMLDivElement>('#tip')!
 /** A person under the pointer, if one is nearer than any slot. */
 function pickPerson(e: MouseEvent | null): Person | null {
   pick(e)
-  const hp = ray.intersectObjects(people.hitMeshes, false)[0]
+  const hp = ray.intersectObjects([...people.hitMeshes, ...crew.hitMeshes], false)[0]
   if (!hp) return null
   const hs = ray.intersectObject(hits, false)[0]
   return !hs || hp.distance < hs.distance ? people.byHit(hp.object) : null
@@ -293,33 +306,40 @@ function updateAim(now: number) {
 const tagBtn = document.querySelector<HTMLButtonElement>('#tags')!
 tagBtn.addEventListener('click', () => {
   const on = !tagBtn.classList.contains('on')
-  people.setTags(on)
+  people.setTags(on); crew.setTags(on)
   tagBtn.classList.toggle('on', on)
 })
+
+// ---- Sim clock -------------------------------------------------------------------------------------------
+const simClockEl = document.querySelector<HTMLElement>('#simclock')!
 
 // ---- Live order ------------------------------------------------------------------------------------------
 const orderBtn = document.querySelector<HTMLButtonElement>('#neworder')!
 const followBtn = document.querySelector<HTMLButtonElement>('#follow')!
-let lastActor: Person | null = null
+let lastActor: { x: number; z: number } | null = null
 orderBtn.addEventListener('click', () => {
   orderBtn.blur()
-  const o = orders.start()
-  if (!o) return
-  renderOrder(o, pendency.now)
+  trace.start()
+  pendency.trace = trace.order
+  renderOrder(trace.order, sim, trace.waiting)
   if (walk.active) setWalk(false)
   follow = true; followBtn.classList.add('on')
   lastActor = null
 })
 followBtn.addEventListener('click', () => { follow = !follow; followBtn.classList.toggle('on', follow); lastActor = null })
 document.querySelectorAll<HTMLButtonElement>('[data-speed]').forEach(b => b.addEventListener('click', () => {
+  b.blur()
   speed = Number(b.dataset.speed)
   document.querySelectorAll('[data-speed]').forEach(x => x.classList.toggle('on', x === b))
 }))
-document.querySelector('#closeorder')!.addEventListener('click', () => { renderOrder(null, 0); follow = false; followBtn.classList.remove('on') })
+document.querySelector('#closeorder')!.addEventListener('click', () => {
+  trace.clear(); pendency.trace = null
+  renderOrder(null, null); follow = false; followBtn.classList.remove('on')
+})
 let orderUi = 0
 /** Chase camera: keeps your orbit angle, moves with the person working the order. */
 function followActor(dt: number) {
-  const a = orders.current?.actor
+  const a = trace.actor
   if (!follow || !a || walk.active) return
   const target = V(a.x, 1.0, a.z)
   if (a !== lastActor) {
@@ -382,16 +402,27 @@ renderer.setAnimationLoop(() => {
     controls.target.lerpVectors(tween.from[1], tween.to[1], k)
   }
   coolers.update(Math.min(dt, 0.1))
-  const sdt = Math.min(dt, 0.1) * speed
-  people.update(sdt)
-  orders.update(clock.elapsedTime)
+  // The engine runs in fixed steps; the frame only decides how many.
+  simAcc += Math.min(dt, 0.1) * speed
+  let n = 0
+  while (simAcc >= STEP && n++ < 400) { sim.step(); simAcc -= STEP }
+  if (n >= 400) simAcc = 0
+  people.update(Math.min(dt, 0.1) * Math.min(speed, 4))
+  crew.sync(Math.min(dt, 0.1), speed)
+  trace.update(clock.elapsedTime)
+  pendency.trace = trace.order
   followActor(dt)
-  if (orders.current && (orderUi += dt) > 0.5) { orderUi = 0; renderOrder(orders.current, pendency.now) }
+  if ((orderUi += dt) > 0.5) {
+    orderUi = 0
+    if (trace.order || trace.waiting) renderOrder(trace.order, sim, trace.waiting)
+    renderKpis(sim)
+    simClockEl.textContent = simClock(sim.t)
+  }
   if (person) {
     ring.position.set(person.x, 0.02, person.z)
     if ((personAt += dt) > 0.5) { personAt = 0; renderPerson(person) }
   }
-  tv.update(dt * speed)
+  tv.update(dt)
   ambience(clock.elapsedTime)
   if (walk.active) { walk.update(Math.min(dt, 0.1)); updateAim(performance.now()) }
   else controls.update()
@@ -412,7 +443,7 @@ if (w) { setWalk(true, [w[0], w[1], (w[2] * Math.PI) / 180]); if (w[3]) walk.pla
 // ?who=picker|rider|sm|asm selects the first of that role and frames them (after they have moved a little).
 const who = qs.get('who')
 if (who) setTimeout(() => {
-  const p = people.list.find(a => a.role === who)
+  const p = [...people.list, ...crew.members].find(a => a.role === who)
   if (!p) return
   selectPerson(p)
   const f = V(Math.sin(p.yaw), 0, Math.cos(p.yaw))
@@ -426,7 +457,9 @@ if (qs.get('order')) setTimeout(() => orderBtn.click(), 500)
 // ?skip=S fast-forwards S simulated seconds after the order starts, without rendering (for checks).
 const skip = Number(qs.get('skip') ?? 0)
 if (skip) setTimeout(() => {
-  for (let i = 0; i < skip * 10; i++) { people.update(0.1); tv.update(0.1) }
-  if (orders.current) renderOrder(orders.current, pendency.now)
+  sim.advance(skip)
+  crew.sync(0.1, 1)
+  renderOrder(trace.order, sim, trace.waiting)
+  renderKpis(sim)
   lastActor = null
 }, 900)

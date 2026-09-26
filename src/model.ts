@@ -86,6 +86,8 @@ export interface Store {
   fixtures: Fixture[]
   zones: ZoneArea[]
   pigeon: PigeonWall | null
+  /** Scooter parking outside the entrance: where each scooter stands, nose out (west). */
+  riderBays: [number, number][]
   warnings: string[]
 }
 
@@ -251,14 +253,12 @@ export function buildStore(L: SheetLayout): Store {
     for (let rI = 0; rI < rows; rI++) {
       for (let c = 0; c < cols; c++) {
         const code = `PH-${LEVEL[rI]}${String(c + 1).padStart(2, '0')}`
-        const rand = rng(hash(code))
         const along = -len / 2 + (c + 0.5) * cwid
-        const full = rand() < 0.3
         slots.push({
           code, kind: 'ph', owner: 'DROP ZONE', zone: 'ambient', level: LEVEL[rI], pos: c + 1,
           x: alongZ ? cx : cx + along, y: 0.15 + rI * rh + rh / 2, z: alongZ ? cz - along : cz,
           w: cwid - 0.02, h: rh - 0.03, d: depth - 0.02, ry: alongZ ? Math.PI / 2 : 0,
-          sku: null, qty: full ? 1 + Math.floor(rand() * 4) : 0, cap: 6,
+          sku: null, qty: 0, cap: 1,
         })
       }
     }
@@ -278,6 +278,13 @@ export function buildStore(L: SheetLayout): Store {
     })
   }
 
+  // Rider bay: three columns of 1 m bays either side of the entrance line, outside the front wall.
+  const riderBays: [number, number][] = []
+  if (ent) {
+    const cz = (ent.z0 + ent.z1) / 2
+    for (const x of [-8.6, -6.3, -4.0]) for (let z = cz - 5; z <= cz + 5.01; z += 1.0) riderBays.push([x, z])
+  }
+
   if (!CATALOG.length) warnings.push('Empty catalogue')
-  return { name: L.name, W, D, racks, slots, walls, doors, fixtures, zones, pigeon, warnings }
+  return { name: L.name, W, D, racks, slots, walls, doors, fixtures, zones, pigeon, riderBays, warnings }
 }

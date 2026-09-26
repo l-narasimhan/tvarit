@@ -56,13 +56,15 @@ export function buildShell(store: Store): { floor: THREE.Object3D; walls: THREE.
   const ent = store.fixtures.find(f => f.kind === 'entrance')
   if (ent) {
     const cz = (ent.z0 + ent.z1) / 2
-    const x0 = -9, x1 = -2.5, z0 = cz - 6, z1 = cz + 6
+    const x0 = -9.8, x1 = -2.5, z0 = cz - 6, z1 = cz + 6
     tint(x0, z0, x1, z1, 0x4a4c50, -0.01)
     const lines: THREE.BufferGeometry[] = []
-    for (let z = z0 + 0.5; z <= z1 - 0.4; z += 1.0) lines.push(boxAt(2.4, 0.004, 0.06, x0 + 1.3, 0.0, z))
-    lines.push(boxAt(0.06, 0.004, z1 - z0 - 0.8, x0 + 2.5, 0, cz))
+    // One 1 m bay line between scooters, per column of bays.
+    for (const bx of [...new Set(store.riderBays.map(b => b[0]))]) {
+      for (let z = cz - 5.5; z <= cz + 5.51; z += 1.0) lines.push(boxAt(1.8, 0.004, 0.06, bx + 0.1, 0.0, z))
+    }
     floor.add(merged(lines, std(0xf2f2f2, 0.7), false))
-    floor.add(floorText('RIDER BAY', x1 - 1.4, cz, 0.7, '#f2c200', Math.PI / 2))
+    floor.add(floorText('RIDER BAY', x1 - 0.6, cz, 0.6, '#f2c200', Math.PI / 2))
     // Walkway from the bay to the door.
     const walk: THREE.BufferGeometry[] = []
     for (let x = x1 + 0.2; x < -0.4; x += 0.5) walk.push(boxAt(0.3, 0.004, ent.z1 - ent.z0 - 0.6, x, 0, cz))

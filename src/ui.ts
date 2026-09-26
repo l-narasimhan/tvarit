@@ -3,8 +3,7 @@
 import { code128B } from './barcode'
 import type { Slot, Store } from './model'
 import type { Person } from './people'
-import type { OrderRec } from './orders'
-import { clockText, mmss, SLA } from './pendency'
+import { clock, fmt, type SOrder, type Sim, type Stage } from './sim/engine'
 import { ROLE_COLOR, ROLE_NAME, type Role } from './scene/figure'
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
@@ -109,26 +108,39 @@ export function renderPerson(p: Person | null) {
   el.querySelector('.x')!.addEventListener('click', () => el.dispatchEvent(new CustomEvent('close')))
 }
 
-const STEPS: [OrderRec['phase'], string][] = [
-  ['assigned', 'Placed'], ['picking', 'Picking'], ['bagging', 'Bagging'], ['in PH', 'In pigeon hole'],
-  ['rider coming', 'Rider coming'], ['collected', 'Collected'], ['dispatched', 'Dispatched'],
+const STEPS: [Stage[], string][] = [
+  [['queued'], 'Placed'], [['picking'], 'Picking'], [['bagging'], 'Bagging'], [['ready'], 'In pigeon hole'],
+  [['collecting'], 'Rider scanning'], [['out'], 'Dispatched'],
 ]
 const ICON = { order: '🧾', pick: '📦', bag: '🛍', ph: '🗄', rider: '🛵', done: '✅' } as const
 
-export function renderOrder(o: OrderRec | null, now: number) {
+export function renderOrder(o: SOrder | null, sim: Sim | null, waiting = false) {
   const el = $('#order')
-  if (!o) { el.hidden = true; return }
+  if (!o && !waiting) { el.hidden = true; return }
   el.hidden = false
-  const phaseIdx = o.phase === 'delivered' ? STEPS.length : STEPS.findIndex(s => s[0] === o.phase)
-  const age = (o.o2d ?? now - o.born)
-  const late = age > SLA
-  const lines = o.lines.map(l => `<tr class="${l.picked ? 'ok' : ''}"><td>${l.picked ? '✓' : '○'}</td><td class="mono">${l.slot.code}</td>
-    <td>${l.slot.sku!.name}</td><td class="r">${l.qty}</td><td class="r mono">${l.before}→${l.picked ? l.slot.qty : '…'}</td></tr>`).join('')
   const body = el.querySelector('.body') as HTMLElement
+  if (!o || !sim) { body.innerHTML = '<div class="who">Waiting for the next order to arrive…</div>'; return }
+  const idx = STEPS.findIndex(s => s[0].includes(o.stage))
+  const age = sim.age(o)
+  const late = age > sim.cfg.sla
+  const lines = o.lines.map(l => `<tr class="${l.picked ? 'ok' : ''}"><td>${l.picked ? '✓' : '○'}</td><td class="mono">${l.slot.code}</td>
+    <td>${l.slot.sku!.name}</td><td class="r">${l.qty}</td><td class="r mono">${l.picked ? `${l.before}→${l.slot.qty}` : l.slot.qty}</td></tr>`).join('')
   body.innerHTML = `
-    <div class="ohead"><b class="mono">${o.id}</b><span class="clock ${late ? 'late' : ''}">${o.o2d != null ? 'O2D ' : ''}${mmss(age)}</span></div>
-    <div class="steps">${STEPS.map((s, i) => `<span class="${i < phaseIdx ? 'done' : i === phaseIdx ? 'now' : ''}">${s[1]}</span>`).join('')}</div>
-    <div class="who">${o.picker ? `Picker <b>${o.picker.name}</b>` : ''}${o.rider ? ` · Rider <b>${o.rider.name}</b>` : ''}${o.ph ? ` · <span class="mono">${o.ph.code}</span>` : ''}</div>
+    <div class="ohead"><b class="mono">${o.id}</b><span class="clock ${late ? 'late' : ''}">${o.stage === 'out' ? 'O2D ' : ''}${fmt(age)} <small>/ ${fmt(sim.cfg.sla)}</small></span></div>
+    <div class="steps">${STEPS.map((s, i) => `<span class="${i < idx ? 'done' : i === idx ? 'now' : ''}">${s[1]}</span>`).join('')}</div>
+    <div class="who">${o.picker ? `Picker <b>${o.picker.name}</b>` : 'Waiting for a free picker'}${o.rider ? ` · Rider <b>${o.rider.name}</b>` : ''}${o.ph ? ` · <span class="mono">${o.ph.code}</span>` : ''}</div>
     <table class="lines">${lines}</table>
-    <ol class="log">${o.events.map(e => `<li><span class="mono">${clockText(e.t)}</span> ${ICON[e.kind]} ${e.text}</li>`).reverse().join('')}</ol>`
+    <ol class="log">${o.events.map(e => `<li><span class="mono">${clock(e.t)}</span> ${ICON[e.kind]} ${e.text}</li>`).reverse().join('')}</ol>`
+}
+
+export function renderKpis(sim: Sim) {
+  const d = sim.done
+  const hr = sim.recent(3600)
+  $('#kpis').innerHTML = `<div class="sub">Since the run started · last hour</div>
+    <div class="grid kp">
+      <div><b>${d.length}</b><span>dispatched · ${hr.length}/h</span></div>
+      <div><b class="${sim.o2d(hr) > sim.cfg.sla ? 'bad' : 'good'}">${fmt(sim.o2d(hr))}</b><span>avg O2D, last hour</span></div>
+      <div><b class="${sim.slaHit(hr) < 0.8 ? 'bad' : 'good'}">${Math.round(sim.slaHit(hr) * 100)}%</b><span>≤ ${fmt(sim.cfg.sla)}, last hour</span></div>
+      <div><b>${sim.open.length}</b><span>open now</span></div>
+    </div>`
 }

@@ -3,7 +3,7 @@
 
 import * as THREE from 'three'
 import type { Store } from '../model'
-import { clockText, mmss, Pendency, SLA, STAGE_NAME, STAGES, type Stage } from '../pendency'
+import { clockText, mmss, Pendency, STAGE_NAME, STAGES, type Stage } from '../pendency'
 import { boxAt, merged } from './util'
 
 const PX_W = 1280, PX_H = 720
@@ -11,7 +11,7 @@ const SCREEN_W = 1.22, SCREEN_H = 0.69          // 55" 16:9 active area
 
 export interface TV { group: THREE.Group; pos: THREE.Vector3; normal: THREE.Vector3; update(dt: number): void }
 
-const COLOR: Record<Stage, string> = { queued: '#3b82f6', picking: '#f59e0b', ready: '#22c55e', out: '#64748b' }
+const COLOR: Record<Stage, string> = { queued: '#3b82f6', picking: '#f59e0b', ready: '#22c55e' }
 
 export function buildTV(store: Store, feed: Pendency): TV {
   // West wall, level with the pigeon holes, facing into the store.
@@ -51,7 +51,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
     txt(clockText(f.now), PX_W - 28, 35, 34, '#94a3b8', 'right', 600)
 
     // Stage tiles.
-    const open = f.orders.length
+    const open = f.open
     const tiles: [string, number, string][] = [['OPEN', open, '#e2e8f0'], ...STAGES.map(s => [STAGE_NAME[s].toUpperCase(), f.count(s), COLOR[s]] as [string, number, string])]
     const tw = (PX_W - 40 - (tiles.length - 1) * 16) / tiles.length
     tiles.forEach(([label, n, col], i) => {
@@ -65,10 +65,10 @@ export function buildTV(store: Store, feed: Pendency): TV {
     // KPIs.
     const br = f.breaching(), risk = f.atRisk()
     const kpis: [string, string, string][] = [
-      ['BREACHING  > 8 min', String(br), br ? '#ef4444' : '#22c55e'],
-      ['AT RISK  6–8 min', String(risk), risk ? '#f59e0b' : '#22c55e'],
-      ['AVG ORDER → DISPATCH', mmss(f.avgO2D()), f.avgO2D() > SLA ? '#ef4444' : '#e2e8f0'],
-      ['SLA MET · LAST HOUR', `${Math.round(f.slaHit() * 100)}%`, f.slaHit() < 0.9 ? '#f59e0b' : '#22c55e'],
+      [`BREACHING  > ${mmss(f.sla)}`, String(br), br ? '#ef4444' : '#22c55e'],
+      [`AT RISK  ${mmss(f.sla * 0.75)}–${mmss(f.sla)}`, String(risk), risk ? '#f59e0b' : '#22c55e'],
+      ['AVG ORDER → DISPATCH', mmss(f.avgO2D()), f.avgO2D() > f.sla ? '#ef4444' : '#e2e8f0'],
+      ['SLA MET · LAST HOUR', `${Math.round(f.slaHit() * 100)}%`, f.slaHit() < 0.8 ? '#f59e0b' : '#22c55e'],
     ]
     kpis.forEach(([label, v, col], i) => {
       const x = 20 + (i % 2) * 308, y = 272 + Math.floor(i / 2) * 170
@@ -77,7 +77,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
       txt(v, x + 146, y + 70, 70, col, 'center', 800)
       txt(label, x + 146, y + 128, 19, '#94a3b8', 'center', 700)
     })
-    txt(`Dispatched last hour: ${f.dispatched.length}  ·  Pickers ${f.count('picking')}/${f.pickers} busy  ·  ${f.riders} riders on shift`,
+    txt(`Dispatched last hour: ${f.lastHour().length}  ·  Pickers ${f.pickersBusy()}/${f.pickers} busy  ·  Riders in bay ${f.ridersIn()}/${f.riders}`,
       20 + 300, 632, 19, '#94a3b8', 'center', 600)
 
     // Oldest open orders.
@@ -88,7 +88,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
     ;['ORDER', 'ITEMS', 'STAGE', 'AGE'].forEach((h, i) => txt(h, cols[i], 336, 16, '#64748b', i === 3 ? 'right' : 'left', 700))
     f.oldest(6).forEach((o, i) => {
       const y = 380 + i * 46
-      const a = f.age(o)
+      const a = o.age, SLA = f.sla
       const ac = a > SLA ? '#ef4444' : a > SLA * 0.75 ? '#f59e0b' : '#e2e8f0'
       if (a > SLA) { ctx.fillStyle = 'rgba(239,68,68,0.12)'; ctx.fillRect(x0 + 8, y - 20, w - 16, 40) }
       if (o.live) { ctx.fillStyle = 'rgba(255,176,0,0.18)'; ctx.fillRect(x0 + 8, y - 20, w - 16, 40) }
@@ -99,7 +99,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
       txt(mmss(a), cols[3], y, 28, ac, 'right', 800)
     })
 
-    txt('Simulated feed — live orders arrive with the order sim milestone', PX_W / 2, 698, 15, '#475569', 'center', 500)
+    txt('Live from the store simulation', PX_W / 2, 698, 15, '#475569', 'center', 500)
     tex.needsUpdate = true
   }
   const txt = (s: string, x: number, y: number, size: number, color: string, align: CanvasTextAlign, weight: number) => {
@@ -117,8 +117,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
     group, pos, normal,
     update(dt) {
       acc += dt
-      if (acc < 1) return
-      feed.tick(acc)
+      if (acc < 0.5) return
       acc = 0
       draw()
     },
