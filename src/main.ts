@@ -215,7 +215,7 @@ function setWalk(on: boolean, at?: [number, number, number]) {
   }
   resize()
 }
-walkBtn.addEventListener('click', () => setWalk(!walk.active))
+walkBtn.addEventListener('click', () => { walkBtn.blur(); setWalk(!walk.active) })
 addEventListener('keydown', e => {
   if (e.code === 'KeyV' && (e.target as HTMLElement).tagName !== 'INPUT') setWalk(!walk.active)
 })

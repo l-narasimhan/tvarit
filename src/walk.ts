@@ -1,10 +1,11 @@
-// First-person walk: eye height 1.65 m, WASD / arrows, Shift to hurry, mouse to look (pointer lock, or drag when
+// First-person walk: eye height 1.65 m, W/S or arrows up/down to move, arrows left/right to turn, A/D to
+// sidestep, Shift to hurry, mouse to look (pointer lock, or drag when
 // the browser will not lock). Collides with shelving, fridges, walls, desks and pallets; doors are open.
 
 import * as THREE from 'three'
 import type { Rect, Slot, Store } from './model'
 
-const EYE = 1.65, RADIUS = 0.22, WALK = 1.4, RUN = 3.0
+const EYE = 1.65, RADIUS = 0.22, WALK = 1.4, RUN = 3.0, TURN = 1.9
 
 export class Walk {
   active = false
@@ -85,10 +86,18 @@ export class Walk {
 
   update(dt: number) {
     const f = (k: string) => (this.keys.has(k) ? 1 : 0)
+    const hurry = this.keys.has('ShiftLeft') || this.keys.has('ShiftRight')
+    // Arrow left / right (and Q / E) turn on the spot; A / D step sideways.
+    const turn = f('ArrowLeft') + f('KeyQ') - f('ArrowRight') - f('KeyE')
+    if (turn) {
+      this.yaw += turn * (hurry ? TURN * 1.8 : TURN) * dt
+      this.pitch *= Math.max(0, 1 - 4 * dt)         // ease the gaze back to level while turning
+      this.apply()
+    }
     const fwd = f('KeyW') + f('ArrowUp') - f('KeyS') - f('ArrowDown')
-    const side = f('KeyD') + f('ArrowRight') - f('KeyA') - f('ArrowLeft')
+    const side = f('KeyD') - f('KeyA')
     if (!fwd && !side) return
-    const speed = (this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') ? RUN : WALK) * dt
+    const speed = (hurry ? RUN : WALK) * dt
     const len = Math.hypot(fwd, side)
     const sy = Math.sin(this.yaw), cy = Math.cos(this.yaw)
     const dx = ((-sy * fwd + cy * side) / len) * speed
