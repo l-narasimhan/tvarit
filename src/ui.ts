@@ -3,6 +3,8 @@
 import { code128B } from './barcode'
 import type { Slot, Store } from './model'
 import type { Person } from './people'
+import type { OrderRec } from './orders'
+import { clockText, mmss, SLA } from './pendency'
 import { ROLE_COLOR, ROLE_NAME, type Role } from './scene/figure'
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
@@ -105,4 +107,28 @@ export function renderPerson(p: Person | null) {
     ${p.doneLabel ? `<div class="kv"><span>${p.doneLabel[0].toUpperCase() + p.doneLabel.slice(1)}</span><b>${p.done}</b></div>` : ''}
     <div class="warn" style="color:var(--mute)">Behaviour preview — tasks tie to real orders and stock in M3.</div>`
   el.querySelector('.x')!.addEventListener('click', () => el.dispatchEvent(new CustomEvent('close')))
+}
+
+const STEPS: [OrderRec['phase'], string][] = [
+  ['assigned', 'Placed'], ['picking', 'Picking'], ['bagging', 'Bagging'], ['in PH', 'In pigeon hole'],
+  ['rider coming', 'Rider coming'], ['collected', 'Collected'], ['dispatched', 'Dispatched'],
+]
+const ICON = { order: '🧾', pick: '📦', bag: '🛍', ph: '🗄', rider: '🛵', done: '✅' } as const
+
+export function renderOrder(o: OrderRec | null, now: number) {
+  const el = $('#order')
+  if (!o) { el.hidden = true; return }
+  el.hidden = false
+  const phaseIdx = o.phase === 'delivered' ? STEPS.length : STEPS.findIndex(s => s[0] === o.phase)
+  const age = (o.o2d ?? now - o.born)
+  const late = age > SLA
+  const lines = o.lines.map(l => `<tr class="${l.picked ? 'ok' : ''}"><td>${l.picked ? '✓' : '○'}</td><td class="mono">${l.slot.code}</td>
+    <td>${l.slot.sku!.name}</td><td class="r">${l.qty}</td><td class="r mono">${l.before}→${l.picked ? l.slot.qty : '…'}</td></tr>`).join('')
+  const body = el.querySelector('.body') as HTMLElement
+  body.innerHTML = `
+    <div class="ohead"><b class="mono">${o.id}</b><span class="clock ${late ? 'late' : ''}">${o.o2d != null ? 'O2D ' : ''}${mmss(age)}</span></div>
+    <div class="steps">${STEPS.map((s, i) => `<span class="${i < phaseIdx ? 'done' : i === phaseIdx ? 'now' : ''}">${s[1]}</span>`).join('')}</div>
+    <div class="who">${o.picker ? `Picker <b>${o.picker.name}</b>` : ''}${o.rider ? ` · Rider <b>${o.rider.name}</b>` : ''}${o.ph ? ` · <span class="mono">${o.ph.code}</span>` : ''}</div>
+    <table class="lines">${lines}</table>
+    <ol class="log">${o.events.map(e => `<li><span class="mono">${clockText(e.t)}</span> ${ICON[e.kind]} ${e.text}</li>`).reverse().join('')}</ol>`
 }

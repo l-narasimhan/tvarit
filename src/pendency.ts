@@ -6,7 +6,7 @@ export type Stage = 'queued' | 'picking' | 'ready' | 'out'
 export const STAGES: Stage[] = ['queued', 'picking', 'ready']
 export const STAGE_NAME: Record<Stage, string> = { queued: 'To pick', picking: 'Picking & bagging', ready: 'In pigeon hole', out: 'Dispatched' }
 
-export interface Order { id: string; born: number; items: number; stage: Stage; until: number; done?: number }
+export interface Order { id: string; born: number; items: number; stage: Stage; until: number; done?: number; live?: boolean }
 
 /** Promise to the customer is 10 min door-to-door; the store's share is dispatch within 8 min of order. */
 export const SLA = 8 * 60
@@ -52,7 +52,20 @@ export class Pendency {
   age(o: Order) { return this.t - o.born }
   breaching() { return this.orders.filter(o => this.age(o) > SLA).length }
   atRisk() { return this.orders.filter(o => this.age(o) > SLA * 0.75 && this.age(o) <= SLA).length }
-  oldest(n: number) { return [...this.orders].sort((a, b) => a.born - b.born).slice(0, n) }
+  /** Live (traced) orders pinned first, then the oldest. */
+  oldest(n: number) { return [...this.orders].sort((a, b) => Number(!!b.live) - Number(!!a.live) || a.born - b.born).slice(0, n) }
+
+  /** A real order from the twin: its stages are driven by what happens on the floor, not by the stand-in. */
+  addLive(id: string, items: number): Order {
+    const o: Order = { id, born: this.t, items, stage: 'queued', until: Infinity, live: true }
+    this.orders.push(o)
+    return o
+  }
+  setStage(o: Order, s: Stage) {
+    o.stage = s
+    if (s === 'out') { o.done = this.t; this.orders = this.orders.filter(x => x !== o); this.dispatched.push(o) }
+  }
+  get nextId() { return `#${this.seq++}` }
   /** Mean order-to-dispatch over the last hour, seconds. */
   avgO2D() {
     const d = this.dispatched
@@ -62,6 +75,13 @@ export class Pendency {
     const d = this.dispatched
     return d.length ? d.filter(o => o.done! - o.born <= SLA).length / d.length : 1
   }
+}
+
+const CLOCK0 = 19 * 3600 + 42 * 60
+/** Store wall-clock for a sim time, HH:MM:SS. */
+export const clockText = (t: number) => {
+  const c = CLOCK0 + t
+  return `${Math.floor(c / 3600) % 24}:${String(Math.floor(c / 60) % 60).padStart(2, '0')}:${String(Math.floor(c) % 60).padStart(2, '0')}`
 }
 
 export const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`

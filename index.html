@@ -18,6 +18,7 @@
         <button data-view="ph">Pigeon holes</button>
         <button data-view="tv">Pendency TV</button>
         <span class="sep"></span>
+        <button id="neworder" class="go" title="Run one order end to end">▶ New order</button>
         <button id="walk" title="First-person walk (V)">🚶 Walk</button>
         <button id="walls" class="on" title="Toggle wall height">Walls</button>
         <button id="labels" class="on" title="Toggle barcode labels">Labels</button>
@@ -38,6 +39,15 @@
     <aside id="inspector" hidden></aside>
     <div id="tip" hidden></div>
     <div id="chip" hidden></div>
+    <aside id="order" hidden>
+      <div class="obar">
+        <span>Live order</span>
+        <span class="speed"><button data-speed="1" class="on">1×</button><button data-speed="2">2×</button><button data-speed="5">5×</button><button data-speed="10">10×</button></span>
+        <button id="follow" class="on" title="Camera follows whoever is working the order">Follow</button>
+        <button id="closeorder" aria-label="Close">×</button>
+      </div>
+      <div class="body"></div>
+    </aside>
     <div id="hud" hidden>
       <div class="cross"></div>
       <div id="aim" hidden></div>

@@ -44,6 +44,9 @@ export class Figure {
   private shL = new THREE.Group(); private shR = new THREE.Group()
   private elL = new THREE.Group(); private elR = new THREE.Group()
   private phase = Math.random() * 10
+  private crate: THREE.Group | null = null
+  private crateItems = new THREE.Group()
+  private bag: THREE.Mesh
 
   constructor(readonly role: Role, seed: number) {
     const skin = mat(SKIN[seed % SKIN.length], 0.6)
@@ -94,6 +97,8 @@ export class Figure {
       box(0.34, 0.02, 0.26, 0x0e7490, 0, -0.1, 0, crate)
       for (const [w, d, x, z] of [[0.34, 0.015, 0, 0.13], [0.34, 0.015, 0, -0.13], [0.015, 0.26, 0.17, 0], [0.015, 0.26, -0.17, 0]] as const)
         box(w, 0.2, d, 0x0e7490, x, 0, z, crate)
+      crate.add(this.crateItems)
+      this.crate = crate
       this.elL.add(crate)
     }
     if (role === 'sm') {
@@ -110,10 +115,28 @@ export class Figure {
       box(0.385, 0.04, 0.265, 0xd1d5db, 0, 1.3, -0.25, this.body, 0.2)
     }
 
+    // A sealed kraft order bag, carried in the right hand when there is one.
+    this.bag = m(new THREE.BoxGeometry(0.24, 0.3, 0.14), mat(0xc09562, 0.85), 0, -0.44, 0.04)
+    this.bag.visible = false
+    this.elR.add(this.bag)
+
     this.hit = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.8, 0.55), new THREE.MeshBasicMaterial({ visible: false }))
     this.hit.position.y = 0.9
     this.root.add(this.hit)
   }
+
+  /** What is in the picking crate: one small pack per unit, in the SKU's colour. */
+  setCrate(colors: number[]) {
+    if (!this.crate) return
+    this.crateItems.clear()
+    colors.slice(0, 12).forEach((c, i) => {
+      const o = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.1, 0.06), mat(c, 0.5))
+      o.position.set(-0.12 + (i % 4) * 0.08, -0.03 + Math.floor(i / 8) * 0.1, -0.07 + (Math.floor(i / 4) % 2) * 0.12)
+      this.crateItems.add(o)
+    })
+  }
+
+  setBag(on: boolean) { this.bag.visible = on }
 
   /** Drives the joints for this frame. `speed` is metres per second when walking. */
   pose(p: Pose, dt: number, speed = 1.2) {

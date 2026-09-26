@@ -9,6 +9,8 @@ import { buildRacks, rackHeaders } from './scene/racks'
 import { buildShell } from './scene/shell'
 import { findSlot, renderInspector, renderPerson, renderStaff, renderSummary } from './ui'
 import { People, type Person } from './people'
+import { OrderRun } from './orders'
+import { renderOrder } from './ui'
 import { Walk } from './walk'
 import { ChillerAudio } from './audio'
 import { Pendency } from './pendency'
@@ -47,6 +49,10 @@ let labelMeshes: THREE.Object3D[] = []
 let hits: THREE.InstancedMesh
 let coolers: Coolers
 let people: People
+let pendency: Pendency
+let orders: OrderRun
+let speed = 1
+let follow = true
 let tv: TV
 const audio = new ChillerAudio()
 const highlight = new THREE.LineSegments(
@@ -67,9 +73,12 @@ function load(layout = STORE01) {
   world.add(shell.floor, walls, buildRacks(store, atlas), rackHeaders(store), buildFixtures(store, atlas, goods))
   goods.meshes().forEach(m => world.add(m))
   coolers = buildCoolers(store)
-  tv = buildTV(store, new Pendency())
+  pendency = new Pendency()
+  tv = buildTV(store, pendency)
   people = new People(store)
-  world.add(coolers.group, tv.group, people.group)
+  orders = new OrderRun(store, people, goods, pendency)
+  orders.onChange = o => { renderOrder(o, pendency.now); if (selected) renderInspector(selected, store) }
+  world.add(coolers.group, tv.group, people.group, orders.group)
   renderStaff(people.list)
   labelMeshes = atlas.meshes()
   labelMeshes.forEach(m => world.add(m))
@@ -288,6 +297,42 @@ tagBtn.addEventListener('click', () => {
   tagBtn.classList.toggle('on', on)
 })
 
+// ---- Live order ------------------------------------------------------------------------------------------
+const orderBtn = document.querySelector<HTMLButtonElement>('#neworder')!
+const followBtn = document.querySelector<HTMLButtonElement>('#follow')!
+let lastActor: Person | null = null
+orderBtn.addEventListener('click', () => {
+  orderBtn.blur()
+  const o = orders.start()
+  if (!o) return
+  renderOrder(o, pendency.now)
+  if (walk.active) setWalk(false)
+  follow = true; followBtn.classList.add('on')
+  lastActor = null
+})
+followBtn.addEventListener('click', () => { follow = !follow; followBtn.classList.toggle('on', follow); lastActor = null })
+document.querySelectorAll<HTMLButtonElement>('[data-speed]').forEach(b => b.addEventListener('click', () => {
+  speed = Number(b.dataset.speed)
+  document.querySelectorAll('[data-speed]').forEach(x => x.classList.toggle('on', x === b))
+}))
+document.querySelector('#closeorder')!.addEventListener('click', () => { renderOrder(null, 0); follow = false; followBtn.classList.remove('on') })
+let orderUi = 0
+/** Chase camera: keeps your orbit angle, moves with the person working the order. */
+function followActor(dt: number) {
+  const a = orders.current?.actor
+  if (!follow || !a || walk.active) return
+  const target = V(a.x, 1.0, a.z)
+  if (a !== lastActor) {
+    lastActor = a
+    fly(target.clone().add(V(4.5, 7, 6)), target)
+    return
+  }
+  if (tween.t < 1) { tween.to[1].copy(target); return }
+  const d = target.clone().sub(controls.target).multiplyScalar(Math.min(1, dt * 4))
+  controls.target.add(d)
+  camera.position.add(d)
+}
+
 // ---- Chiller ambience ----------------------------------------------------------------------------------------
 const chip = document.querySelector<HTMLDivElement>('#chip')!
 const soundBtn = document.querySelector<HTMLButtonElement>('#sound')!
@@ -337,12 +382,16 @@ renderer.setAnimationLoop(() => {
     controls.target.lerpVectors(tween.from[1], tween.to[1], k)
   }
   coolers.update(Math.min(dt, 0.1))
-  people.update(Math.min(dt, 0.1))
+  const sdt = Math.min(dt, 0.1) * speed
+  people.update(sdt)
+  orders.update(clock.elapsedTime)
+  followActor(dt)
+  if (orders.current && (orderUi += dt) > 0.5) { orderUi = 0; renderOrder(orders.current, pendency.now) }
   if (person) {
     ring.position.set(person.x, 0.02, person.z)
     if ((personAt += dt) > 0.5) { personAt = 0; renderPerson(person) }
   }
-  tv.update(dt)
+  tv.update(dt * speed)
   ambience(clock.elapsedTime)
   if (walk.active) { walk.update(Math.min(dt, 0.1)); updateAim(performance.now()) }
   else controls.update()
@@ -369,3 +418,15 @@ if (who) setTimeout(() => {
   const f = V(Math.sin(p.yaw), 0, Math.cos(p.yaw))
   fly(V(p.x, 2.9, p.z).addScaledVector(f, -2.2), V(p.x, 1.0, p.z), true)
 }, 3000)
+
+// ?order=1 starts an order on load; ?speed=N runs the floor N× (for screenshot checks).
+const sp = qs.get('speed')
+if (sp) { speed = Number(sp); document.querySelectorAll<HTMLElement>('[data-speed]').forEach(x => x.classList.toggle('on', x.dataset.speed === sp)) }
+if (qs.get('order')) setTimeout(() => orderBtn.click(), 500)
+// ?skip=S fast-forwards S simulated seconds after the order starts, without rendering (for checks).
+const skip = Number(qs.get('skip') ?? 0)
+if (skip) setTimeout(() => {
+  for (let i = 0; i < skip * 10; i++) { people.update(0.1); tv.update(0.1) }
+  if (orders.current) renderOrder(orders.current, pendency.now)
+  lastActor = null
+}, 900)

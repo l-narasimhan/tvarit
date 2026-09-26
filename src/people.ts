@@ -10,9 +10,11 @@ import type { Slot, Store } from './model'
 import { NavGrid, type P2 } from './nav'
 import { Figure, makeScooter, nameTag, type Pose, type Role } from './scene/figure'
 
-type Step =
+export type Step =
   | { kind: 'go'; to: P2; status: string; path?: P2[]; i?: number }
   | { kind: 'do'; secs: number; pose: Pose; status: string; yaw?: number; at?: P2 }
+  | { kind: 'call'; fn: () => void }
+  | { kind: 'drive'; to: P2; speed: number; status: string }
 
 export interface Person {
   id: string
@@ -27,6 +29,8 @@ export interface Person {
   x: number
   z: number
   yaw: number
+  /** The live order this person is working, if any. */
+  busy: string | null
 }
 
 const NAMES: Record<Role, string[]> = {
@@ -52,6 +56,9 @@ class Agent implements Person {
   yaw = 0
   plan: Step[] = []
   pose: Pose = 'stand'
+  busy: string | null = null
+  bay: P2 | null = null
+  scooter: THREE.Object3D | null = null
   constructor(public role: Role, public name: string, public shift: string, seed: number, private refill: (a: Agent) => void) {
     this.id = `${role}-${seed}`
     this.fig = new Figure(role, seed)
@@ -64,10 +71,22 @@ class Agent implements Person {
 
   update(dt: number, nav: NavGrid) {
     if (!this.plan.length) this.refill(this)
+    while (this.plan[0]?.kind === 'call') (this.plan.shift() as { fn: () => void }).fn()
+    if (!this.plan.length) this.refill(this)
     const s = this.plan[0]
     if (!s) return
     this.status = s.status
-    if (s.kind === 'go') {
+    if (s.kind === 'drive') {
+      // Ride the scooter: scooter moves, rider sits on it.
+      const sc = this.scooter!
+      const dx = s.to[0] - sc.position.x, dz = s.to[1] - sc.position.z, d = Math.hypot(dx, dz)
+      const step = s.speed * dt
+      if (d <= step) { sc.position.x = s.to[0]; sc.position.z = s.to[1]; this.plan.shift() }
+      else { sc.position.x += (dx / d) * step; sc.position.z += (dz / d) * step; sc.rotation.y = yawTo(dx, dz) }
+      this.yaw = sc.rotation.y
+      this.x = sc.position.x - Math.sin(this.yaw) * 0.3; this.z = sc.position.z - Math.cos(this.yaw) * 0.3
+      this.pose = 'ride'
+    } else if (s.kind === 'go') {
       s.path ??= nav.path([this.x, this.z], s.to) ?? [s.to]
       s.i ??= 0
       const target = s.path[s.i]
@@ -113,6 +132,7 @@ export class People {
   constructor(private store: Store, counts = { picker: 8, rider: 6 }) {
     this.group.name = 'people'
     this.nav = new NavGrid(store)
+    this.spots = { loadX: 0, collectX: 0, faceLoad: 0, faceCollect: 0 }
     const bins = store.slots.filter(s => s.kind === 'bin' && s.qty > 0 && s.sku)
     const byZone = (z: string) => bins.filter(b => b.zone === z)
     const zoneBins = { ambient: byZone('ambient'), chiller: byZone('chiller'), hv: byZone('hv') }
@@ -126,6 +146,7 @@ export class People {
     const loadX = pig ? (pack ? pack.x1 + 0.35 : pig.cx + tableSide * (pig.depth / 2 + 0.4)) : store.W / 2
     const collectX = pig ? pig.cx - tableSide * (pig.depth / 2 + 0.4) : store.W / 2
     const faceLoad = tableSide > 0 ? -Math.PI / 2 : Math.PI / 2, faceCollect = -faceLoad
+    this.spots = { loadX, collectX, faceLoad, faceCollect }
 
     // Where a person stands to work a slot: just in front of its face.
     const front = (s: Slot, gap = 0.55): P2 => [s.x + Math.sin(s.ry) * (s.d / 2 + gap), s.z + Math.cos(s.ry) * (s.d / 2 + gap)]
@@ -164,7 +185,7 @@ export class People {
     }
     const pickBays = [1, 2, 4, 5, 7, 9, 3, 8].filter(i => i < bays.length)
     const rider = (a: Agent) => {
-      const bay = (a as any).bay as P2
+      const bay = a.bay!
       const seat: P2 = [bay[0] + 0.3, bay[1]]
       if (Math.random() < 0.35) {
         const id = `#${this.order++}`
@@ -181,8 +202,9 @@ export class People {
     }
     this.spawn('rider', Math.min(counts.rider, pickBays.length), '11:00–23:00', rider, (a, i) => {
       const bay = bays[pickBays[i]]
-      ;(a as any).bay = bay
+      a.bay = bay
       const sc = makeScooter(i)
+      a.scooter = sc
       sc.position.set(bay[0], 0, bay[1]); sc.rotation.y = -Math.PI / 2
       this.group.add(sc)
       a.place(bay[0] + 0.3, bay[1], -Math.PI / 2); a.doneLabel = 'trips today'; a.done = 6 + i * 2
@@ -233,6 +255,28 @@ export class People {
   }
 
   update(dt: number) { for (const a of this.list) a.update(dt, this.nav) }
+
+  /** Pigeon-hole working positions: pickers load at loadX facing faceLoad; riders collect at collectX. */
+  spots: { loadX: number; collectX: number; faceLoad: number; faceCollect: number }
+  get grid() { return this.nav }
+
+  /** The nearest person of a role who is not on a live order. */
+  nearest(role: Role, x: number, z: number): Agent | null {
+    let best: Agent | null = null, bd = Infinity
+    for (const a of this.list) {
+      if (a.role !== role || a.busy) continue
+      const d = Math.hypot(a.x - x, a.z - z)
+      if (d < bd) { bd = d; best = a }
+    }
+    return best
+  }
+
+  /** Drops whatever preview task the person was on and gives them this plan. */
+  assign(a: Person, order: string, plan: Step[]) {
+    const ag = a as Agent
+    ag.busy = order
+    ag.plan = plan
+  }
 
   get hitMeshes() { return this.list.map(a => a.fig.hit) }
   byHit(o: THREE.Object3D): Person | null {

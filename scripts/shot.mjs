@@ -9,6 +9,6 @@ for (const a of args) {
   const q = a.includes('=') ? a : `view=${a}`
   const out = `shots/${a.replace(/[^\w-]/g, '_')}.png`
   execFileSync(CHROME, ['--headless=new', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--hide-scrollbars',
-    '--window-size=1600,1000', '--virtual-time-budget=15000', `--screenshot=${out}`, `${base}?${q}`], { stdio: 'ignore' })
+    '--window-size=1600,1000', `--virtual-time-budget=${process.env.BUDGET ?? 15000}`, `--screenshot=${out}`, `${base}?${q}`], { stdio: 'ignore' })
   console.log(out)
 }

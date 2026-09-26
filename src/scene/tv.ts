@@ -3,7 +3,7 @@
 
 import * as THREE from 'three'
 import type { Store } from '../model'
-import { mmss, Pendency, SLA, STAGE_NAME, STAGES, type Stage } from '../pendency'
+import { clockText, mmss, Pendency, SLA, STAGE_NAME, STAGES, type Stage } from '../pendency'
 import { boxAt, merged } from './util'
 
 const PX_W = 1280, PX_H = 720
@@ -42,16 +42,13 @@ export function buildTV(store: Store, feed: Pendency): TV {
   glow.position.copy(pos).addScaledVector(normal, 0.4)
   group.add(glow)
 
-  const clock0 = 19 * 3600 + 42 * 60
   const draw = () => {
     const f = feed
     ctx.fillStyle = '#0b1220'; ctx.fillRect(0, 0, PX_W, PX_H)
     // Header.
     ctx.fillStyle = '#111a2e'; ctx.fillRect(0, 0, PX_W, 70)
     txt(`${store.name.toUpperCase()} · ORDER PENDENCY`, 28, 35, 34, '#e2e8f0', 'left', 800)
-    const c = clock0 + f.now
-    const hh = Math.floor(c / 3600) % 24, mm = Math.floor(c / 60) % 60, ss = Math.floor(c) % 60
-    txt(`${hh}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, PX_W - 28, 35, 34, '#94a3b8', 'right', 600)
+    txt(clockText(f.now), PX_W - 28, 35, 34, '#94a3b8', 'right', 600)
 
     // Stage tiles.
     const open = f.orders.length
@@ -94,7 +91,8 @@ export function buildTV(store: Store, feed: Pendency): TV {
       const a = f.age(o)
       const ac = a > SLA ? '#ef4444' : a > SLA * 0.75 ? '#f59e0b' : '#e2e8f0'
       if (a > SLA) { ctx.fillStyle = 'rgba(239,68,68,0.12)'; ctx.fillRect(x0 + 8, y - 20, w - 16, 40) }
-      txt(o.id, cols[0], y, 26, '#e2e8f0', 'left', 700)
+      if (o.live) { ctx.fillStyle = 'rgba(255,176,0,0.18)'; ctx.fillRect(x0 + 8, y - 20, w - 16, 40) }
+      txt(o.live ? `${o.id} ★` : o.id, cols[0], y, 26, o.live ? '#ffb000' : '#e2e8f0', 'left', 700)
       txt(String(o.items), cols[1], y, 26, '#e2e8f0', 'left', 600)
       ctx.fillStyle = COLOR[o.stage]; ctx.beginPath(); ctx.arc(cols[2] + 8, y, 7, 0, Math.PI * 2); ctx.fill()
       txt(STAGE_NAME[o.stage], cols[2] + 24, y, 24, '#e2e8f0', 'left', 600)
