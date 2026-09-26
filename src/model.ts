@@ -92,7 +92,7 @@ export interface Store {
 const LEVEL = 'ABCDEFGH'
 const SPEC: Record<Zone, { height: number; levels: number; depth: number; bin: number }> = {
   ambient: { height: 2.1, levels: 5, depth: 0.5, bin: 0.46 },
-  chiller: { height: 1.9, levels: 4, depth: 0.5, bin: 0.46 },
+  chiller: { height: 1.95, levels: 5, depth: 0.5, bin: 0.46 },
   hv: { height: 1.8, levels: 4, depth: 0.55, bin: 0.55 },
 }
 const FACE_RY: Record<Face, number> = { S: 0, N: Math.PI, E: Math.PI / 2, W: -Math.PI / 2 }

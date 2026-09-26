@@ -8,6 +8,7 @@ import { LabelAtlas } from './scene/labels'
 import { buildRacks, rackHeaders } from './scene/racks'
 import { buildShell } from './scene/shell'
 import { findSlot, renderInspector, renderSummary } from './ui'
+import { Walk } from './walk'
 import './style.css'
 
 // ---- Renderer, camera, lights ----------------------------------------------------------------------------
@@ -26,6 +27,7 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 controls.maxPolarAngle = Math.PI / 2 - 0.03
 controls.minDistance = 0.4
+const walk = new Walk(camera, canvas)
 
 scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f95, 1.4))
 const sun = new THREE.DirectionalLight(0xffffff, 1.6)
@@ -74,6 +76,7 @@ function load(layout = STORE01) {
   sun.shadow.bias = -0.0004
   sc.updateProjectionMatrix()
 
+  walk.setStore(store)
   renderSummary(store)
   ;(window as any).__stats = { labels: atlas.count, goods: goods.count, slots: store.slots.length, racks: store.racks.length }
 }
@@ -96,6 +99,7 @@ function fly(pos: THREE.Vector3, target: THREE.Vector3, instant = false) {
 
 const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z)
 function view(name: string, instant = false) {
+  if (walk.active) setWalk(false)
   const { W, D } = store
   const zone = (k: string) => store.zones.find(z => z.kind === k)
   if (name === 'top') return fly(V(W / 2, 46, D / 2 + 0.01), V(W / 2, 0, D / 2), instant)
@@ -117,6 +121,7 @@ function view(name: string, instant = false) {
 
 function focus(s: Slot, instant = false) {
   select(s)
+  if (walk.active) return walk.faceSlot(s)
   const n = V(Math.sin(s.ry), 0, Math.cos(s.ry))
   const dist = s.kind === 'pallet' ? 3.2 : 1.5
   const target = V(s.x, s.y, s.z)
@@ -135,9 +140,10 @@ function select(s: Slot | null) {
 const ray = new THREE.Raycaster()
 const ndc = new THREE.Vector2()
 const tip = document.querySelector<HTMLDivElement>('#tip')!
-function pick(e: MouseEvent): Slot | null {
+function pick(e: MouseEvent | null): Slot | null {
   const r = canvas.getBoundingClientRect()
-  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1)
+  if (!e || walk.locked) ndc.set(0, 0)
+  else ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1)
   ray.setFromCamera(ndc, camera)
   const hit = ray.intersectObject(hits, false)[0]
   return hit?.instanceId != null ? store.slots[hit.instanceId] : null
@@ -145,12 +151,17 @@ function pick(e: MouseEvent): Slot | null {
 let down = { x: 0, y: 0 }
 canvas.addEventListener('pointerdown', e => (down = { x: e.clientX, y: e.clientY }))
 canvas.addEventListener('pointerup', e => {
-  if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4) return
+  if (walk.active && !walk.locked) {
+    // First click takes the mouse for looking; a drag without lock also looks.
+    if (Math.hypot(e.clientX - down.x, e.clientY - down.y) <= 4) walk.lock()
+    return
+  }
+  if (!walk.locked && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4) return
   select(pick(e))
 })
 canvas.addEventListener('dblclick', e => { const s = pick(e); if (s) focus(s) })
 canvas.addEventListener('pointermove', e => {
-  if (e.buttons) { tip.hidden = true; return }
+  if (e.buttons || walk.active) { tip.hidden = true; return }
   const s = pick(e)
   tip.hidden = !s
   if (s) {
@@ -183,6 +194,41 @@ labelBtn.addEventListener('click', () => {
   labelBtn.classList.toggle('on', on)
 })
 
+// ---- Walk mode -------------------------------------------------------------------------------------------
+const walkBtn = document.querySelector<HTMLButtonElement>('#walk')!
+const hud = document.querySelector<HTMLDivElement>('#hud')!
+const aim = document.querySelector<HTMLDivElement>('#aim')!
+function setWalk(on: boolean, at?: [number, number, number]) {
+  walkBtn.classList.toggle('on', on)
+  document.body.classList.toggle('walking', on)
+  hud.hidden = !on
+  if (on) {
+    controls.enabled = false
+    tween.t = 1
+    const ent = store.fixtures.find(f => f.kind === 'entrance')
+    const [x, z, yaw] = at ?? [ent ? 0.6 : store.W / 2, ent ? (ent.z0 + ent.z1) / 2 : store.D / 2, -Math.PI / 2]
+    walk.enter(x, z, yaw)
+  } else {
+    walk.exit()
+    controls.enabled = true
+    view('overview')
+  }
+  resize()
+}
+walkBtn.addEventListener('click', () => setWalk(!walk.active))
+addEventListener('keydown', e => {
+  if (e.code === 'KeyV' && (e.target as HTMLElement).tagName !== 'INPUT') setWalk(!walk.active)
+})
+document.addEventListener('pointerlockchange', () => document.body.classList.toggle('locked', walk.locked))
+let aimAt = 0
+function updateAim(now: number) {
+  if (now - aimAt < 100) return
+  aimAt = now
+  const s = pick(null)
+  aim.textContent = s ? (s.sku && s.kind !== 'ph' ? `${s.code} · ${s.sku.name} · ${s.qty}` : s.code) : ''
+  aim.hidden = !s
+}
+
 // ---- Loop --------------------------------------------------------------------------------------------------
 function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight
@@ -190,7 +236,7 @@ function resize() {
   camera.aspect = w / h
   // Centre the view in the space right of the left panel, on screens wide enough to have one beside it.
   const left = document.querySelector<HTMLElement>('#left')!
-  const shift = w > 720 ? (left.offsetWidth + 12) / 2 : 0
+  const shift = w > 720 && !walk.active ? (left.offsetWidth + 12) / 2 : 0
   camera.setViewOffset(w, h, -shift, 0, w, h)
   camera.updateProjectionMatrix()
 }
@@ -205,7 +251,8 @@ renderer.setAnimationLoop(() => {
     camera.position.lerpVectors(tween.from[0], tween.to[0], k)
     controls.target.lerpVectors(tween.from[1], tween.to[1], k)
   }
-  controls.update()
+  if (walk.active) { walk.update(Math.min(dt, 0.1)); updateAim(performance.now()) }
+  else controls.update()
   renderer.render(scene, camera)
 })
 
@@ -217,3 +264,6 @@ const found = qs.get('find') ? findSlot(store, qs.get('find')!) : null
 if (found) focus(found, true)
 else view(qs.get('view') ?? 'overview', true)
 if (qs.get('walls') === 'low') wallBtn.click()
+// ?walk=x,z,yawDeg[,pitchDeg] drops you in first person there.
+const w = qs.get('walk')?.split(',').map(Number)
+if (w) { setWalk(true, [w[0], w[1], (w[2] * Math.PI) / 180]); if (w[3]) walk.place(w[0], w[1], (w[2] * Math.PI) / 180, (w[3] * Math.PI) / 180) }

@@ -8,6 +8,7 @@ import { boxAt, merged, rackMatrix } from './util'
 
 const LABEL_H = 0.042
 const LABEL_W = LABEL_H * LabelAtlas.ASPECT
+const FRIDGE_CANOPY = 0.22
 
 const std = (color: number, roughness = 0.5, metalness = 0.3) => new THREE.MeshStandardMaterial({ color, roughness, metalness })
 
@@ -39,6 +40,9 @@ export function buildRacks(store: Store, atlas: LabelAtlas): THREE.Object3D {
   }
   g.add(merged(parts.lip ?? [], mats.lip, false))
   g.add(merged(parts.glass ?? [], mats.glass, false))
+  g.add(merged(parts.fridge ?? [], std(0xf2f4f6, 0.35, 0.2)))
+  g.add(merged(parts.frame ?? [], std(0x2b2e33, 0.4, 0.6), false))
+  g.add(merged(parts.lamp ?? [], new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xe8f4ff, emissiveIntensity: 2.5 }), false))
   return g
 }
 
@@ -65,6 +69,28 @@ function shelving(r: Rack, m: THREE.Matrix4, add: (k: string, g: THREE.BufferGeo
     add(`back-${z}`, boxAt(0.02, H, D, L / 2 - 0.01, H / 2, 0, m))
     add('glass', boxAt(L - 0.04, H - 0.1, 0.008, 0, H / 2, D / 2 + 0.03, m))
   }
+  if (z === 'chiller') fridge(r, m, add)
+}
+
+/** Upright glass-door refrigerator (visi-cooler) around chiller shelving: insulated body, lit canopy, doors. */
+function fridge(r: Rack, m: THREE.Matrix4, add: (k: string, g: THREE.BufferGeometry) => void) {
+  const { len: L, depth: D, height: H } = r
+  const front = D / 2 + 0.035
+  add('fridge', boxAt(0.04, H, D + 0.05, -L / 2 - 0.005, H / 2, 0.025, m))
+  add('fridge', boxAt(0.04, H, D + 0.05, L / 2 + 0.005, H / 2, 0.025, m))
+  add('fridge', boxAt(L + 0.05, FRIDGE_CANOPY, D + 0.08, 0, H + FRIDGE_CANOPY / 2, 0.04, m))
+  add('frame', boxAt(L + 0.05, 0.1, 0.012, 0, 0.05, front, m))                       // compressor grille
+  add('lamp', boxAt(L - 0.08, 0.02, 0.03, 0, H - 0.04, D / 2 - 0.02, m))              // interior LED strip
+  // Doors: one per ~0.7 m, framed, each with a handle on its opening edge.
+  const n = Math.max(1, Math.round(L / 0.7)), dw = L / n
+  for (let i = 0; i < n; i++) {
+    const x = -L / 2 + (i + 0.5) * dw
+    add('glass', boxAt(dw - 0.05, H - 0.16, 0.01, x, H / 2 + 0.03, front, m))
+    add('frame', boxAt(0.02, 0.4, 0.025, x + dw / 2 - 0.07, 1.05, front + 0.03, m))
+  }
+  for (let i = 0; i <= n; i++) add('frame', boxAt(0.035, H - 0.1, 0.03, -L / 2 + i * dw, H / 2 + 0.05, front, m))
+  add('frame', boxAt(L, 0.035, 0.03, 0, 0.11, front, m))
+  add('frame', boxAt(L, 0.035, 0.03, 0, H - 0.01, front, m))
 }
 
 function labels(r: Rack, m: THREE.Matrix4, atlas: LabelAtlas) {
@@ -78,8 +104,14 @@ function labels(r: Rack, m: THREE.Matrix4, atlas: LabelAtlas) {
       atlas.add(drawBinLabel(code), m.clone().multiply(q), Math.min(LABEL_W, bw - 0.02), LABEL_H)
     }
   })
-  // Rack header: the module code, big, above the pick face.
+  // Rack header: the module code, big, above the pick face. Fridges carry it on their canopy.
   const sw = Math.min(0.62, r.len - 0.05)
+  if (r.zone === 'chiller') {
+    const sh = Math.min(sw / LabelAtlas.ASPECT, FRIDGE_CANOPY - 0.04)
+    q.makeTranslation(0, r.height + FRIDGE_CANOPY / 2, r.depth / 2 + 0.082)
+    atlas.add(drawSign(r.id, ZONE_SIGN[r.zone]), m.clone().multiply(q), sh * LabelAtlas.ASPECT, sh)
+    return
+  }
   q.makeTranslation(0, r.height + 0.1, r.depth / 2 - 0.018)
   atlas.add(drawSign(r.id, ZONE_SIGN[r.zone]), m.clone().multiply(q), sw, sw / LabelAtlas.ASPECT)
   // And on the back, so the code reads from either aisle.
@@ -90,7 +122,7 @@ function labels(r: Rack, m: THREE.Matrix4, atlas: LabelAtlas) {
 /** The header board the signs hang on. */
 export function rackHeaders(store: Store): THREE.Object3D {
   const geos: THREE.BufferGeometry[] = []
-  for (const r of store.racks) {
+  for (const r of store.racks.filter(r => r.zone !== 'chiller')) {
     const m = rackMatrix(r.cx, 0, r.cz, r.ry)
     const sw = Math.min(0.62, r.len - 0.05)
     geos.push(boxAt(sw + 0.02, sw / LabelAtlas.ASPECT + 0.02, 0.012, 0, r.height + 0.1, r.depth / 2 - 0.025, m))

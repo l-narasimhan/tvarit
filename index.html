@@ -17,6 +17,7 @@
         <button data-view="hv">HV cage</button>
         <button data-view="ph">Pigeon holes</button>
         <span class="sep"></span>
+        <button id="walk" title="First-person walk (V)">🚶 Walk</button>
         <button id="walls" class="on" title="Toggle wall height">Walls</button>
         <button id="labels" class="on" title="Toggle barcode labels">Labels</button>
       </div>
@@ -32,6 +33,11 @@
     </aside>
     <aside id="inspector" hidden></aside>
     <div id="tip" hidden></div>
+    <div id="hud" hidden>
+      <div class="cross"></div>
+      <div id="aim" hidden></div>
+      <div class="help"><b>Click</b> to look around · <b>WASD</b> move · <b>Shift</b> hurry · <b>Click</b> a bin to scan it · <b>Esc</b> free mouse · <b>V</b> leave walk</div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
