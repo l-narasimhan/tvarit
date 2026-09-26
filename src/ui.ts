@@ -87,7 +87,7 @@ export function findSlot(store: Store, q: string): Slot | null {
 
 export function renderStaff(list: Person[]) {
   const n = (r: Role) => list.filter(p => p.role === r).length
-  const roles: Role[] = ['sm', 'asm', 'picker', 'packer', 'rider']
+  const roles: Role[] = ['sm', 'asm', 'picker', 'rider']
   document.querySelector<HTMLElement>('#staff')!.innerHTML = `<div class="sub">On the floor</div><div class="roster">${roles
     .map(r => `<span><i style="background:${ROLE_COLOR[r]}"></i>${ROLE_NAME[r].replace('Area Sales Manager', 'ASM')} <b>${n(r)}</b></span>`).join('')}</div>`
 }

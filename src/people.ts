@@ -1,6 +1,6 @@
 // The shift on the floor. Each person runs a plan of steps ("walk to", "do for n seconds"), refilled by their
-// role when it runs out. Pickers walk real pick paths to real bins and drop at real pigeon holes; packers pack
-// at their station; riders wait on their scooters and come in to collect; the store manager works the front
+// role when it runs out. There are no packers in a darkstore: pickers pick into a bag, seal it at the table and
+// drop it in a pigeon hole; riders come in and collect straight from the pigeon hole; the store manager works the front
 // desk and walks the floor; the ASM is visiting on an audit round.
 //
 // This is behaviour, not yet orders: M3 ties these walks to actual orders, stock and the pendency TV.
@@ -33,10 +33,9 @@ const NAMES: Record<Role, string[]> = {
   sm: ['Rajesh Kumar'],
   asm: ['Meera Iyer'],
   picker: ['Ravi', 'Sunita', 'Imran', 'Deepak', 'Kavya', 'Manoj', 'Pooja', 'Arjun', 'Farhan', 'Neha'],
-  packer: ['Suresh', 'Anjali', 'Vikram', 'Lakshmi'],
   rider: ['Ajay', 'Sandeep', 'Rahul', 'Kiran', 'Salman', 'Gopal', 'Naveen', 'Tariq'],
 }
-const SPEED: Record<Role, number> = { sm: 1.1, asm: 1.0, picker: 1.3, packer: 1.1, rider: 1.2 }
+const SPEED: Record<Role, number> = { sm: 1.1, asm: 1.0, picker: 1.3, rider: 1.2 }
 const rnd = (a: number, b: number) => a + Math.random() * (b - a)
 const pickOne = <T,>(a: T[]) => a[Math.floor(Math.random() * a.length)]
 const yawTo = (dx: number, dz: number) => Math.atan2(dx, dz)
@@ -111,7 +110,7 @@ export class People {
   private nav: NavGrid
   private order = 48300
 
-  constructor(private store: Store, counts = { picker: 8, packer: 3, rider: 6 }) {
+  constructor(private store: Store, counts = { picker: 8, rider: 6 }) {
     this.group.name = 'people'
     this.nav = new NavGrid(store)
     const bins = store.slots.filter(s => s.kind === 'bin' && s.qty > 0 && s.sku)
@@ -122,7 +121,11 @@ export class People {
     const desk = store.fixtures.find(f => f.kind === 'desk')
     const ent = store.fixtures.find(f => f.kind === 'entrance')
     const pig = store.pigeon
-    const handover: P2 = pack ? [pack.x1 + 0.9, pack.z0 + 0.4] : [store.W / 2, store.D / 2]
+    // Pigeon-hole faces: pickers load from the packing-table side, riders collect from the other.
+    const tableSide = pig && pack ? Math.sign((pack.x0 + pack.x1) / 2 - pig.cx) || 1 : 1
+    const loadX = pig ? (pack ? pack.x1 + 0.35 : pig.cx + tableSide * (pig.depth / 2 + 0.4)) : store.W / 2
+    const collectX = pig ? pig.cx - tableSide * (pig.depth / 2 + 0.4) : store.W / 2
+    const faceLoad = tableSide > 0 ? -Math.PI / 2 : Math.PI / 2, faceCollect = -faceLoad
 
     // Where a person stands to work a slot: just in front of its face.
     const front = (s: Slot, gap = 0.55): P2 => [s.x + Math.sin(s.ry) * (s.d / 2 + gap), s.z + Math.cos(s.ry) * (s.d / 2 + gap)]
@@ -140,11 +143,10 @@ export class People {
       }
       if (pig && ph.length) {
         const slot = pickOne(ph)
-        // Pickers load from the side away from the packing table.
-        const x = pig.cx - pig.depth / 2 - 0.4
-        a.plan.push({ kind: 'go', to: [x, slot.z], status: `Order ${id} · taking crate to ${slot.code}` })
-        a.plan.push({ kind: 'do', secs: rnd(2, 3), pose: 'reach', yaw: Math.PI / 2, status: `Order ${id} · dropping at ${slot.code}` })
-        a.plan.push({ kind: 'do', secs: 0.1, pose: 'stand', status: '', yaw: Math.PI / 2 })
+        // Bag and seal at the packing table, then post the bag into its pigeon hole across the table.
+        a.plan.push({ kind: 'go', to: [loadX, slot.z], status: `Order ${id} · to the packing table` })
+        a.plan.push({ kind: 'do', secs: rnd(4, 7), pose: 'pack', yaw: faceLoad, status: `Order ${id} · bagging & sealing` })
+        a.plan.push({ kind: 'do', secs: rnd(1.5, 2.5), pose: 'reach', yaw: faceLoad, status: `Order ${id} · dropping at ${slot.code}` })
       }
       a.done++
     }
@@ -152,27 +154,6 @@ export class People {
       const s = pickOne(zoneBins.ambient)
       const [x, z] = this.nav.nearestFree(...front(s)) ?? [store.W / 2, store.D / 2]
       a.place(x, z, facing(s)); a.doneLabel = 'orders picked'; a.done = 20 + i * 3
-    })
-
-    // ---- Packers: one per station along the table, on the side away from the pigeon holes ----
-    const stations: P2[] = []
-    if (pack) {
-      const len = pack.z1 - pack.z0 - 0.3, n = Math.max(1, Math.floor(len / 2.2))
-      for (let i = 0; i < n; i++) stations.push([pack.x1 + 0.35, pack.z0 + 0.15 + (i + 0.5) * (len / n)])
-    }
-    const packer = (a: Agent) => {
-      const home = stations[this.list.filter(p => p.role === 'packer').indexOf(a) % Math.max(1, stations.length)] ?? handover
-      const id = `#${this.order++}`
-      a.plan.push({ kind: 'go', to: home, status: 'Back to station' })
-      a.plan.push({ kind: 'do', secs: rnd(2, 3), pose: 'reach', yaw: -Math.PI / 2, at: home, status: `Order ${id} · pulling from pigeon hole` })
-      a.plan.push({ kind: 'do', secs: rnd(12, 20), pose: 'pack', yaw: -Math.PI / 2, status: `Order ${id} · packing & labelling` })
-      a.plan.push({ kind: 'go', to: handover, status: `Order ${id} · handing to rider` })
-      a.plan.push({ kind: 'do', secs: 2, pose: 'reach', yaw: Math.PI / 2, status: `Order ${id} · handed over` })
-      a.done++
-    }
-    this.spawn('packer', Math.min(counts.packer, Math.max(1, stations.length)), '07:00–15:00', packer, (a, i) => {
-      const h = stations[i] ?? handover
-      a.place(h[0], h[1], -Math.PI / 2); a.doneLabel = 'orders packed'; a.done = 40 + i * 7
     })
 
     // ---- Riders: scooters parked nose-out in the bay ----
@@ -187,8 +168,10 @@ export class People {
       const seat: P2 = [bay[0] + 0.3, bay[1]]
       if (Math.random() < 0.35) {
         const id = `#${this.order++}`
-        a.plan.push({ kind: 'go', to: handover, status: `Going in to collect ${id}` })
-        a.plan.push({ kind: 'do', secs: rnd(4, 7), pose: 'stand', yaw: -Math.PI / 2, status: `Collecting ${id} at packing` })
+        const slot = pickOne(ph.length ? ph : [{ z: store.D / 2, code: 'PH' } as Slot])
+        a.plan.push({ kind: 'go', to: [collectX, slot.z], status: `Going in to collect ${id} from ${slot.code}` })
+        a.plan.push({ kind: 'do', secs: rnd(1.5, 2.5), pose: 'scan', yaw: faceCollect, status: `Scanning ${slot.code} · ${id}` })
+        a.plan.push({ kind: 'do', secs: rnd(1.5, 2.5), pose: 'reach', yaw: faceCollect, status: `Taking ${id} from ${slot.code}` })
         a.plan.push({ kind: 'go', to: [bay[0] + 0.3, bay[1] + 0.55], status: `Back to scooter with ${id}` })
         a.plan.push({ kind: 'do', secs: rnd(2, 4), pose: 'ride', yaw: -Math.PI / 2, at: seat, status: `Leaving with ${id}` })
         a.done++
@@ -212,7 +195,7 @@ export class People {
     const sm = (a: Agent) => {
       a.plan.push({ kind: 'go', to: chair, status: 'Back to front desk' })
       a.plan.push({ kind: 'do', secs: rnd(35, 70), pose: 'sit', yaw: Math.PI / 2, at: chair, status: 'At front desk · watching pendency & WMS' })
-      const stops: [P2, string][] = [[handover, 'Checking packing & dispatch'], [pig ? [pig.cx - pig.depth / 2 - 0.5, pig.cz] : handover, 'Checking pigeon holes'], [[store.W * 0.5, store.D * 0.3], 'Floor walk · aisle check']]
+      const stops: [P2, string][] = [[[loadX, pig ? pig.cz : store.D / 2], 'Checking bagging at the table'], [[collectX, pig ? pig.cz : store.D / 2], 'Checking pigeon holes & dispatch'], [[store.W * 0.5, store.D * 0.3], 'Floor walk · aisle check']]
       const [to, what] = pickOne(stops)
       a.plan.push({ kind: 'go', to, status: `Floor walk · heading to ${what.split(' · ').pop()!.toLowerCase()}` })
       a.plan.push({ kind: 'do', secs: rnd(6, 10), pose: 'stand', status: what })
@@ -225,7 +208,7 @@ export class People {
     const audit: [P2, string][] = [
       ...doors.map(d => [[d.axis === 'z' ? d.at - 0.8 : (d.a + d.b) / 2, d.axis === 'z' ? (d.a + d.b) / 2 : d.at + 0.8] as P2, d.style === 'cage' ? 'HV cage · stock count' : 'Chiller · temperature log'] as [P2, string]),
       ...store.slots.filter(s => s.kind === 'pallet').slice(0, 3).map(s => [[s.x, s.z + s.d / 2 + 0.6] as P2, `Bulk pallet ${s.code} · FIFO check`] as [P2, string]),
-      [handover, 'Packing · SLA review with packers'],
+      [[collectX, pig ? pig.cz : store.D / 2], 'Pigeon holes · dispatch SLA review'],
       [[store.W * 0.6, store.D * 0.28], 'Aisle audit · planogram & stock-outs'],
     ]
     const asm = (a: Agent) => {

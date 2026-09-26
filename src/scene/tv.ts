@@ -1,5 +1,5 @@
-// The pendency TV: a 55" screen on the wall behind the pigeon holes, facing the packers — where a darkstore
-// hangs it so pickers, packers and the manager all see the queue. Redrawn once a second.
+// The pendency TV: a 55" screen on the wall behind the pigeon holes, facing the packing table — where a
+// darkstore hangs it so pickers, riders and the manager all see the queue. Redrawn once a second.
 
 import * as THREE from 'three'
 import type { Store } from '../model'
@@ -11,7 +11,7 @@ const SCREEN_W = 1.22, SCREEN_H = 0.69          // 55" 16:9 active area
 
 export interface TV { group: THREE.Group; pos: THREE.Vector3; normal: THREE.Vector3; update(dt: number): void }
 
-const COLOR: Record<Stage, string> = { queued: '#3b82f6', picking: '#f59e0b', packing: '#a855f7', ready: '#22c55e', out: '#64748b' }
+const COLOR: Record<Stage, string> = { queued: '#3b82f6', picking: '#f59e0b', ready: '#22c55e', out: '#64748b' }
 
 export function buildTV(store: Store, feed: Pendency): TV {
   // West wall, level with the pigeon holes, facing into the store.
@@ -56,7 +56,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
     // Stage tiles.
     const open = f.orders.length
     const tiles: [string, number, string][] = [['OPEN', open, '#e2e8f0'], ...STAGES.map(s => [STAGE_NAME[s].toUpperCase(), f.count(s), COLOR[s]] as [string, number, string])]
-    const tw = (PX_W - 40 - 4 * 16) / 5
+    const tw = (PX_W - 40 - (tiles.length - 1) * 16) / tiles.length
     tiles.forEach(([label, n, col], i) => {
       const x = 20 + i * (tw + 16)
       ctx.fillStyle = '#131d33'; round(x, 88, tw, 160, 14)
@@ -80,7 +80,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
       txt(v, x + 146, y + 70, 70, col, 'center', 800)
       txt(label, x + 146, y + 128, 19, '#94a3b8', 'center', 700)
     })
-    txt(`Dispatched last hour: ${f.dispatched.length}  ·  Pickers ${f.count('picking')}/${f.pickers} busy  ·  Packers ${f.count('packing')}/${f.packers} busy`,
+    txt(`Dispatched last hour: ${f.dispatched.length}  ·  Pickers ${f.count('picking')}/${f.pickers} busy  ·  ${f.riders} riders on shift`,
       20 + 300, 632, 19, '#94a3b8', 'center', 600)
 
     // Oldest open orders.

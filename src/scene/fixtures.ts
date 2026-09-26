@@ -58,7 +58,7 @@ function pigeonHoles(store: Store, add: (k: string, g: THREE.BufferGeometry) => 
   for (const s of store.slots.filter(x => x.kind === 'ph')) {
     const r = 'ABCDEFGH'.indexOf(s.level), c = s.pos - 1
     const lx = -L / 2 + (c + 0.5) * cw, y = 0.15 + r * rh + 0.009 - lh / 2 - 0.002
-    // Label on both faces: pickers load one side, packers clear the other.
+    // Label on both faces: pickers load one side, riders collect from the other.
     q.makeTranslation(lx, y, D / 2 + 0.002)
     atlas.add(drawBinLabel(s.code, '#fff8d6'), m.clone().multiply(q), lw, lh)
     q.makeRotationY(Math.PI).setPosition(lx, y, -D / 2 - 0.002)
@@ -95,7 +95,7 @@ function pallets(list: Slot[], add: (k: string, g: THREE.BufferGeometry) => void
     const n = Math.min(s.qty, nx * nz * ny)
     for (let i = 0; i < n; i++) {
       const ix = i % nx, iz = Math.floor(i / nx) % nz, iy = Math.floor(i / (nx * nz))
-      goods.push({ shape: 'box', color: p.color }, s.x - (nx - 1) * p.w / 2 + ix * p.w, 0.144 + p.h / 2 + iy * p.h, s.z - (nz - 1) * p.d / 2 + iz * p.d, p.w - 0.008, p.h - 0.004, p.d - 0.008, 0)
+      goods.push(p.shape === 'box' ? p : { shape: 'box', color: p.color }, s.x - (nx - 1) * p.w / 2 + ix * p.w, 0.144 + p.h / 2 + iy * p.h, s.z - (nz - 1) * p.d / 2 + iz * p.d, p.w - 0.008, p.h - 0.004, p.d - 0.008, 0)
     }
     // Location label on the pallet front.
     const q = new THREE.Matrix4().makeTranslation(0, 0.075, D / 2 + 0.056)
@@ -131,7 +131,7 @@ function packing(f: Fixture, add: (k: string, g: THREE.BufferGeometry) => void) 
   const alongZ = f.z1 - f.z0 >= f.x1 - f.x0
   const len = (alongZ ? f.z1 - f.z0 : f.x1 - f.x0) - 0.3
   const cx = (f.x0 + f.x1) / 2, cz = (f.z0 + f.z1) / 2
-  // Packers stand on local +z (away from the pigeon holes).
+  // Pickers bag on local +z (away from the pigeon holes).
   const m = rackMatrix(cx, 0, cz, alongZ ? Math.PI / 2 : 0)
   const D = Math.min(0.8, (alongZ ? f.x1 - f.x0 : f.z1 - f.z0) - 0.1)
   add('white', boxAt(len, 0.04, D, 0, 0.9, 0, m))

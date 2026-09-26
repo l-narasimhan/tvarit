@@ -12,7 +12,7 @@ export type ItemKind =
   | 'entrance'  // the store front door, where riders collect
   | 'desk'      // front desk: store manager
   | 'wms'       // WMS sitting area: terminals
-  | 'dropzone'  // pigeon holes: pickers drop, packers collect
+  | 'dropzone'  // pigeon holes: pickers drop bagged orders, riders collect
   | 'packing'   // packing table
   | 'station'   // any other labelled station the twin does not model yet (e.g. SE)
 

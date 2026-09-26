@@ -1,14 +1,14 @@
 // Low-poly people with real joints (hips, knees, shoulders) so they can walk, sit, reach and scan. Forward is
-// local +z. Each role is recognisable at a glance: picker in hi-vis with scanner and crate, packer in apron,
+// local +z. Each role is recognisable at a glance: picker in hi-vis with scanner and crate,
 // store manager in shirt and lanyard, ASM in blazer with clipboard, rider in helmet with delivery bag.
 
 import * as THREE from 'three'
 
-export type Role = 'sm' | 'asm' | 'picker' | 'packer' | 'rider'
+export type Role = 'sm' | 'asm' | 'picker' | 'rider'
 export type Pose = 'stand' | 'walk' | 'scan' | 'pack' | 'sit' | 'ride' | 'phone' | 'reach'
 
-export const ROLE_NAME: Record<Role, string> = { sm: 'Store Manager', asm: 'Area Sales Manager', picker: 'Picker', packer: 'Packer', rider: 'Rider' }
-export const ROLE_COLOR: Record<Role, string> = { sm: '#0f766e', asm: '#1e3a8a', picker: '#ea580c', packer: '#2563eb', rider: '#dc2626' }
+export const ROLE_NAME: Record<Role, string> = { sm: 'Store Manager', asm: 'Area Sales Manager', picker: 'Picker', rider: 'Rider' }
+export const ROLE_COLOR: Record<Role, string> = { sm: '#0f766e', asm: '#1e3a8a', picker: '#ea580c', rider: '#dc2626' }
 
 const SKIN = [0x8d5524, 0xa0673a, 0xc68642, 0x7a4a26, 0xb07a4f, 0x9c6b43]
 const HAIR = [0x1a1410, 0x221a14, 0x2b2118, 0x111111]
@@ -49,7 +49,7 @@ export class Figure {
     const skin = mat(SKIN[seed % SKIN.length], 0.6)
     const style = {
       sm: { top: 0xf1f5f9, legs: 0x1f2937 }, asm: { top: 0x1e3a8a, legs: 0x4b5563 },
-      picker: { top: 0xf97316, legs: 0x1f2937 }, packer: { top: 0x2563eb, legs: 0x334155 },
+      picker: { top: 0xf97316, legs: 0x1f2937 },
       rider: { top: 0xdc2626, legs: 0x111827 },
     }[role]
     const top = mat(style.top, 0.8), legs = mat(style.legs, 0.85), shoe = mat(0x141414, 0.6)
@@ -96,7 +96,6 @@ export class Figure {
         box(w, 0.2, d, 0x0e7490, x, 0, z, crate)
       this.elL.add(crate)
     }
-    if (role === 'packer') box(0.3, 0.5, 0.02, 0x334155, 0, 1.08, 0.115)          // apron
     if (role === 'sm') {
       box(0.012, 0.22, 0.012, 0x0f766e, 0, 1.33, 0.113)                         // lanyard
       box(0.07, 0.1, 0.01, 0x0f766e, 0, 1.2, 0.118)                             // ID card

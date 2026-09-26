@@ -141,9 +141,9 @@ function focus(s: Slot, instant = false) {
   select(s)
   if (walk.active) return walk.faceSlot(s)
   const n = V(Math.sin(s.ry), 0, Math.cos(s.ry))
-  const dist = s.kind === 'pallet' ? 3.2 : 1.5
+  const dist = s.kind === 'pallet' ? 2.4 : 1.5
   const target = V(s.x, s.y, s.z)
-  fly(target.clone().addScaledVector(n, dist).add(V(0, 0.35, 0)), target, instant)
+  fly(target.clone().addScaledVector(n, dist).add(V(0, s.kind === 'pallet' ? 1.6 : 0.35, 0)), target, instant)
 }
 
 const ring = new THREE.Mesh(new THREE.RingGeometry(0.36, 0.44, 32), new THREE.MeshBasicMaterial({ color: 0xffb000, depthTest: false, transparent: true }))
@@ -360,7 +360,7 @@ if (qs.get('walls') === 'low') wallBtn.click()
 // ?walk=x,z,yawDeg[,pitchDeg] drops you in first person there.
 const w = qs.get('walk')?.split(',').map(Number)
 if (w) { setWalk(true, [w[0], w[1], (w[2] * Math.PI) / 180]); if (w[3]) walk.place(w[0], w[1], (w[2] * Math.PI) / 180, (w[3] * Math.PI) / 180) }
-// ?who=picker|packer|rider|sm|asm selects the first of that role and frames them (after they have moved a little).
+// ?who=picker|rider|sm|asm selects the first of that role and frames them (after they have moved a little).
 const who = qs.get('who')
 if (who) setTimeout(() => {
   const p = people.list.find(a => a.role === who)

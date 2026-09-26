@@ -246,7 +246,7 @@ export function buildStore(L: SheetLayout): Store {
     const depth = 0.5, height = 1.9, rows = 5, cols = Math.floor(len / 0.45)
     const cx = (dz.x0 + dz.x1) / 2, cz = (dz.z0 + dz.z1) / 2
     pigeon = { rect: dz, cx, cz, len, depth, height, rows, cols }
-    // Through-slots, long axis along z: pickers load from the west face, packers clear from the east.
+    // Through-slots, long axis along z: pickers load from the packing-table side, riders collect from the other.
     const cwid = len / cols, rh = (height - 0.2) / rows
     for (let rI = 0; rI < rows; rI++) {
       for (let c = 0; c < cols; c++) {

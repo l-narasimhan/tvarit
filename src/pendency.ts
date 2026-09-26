@@ -2,9 +2,9 @@
 // arrive at a q-commerce rate and move through the real stages with realistic stage times, so every number on
 // the screen agrees with every other. Marked "simulated" on screen.
 
-export type Stage = 'queued' | 'picking' | 'packing' | 'ready' | 'out'
-export const STAGES: Stage[] = ['queued', 'picking', 'packing', 'ready']
-export const STAGE_NAME: Record<Stage, string> = { queued: 'To pick', picking: 'Picking', packing: 'Packing', ready: 'Awaiting rider', out: 'Dispatched' }
+export type Stage = 'queued' | 'picking' | 'ready' | 'out'
+export const STAGES: Stage[] = ['queued', 'picking', 'ready']
+export const STAGE_NAME: Record<Stage, string> = { queued: 'To pick', picking: 'Picking & bagging', ready: 'In pigeon hole', out: 'Dispatched' }
 
 export interface Order { id: string; born: number; items: number; stage: Stage; until: number; done?: number }
 
@@ -18,7 +18,7 @@ export class Pendency {
   private next = 1
   private seq = 48213
 
-  constructor(public pickers = 8, public packers = 3) {
+  constructor(public pickers = 8, public riders = 6) {
     // Warm up so the screen opens mid-shift, not empty.
     for (let i = 0; i < 900; i++) this.tick(1)
   }
@@ -38,9 +38,9 @@ export class Pendency {
     const busy = (s: Stage) => this.orders.filter(o => o.stage === s).length
     for (const o of this.orders) {
       if (this.t < o.until) continue
-      if (o.stage === 'queued' && busy('picking') < this.pickers) { o.stage = 'picking'; o.until = this.t + 45 + o.items * (12 + Math.random() * 10) }
-      else if (o.stage === 'picking' && busy('packing') < this.packers) { o.stage = 'packing'; o.until = this.t + 35 + o.items * 6 + Math.random() * 30 }
-      else if (o.stage === 'packing') { o.stage = 'ready'; o.until = this.t + 20 + Math.random() * 150 }
+      // Pickers pick, bag and drop in the pigeon hole; a rider then collects from the pigeon hole.
+      if (o.stage === 'queued' && busy('picking') < this.pickers) { o.stage = 'picking'; o.until = this.t + 60 + o.items * (14 + Math.random() * 10) }
+      else if (o.stage === 'picking') { o.stage = 'ready'; o.until = this.t + 20 + Math.random() * 150 }
       else if (o.stage === 'ready') { o.stage = 'out'; o.done = this.t }
     }
     for (const o of this.orders.filter(o => o.stage === 'out')) this.dispatched.push(o)
