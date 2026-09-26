@@ -21,17 +21,19 @@
         <button id="walk" title="First-person walk (V)">🚶 Walk</button>
         <button id="walls" class="on" title="Toggle wall height">Walls</button>
         <button id="labels" class="on" title="Toggle barcode labels">Labels</button>
+        <button id="tags" class="on" title="Name tags on people">Tags</button>
         <button id="sound" class="on" title="Chiller sound">🔊 Sound</button>
       </div>
     </header>
     <aside id="left">
       <div id="summary"></div>
+      <div id="staff"></div>
       <label class="find">
         <span>Find bin, pigeon hole, pallet or product</span>
         <input id="search" placeholder="A5-06-C3 · PH-B07 · Amul Butter" autocomplete="off" />
       </label>
       <div id="miss" hidden>No match</div>
-      <div class="hint">Click a bin to inspect · double-click to fly to it · drag to orbit · right-drag to pan</div>
+      <div class="hint">Click a bin or a person to inspect · double-click to fly to it · drag to orbit · right-drag to pan</div>
     </aside>
     <aside id="inspector" hidden></aside>
     <div id="tip" hidden></div>

@@ -4,6 +4,7 @@
 
 import * as THREE from 'three'
 import type { Rect, Slot, Store } from './model'
+import { solids } from './nav'
 
 const EYE = 1.65, RADIUS = 0.22, WALK = 1.4, RUN = 3.0, TURN = 1.9
 
@@ -38,23 +39,7 @@ export class Walk {
   lock() { if (this.active && !this.locked) this.canvas.requestPointerLock?.() }
 
   setStore(s: Store) {
-    const out: Rect[] = []
-    for (const r of s.racks) {
-      const front = r.zone === 'chiller' ? 0.08 : r.zone === 'hv' ? 0.04 : 0
-      const across = r.face === 'N' || r.face === 'S'
-      const hl = r.len / 2 + 0.03, hd = r.depth / 2
-      // Grow toward the pick face for fridge doors / cabinet glass.
-      const [fx, fz] = { N: [0, -1], S: [0, 1], E: [1, 0], W: [-1, 0] }[r.face]
-      const hx = across ? hl : hd, hz = across ? hd : hl
-      out.push({
-        x0: r.cx - hx + Math.min(0, fx * front), x1: r.cx + hx + Math.max(0, fx * front),
-        z0: r.cz - hz + Math.min(0, fz * front), z1: r.cz + hz + Math.max(0, fz * front),
-      })
-    }
-    out.push(...s.walls)
-    for (const f of s.fixtures) if (f.kind !== 'entrance') out.push(f)
-    for (const p of s.slots) if (p.kind === 'pallet') out.push({ x0: p.x - p.w / 2 - 0.05, x1: p.x + p.w / 2 + 0.05, z0: p.z - p.d / 2 - 0.05, z1: p.z + p.d / 2 + 0.05 })
-    this.solids = out
+    this.solids = solids(s)
     this.bounds = { x0: -10, z0: -0.2, x1: s.W, z1: s.D }
   }
 

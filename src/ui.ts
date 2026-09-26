@@ -2,6 +2,8 @@
 
 import { code128B } from './barcode'
 import type { Slot, Store } from './model'
+import type { Person } from './people'
+import { ROLE_COLOR, ROLE_NAME, type Role } from './scene/figure'
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector(sel) as T
 
@@ -81,4 +83,26 @@ export function findSlot(store: Store, q: string): Slot | null {
     ?? store.slots.find(s => s.code.startsWith(t))
     ?? store.slots.find(s => s.sku?.name.toUpperCase().includes(t) && s.qty > 0)
     ?? null
+}
+
+export function renderStaff(list: Person[]) {
+  const n = (r: Role) => list.filter(p => p.role === r).length
+  const roles: Role[] = ['sm', 'asm', 'picker', 'packer', 'rider']
+  document.querySelector<HTMLElement>('#staff')!.innerHTML = `<div class="sub">On the floor</div><div class="roster">${roles
+    .map(r => `<span><i style="background:${ROLE_COLOR[r]}"></i>${ROLE_NAME[r].replace('Area Sales Manager', 'ASM')} <b>${n(r)}</b></span>`).join('')}</div>`
+}
+
+export function renderPerson(p: Person | null) {
+  const el = $('#inspector')
+  if (!p) { el.hidden = true; return }
+  el.hidden = false
+  el.innerHTML = `
+    <button class="x" aria-label="Close">×</button>
+    <div class="kind"><span class="z" style="background:${ROLE_COLOR[p.role]}">${ROLE_NAME[p.role]}</span></div>
+    <div class="code" style="font-family:system-ui">${p.name}</div>
+    <div class="kv"><span>Shift</span><b>${p.shift}</b></div>
+    <div class="kv"><span>Now</span><b class="now">${p.status || 'Idle'}</b></div>
+    ${p.doneLabel ? `<div class="kv"><span>${p.doneLabel[0].toUpperCase() + p.doneLabel.slice(1)}</span><b>${p.done}</b></div>` : ''}
+    <div class="warn" style="color:var(--mute)">Behaviour preview — tasks tie to real orders and stock in M3.</div>`
+  el.querySelector('.x')!.addEventListener('click', () => el.dispatchEvent(new CustomEvent('close')))
 }

@@ -7,7 +7,8 @@ import { Goods } from './scene/goods'
 import { LabelAtlas } from './scene/labels'
 import { buildRacks, rackHeaders } from './scene/racks'
 import { buildShell } from './scene/shell'
-import { findSlot, renderInspector, renderSummary } from './ui'
+import { findSlot, renderInspector, renderPerson, renderStaff, renderSummary } from './ui'
+import { People, type Person } from './people'
 import { Walk } from './walk'
 import { ChillerAudio } from './audio'
 import { Pendency } from './pendency'
@@ -45,6 +46,7 @@ let walls: THREE.Group
 let labelMeshes: THREE.Object3D[] = []
 let hits: THREE.InstancedMesh
 let coolers: Coolers
+let people: People
 let tv: TV
 const audio = new ChillerAudio()
 const highlight = new THREE.LineSegments(
@@ -66,7 +68,9 @@ function load(layout = STORE01) {
   goods.meshes().forEach(m => world.add(m))
   coolers = buildCoolers(store)
   tv = buildTV(store, new Pendency())
-  world.add(coolers.group, tv.group)
+  people = new People(store)
+  world.add(coolers.group, tv.group, people.group)
+  renderStaff(people.list)
   labelMeshes = atlas.meshes()
   labelMeshes.forEach(m => world.add(m))
 
@@ -142,9 +146,24 @@ function focus(s: Slot, instant = false) {
   fly(target.clone().addScaledVector(n, dist).add(V(0, 0.35, 0)), target, instant)
 }
 
+const ring = new THREE.Mesh(new THREE.RingGeometry(0.36, 0.44, 32), new THREE.MeshBasicMaterial({ color: 0xffb000, depthTest: false, transparent: true }))
+ring.rotation.x = -Math.PI / 2
+ring.renderOrder = 10
+ring.visible = false
+scene.add(ring)
+let person: Person | null = null
+let personAt = 0
+function selectPerson(p: Person | null) {
+  person = p
+  ring.visible = !!p
+  highlight.visible = false
+  renderPerson(p)
+}
+
 let selected: Slot | null = null
 function select(s: Slot | null) {
   selected = s
+  person = null; ring.visible = false
   highlight.visible = !!s
   if (s) slotMatrix(s, 1.04).decompose(highlight.position, highlight.quaternion, highlight.scale)
   renderInspector(s, store)
@@ -154,6 +173,14 @@ function select(s: Slot | null) {
 const ray = new THREE.Raycaster()
 const ndc = new THREE.Vector2()
 const tip = document.querySelector<HTMLDivElement>('#tip')!
+/** A person under the pointer, if one is nearer than any slot. */
+function pickPerson(e: MouseEvent | null): Person | null {
+  pick(e)
+  const hp = ray.intersectObjects(people.hitMeshes, false)[0]
+  if (!hp) return null
+  const hs = ray.intersectObject(hits, false)[0]
+  return !hs || hp.distance < hs.distance ? people.byHit(hp.object) : null
+}
 function pick(e: MouseEvent | null): Slot | null {
   const r = canvas.getBoundingClientRect()
   if (!e || walk.locked) ndc.set(0, 0)
@@ -171,11 +198,20 @@ canvas.addEventListener('pointerup', e => {
     return
   }
   if (!walk.locked && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4) return
-  select(pick(e))
+  const p = pickPerson(e)
+  if (p) selectPerson(p)
+  else select(pick(e))
 })
 canvas.addEventListener('dblclick', e => { const s = pick(e); if (s) focus(s) })
 canvas.addEventListener('pointermove', e => {
   if (e.buttons || walk.active) { tip.hidden = true; return }
+  const who = pickPerson(e)
+  if (who) {
+    tip.hidden = false
+    tip.textContent = `${who.name} · ${who.status || 'Idle'}`
+    tip.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 14}px)`
+    return
+  }
   const s = pick(e)
   tip.hidden = !s
   if (s) {
@@ -183,7 +219,7 @@ canvas.addEventListener('pointermove', e => {
     tip.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 14}px)`
   }
 })
-document.querySelector('#inspector')!.addEventListener('close', () => select(null))
+document.querySelector('#inspector')!.addEventListener('close', () => { select(null); selectPerson(null) })
 
 // ---- Controls ----------------------------------------------------------------------------------------------
 const search = document.querySelector<HTMLInputElement>('#search')!
@@ -238,10 +274,19 @@ let aimAt = 0
 function updateAim(now: number) {
   if (now - aimAt < 100) return
   aimAt = now
+  const who = pickPerson(null)
+  if (who) { aim.hidden = false; aim.textContent = `${who.name} · ${who.status || 'Idle'}`; return }
   const s = pick(null)
   aim.textContent = s ? (s.sku && s.kind !== 'ph' ? `${s.code} · ${s.sku.name} · ${s.qty}` : s.code) : ''
   aim.hidden = !s
 }
+
+const tagBtn = document.querySelector<HTMLButtonElement>('#tags')!
+tagBtn.addEventListener('click', () => {
+  const on = !tagBtn.classList.contains('on')
+  people.setTags(on)
+  tagBtn.classList.toggle('on', on)
+})
 
 // ---- Chiller ambience ----------------------------------------------------------------------------------------
 const chip = document.querySelector<HTMLDivElement>('#chip')!
@@ -292,6 +337,11 @@ renderer.setAnimationLoop(() => {
     controls.target.lerpVectors(tween.from[1], tween.to[1], k)
   }
   coolers.update(Math.min(dt, 0.1))
+  people.update(Math.min(dt, 0.1))
+  if (person) {
+    ring.position.set(person.x, 0.02, person.z)
+    if ((personAt += dt) > 0.5) { personAt = 0; renderPerson(person) }
+  }
   tv.update(dt)
   ambience(clock.elapsedTime)
   if (walk.active) { walk.update(Math.min(dt, 0.1)); updateAim(performance.now()) }
@@ -310,3 +360,12 @@ if (qs.get('walls') === 'low') wallBtn.click()
 // ?walk=x,z,yawDeg[,pitchDeg] drops you in first person there.
 const w = qs.get('walk')?.split(',').map(Number)
 if (w) { setWalk(true, [w[0], w[1], (w[2] * Math.PI) / 180]); if (w[3]) walk.place(w[0], w[1], (w[2] * Math.PI) / 180, (w[3] * Math.PI) / 180) }
+// ?who=picker|packer|rider|sm|asm selects the first of that role and frames them (after they have moved a little).
+const who = qs.get('who')
+if (who) setTimeout(() => {
+  const p = people.list.find(a => a.role === who)
+  if (!p) return
+  selectPerson(p)
+  const f = V(Math.sin(p.yaw), 0, Math.cos(p.yaw))
+  fly(V(p.x, 2.9, p.z).addScaledVector(f, -2.2), V(p.x, 1.0, p.z), true)
+}, 3000)
