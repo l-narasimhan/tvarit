@@ -9,6 +9,10 @@ import { buildRacks, rackHeaders } from './scene/racks'
 import { buildShell } from './scene/shell'
 import { findSlot, renderInspector, renderSummary } from './ui'
 import { Walk } from './walk'
+import { ChillerAudio } from './audio'
+import { Pendency } from './pendency'
+import { buildCoolers, type Coolers } from './scene/coolers'
+import { buildTV, type TV } from './scene/tv'
 import './style.css'
 
 // ---- Renderer, camera, lights ----------------------------------------------------------------------------
@@ -40,6 +44,9 @@ scene.add(world)
 let walls: THREE.Group
 let labelMeshes: THREE.Object3D[] = []
 let hits: THREE.InstancedMesh
+let coolers: Coolers
+let tv: TV
+const audio = new ChillerAudio()
 const highlight = new THREE.LineSegments(
   new THREE.EdgesGeometry(new THREE.BoxGeometry(1, 1, 1)),
   new THREE.LineBasicMaterial({ color: 0xffb000, depthTest: false, transparent: true }))
@@ -57,6 +64,9 @@ function load(layout = STORE01) {
   walls = shell.walls
   world.add(shell.floor, walls, buildRacks(store, atlas), rackHeaders(store), buildFixtures(store, atlas, goods))
   goods.meshes().forEach(m => world.add(m))
+  coolers = buildCoolers(store)
+  tv = buildTV(store, new Pendency())
+  world.add(coolers.group, tv.group)
   labelMeshes = atlas.meshes()
   labelMeshes.forEach(m => world.add(m))
 
@@ -114,6 +124,10 @@ function view(name: string, instant = false) {
   if (name === 'ph' && store.pigeon) {
     const p = store.pigeon
     return fly(V(p.cx + 4.5, 2.6, p.cz - 3), V(p.cx, 1, p.cz), instant)
+  }
+  if (name === 'tv') {
+    const p = tv.pos.clone()
+    return fly(p.clone().add(V(6.2, -0.85, 1.4)), p.clone().add(V(0, -0.35, 0)), instant)
   }
   if (name === 'aisle') return fly(V(W * 0.2, 1.7, D * 0.26), V(W * 0.32, 1.1, D * 0.26), instant)
   return fly(V(W * 0.5 + 6, 26, D + 16), V(W / 2, 0, D / 2 - 1), instant)
@@ -229,6 +243,32 @@ function updateAim(now: number) {
   aim.hidden = !s
 }
 
+// ---- Chiller ambience ----------------------------------------------------------------------------------------
+const chip = document.querySelector<HTMLDivElement>('#chip')!
+const soundBtn = document.querySelector<HTMLButtonElement>('#sound')!
+soundBtn.addEventListener('click', () => {
+  audio.muted = !audio.muted
+  soundBtn.classList.toggle('on', !audio.muted)
+  soundBtn.textContent = audio.muted ? '🔇 Sound' : '🔊 Sound'
+})
+function ambience(t: number) {
+  const p = camera.position
+  let room = 0
+  if (p.y < 3.2) {
+    for (const z of store.zones.filter(z => z.kind === 'chiller')) {
+      const dx = Math.max(z.x0 - p.x, 0, p.x - z.x1), dz = Math.max(z.z0 - p.z, 0, p.z - z.z1)
+      room = Math.max(room, 1 - Math.hypot(dx, dz) / 2.5)
+    }
+  }
+  room = Math.max(0, room)
+  let fan = 0
+  for (const u of coolers.units) fan = Math.max(fan, 1 - p.distanceTo(u) / 3.5)
+  audio.set(room, Math.max(0, fan))
+  const inside = room >= 1
+  chip.hidden = !inside
+  if (inside) chip.textContent = `❄  Chiller  ${(3.7 + 0.3 * Math.sin(t / 40) + 0.05 * Math.sin(t * 1.7)).toFixed(1)} °C`
+}
+
 // ---- Loop --------------------------------------------------------------------------------------------------
 function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight
@@ -251,6 +291,9 @@ renderer.setAnimationLoop(() => {
     camera.position.lerpVectors(tween.from[0], tween.to[0], k)
     controls.target.lerpVectors(tween.from[1], tween.to[1], k)
   }
+  coolers.update(Math.min(dt, 0.1))
+  tv.update(dt)
+  ambience(clock.elapsedTime)
   if (walk.active) { walk.update(Math.min(dt, 0.1)); updateAim(performance.now()) }
   else controls.update()
   renderer.render(scene, camera)

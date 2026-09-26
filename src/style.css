@@ -71,6 +71,10 @@ aside { position: fixed; background: var(--panel); border-radius: 10px; padding:
   border-radius: 5px; font: 12px ui-monospace, Menlo, monospace; white-space: nowrap;
 }
 
+#chip {
+  position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(14, 79, 107, 0.88);
+  color: #e6f6ff; padding: 6px 14px; border-radius: 99px; font-weight: 700; letter-spacing: 0.04em;
+}
 body.walking #left { display: none; }
 #hud { position: fixed; inset: 0; pointer-events: none; }
 #hud .cross { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; }
