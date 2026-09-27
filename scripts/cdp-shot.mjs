@@ -18,7 +18,8 @@ ws.addEventListener('message', e => { const m = JSON.parse(e.data); if (m.id && 
   if (m.method === 'Runtime.exceptionThrown') console.log('EXCEPTION', m.params.exceptionDetails.exception?.description ?? m.params.exceptionDetails.text) })
 const send = (method, params = {}) => new Promise(r => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })) })
 await send('Runtime.enable')
-await send('Page.navigate', { url: `http://localhost:5220/?${query}` })
+await send('Page.navigate', { url: `${process.env.BASE ?? 'http://localhost:5220/'}?${query}` })
+if (process.env.CLICK) { await sleep(Number(process.env.CLICK_AFTER ?? 8) * 1000); await send('Runtime.evaluate', { expression: `document.querySelector(${JSON.stringify(process.env.CLICK)}).click()` }) }
 await sleep(Number(wait) * 1000)
 const v = await send('Runtime.evaluate', { expression: `(document.querySelector(${JSON.stringify(sel)})||{}).innerText`, returnByValue: true })
 console.log(`${sel}:`, v.result?.result?.value)

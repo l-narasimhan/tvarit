@@ -179,8 +179,10 @@ function view(name: string, instant = false) {
     const dir = tv.normal.clone().add(V(0, 0, 0.22)).normalize()
     const blockers = [...store.walls, ...store.racks.map(r => r.foot)]
     const hit = (x: number, z: number) => blockers.some(b => x > b.x0 - 0.35 && x < b.x1 + 0.35 && z > b.z0 - 0.35 && z < b.z1 + 0.35)
-    let s = 1.5
+    // Start at the screen itself, so even a wall under a metre away cannot trap the camera behind it.
+    let s = 0.4
     while (s < 6.2 && !hit(p.x + dir.x * (s + 0.1), p.z + dir.z * (s + 0.1))) s += 0.1
+    s = Math.max(0.6, s)
     const eye = V(p.x + dir.x * s, 1.75, p.z + dir.z * s)
     return fly(eye, p.clone().add(V(0, -0.2, 0)), instant)
   }
