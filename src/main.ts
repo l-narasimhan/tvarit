@@ -21,6 +21,9 @@ import { Pendency } from './pendency'
 import { buildCoolers, type Coolers } from './scene/coolers'
 import { buildTV, type TV } from './scene/tv'
 import './style.css'
+import type { BinRow } from './intake/bins'
+import { getStore, lastStore, rememberStore } from './intake/registry'
+import { demoImport, mountForm, mountStorePicker } from './intake/ui'
 
 // ---- Renderer, camera, lights ----------------------------------------------------------------------------
 const canvas = document.querySelector<HTMLCanvasElement>('#c')!
@@ -71,9 +74,9 @@ highlight.renderOrder = 10
 highlight.visible = false
 scene.add(highlight)
 
-function load(layout = STORE01) {
+function load(layout = STORE01, bins?: BinRow[]) {
   world.clear()
-  store = buildStore(layout)
+  store = buildStore(layout, bins)
   const atlas = new LabelAtlas()
   // The engine starts half an hour before the chosen hour and runs that warm-up headless, so the store opens
   // mid-shift: orders flowing, riders out, stock already moved.
@@ -404,6 +407,9 @@ function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight
   renderer.setSize(w, h, false)
   camera.aspect = w / h
+  // Panels sit below the header, however many rows it wraps to.
+  const top = document.querySelector('header')!.getBoundingClientRect().bottom + 8
+  for (const id of ['#left', '#inspector']) document.querySelector<HTMLElement>(id)!.style.top = `${top}px`
   // Centre the view in the space right of the left panel, on screens wide enough to have one beside it.
   const left = document.querySelector<HTMLElement>('#left')!
   const shift = w > 720 && !walk.active ? (left.offsetWidth + 12) / 2 : 0
@@ -414,6 +420,7 @@ addEventListener('resize', resize)
 
 const clock = new THREE.Clock()
 renderer.setAnimationLoop(() => {
+  if (!sim) return                       // the store is still loading
   const dt = clock.getDelta()
   if (tween.t < 1) {
     tween.t = Math.min(1, tween.t + dt / 0.8)
@@ -450,7 +457,14 @@ renderer.setAnimationLoop(() => {
   renderer.render(scene, camera)
 })
 
-load()
+// Which darkstore: ?store=…, else the last one opened in this browser, else the generic one.
+const bootQs = new URLSearchParams(location.search)
+const record = (await getStore(bootQs.get('store') ?? lastStore())) ?? (await getStore('generic_darkstore'))!
+rememberStore(record.name)
+load(record.layout, record.bins ?? undefined)
+await mountStorePicker(record.name)
+mountForm()
+if (bootQs.get('nsdemo')) demoImport()
 resize()
 // URL hooks for screenshot checks: ?view=top | chiller | hv | ph | aisle, ?find=A5-06-C3, ?walls=low
 const qs = new URLSearchParams(location.search)

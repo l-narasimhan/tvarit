@@ -9,6 +9,7 @@
     <canvas id="c"></canvas>
     <header>
       <div class="brand">TVARIT</div>
+      <span class="picker"><select id="storesel" title="Darkstore"></select><button id="storedel" hidden title="Delete this darkstore">🗑</button></span>
       <div class="views">
         <button data-view="overview">Overview</button>
         <button data-view="top">Plan</button>
@@ -55,6 +56,23 @@
       <div class="cross"></div>
       <div id="aim" hidden></div>
       <div class="help"><b>Click</b> to look around · <b>↑↓</b> move · <b>←→</b> turn · <b>A D</b> sidestep · <b>Shift</b> hurry · <b>Click</b> a bin to scan it · <b>Esc</b> free mouse · <b>V</b> leave walk</div>
+    </div>
+    <div id="newstore" hidden>
+      <div class="sheet">
+        <h2>New darkstore</h2>
+        <p class="sub">Read in this browser only — your layout and bin master are not uploaded anywhere.</p>
+        <div class="cols">
+          <div class="form">
+            <label>Darkstore name<input id="ns-name" placeholder="rka_101_wh_hl_01" autocomplete="off" /></label>
+            <label>Layout (PDF from Google Sheets → File → Download → PDF)<input id="ns-pdf" type="file" accept=".pdf,application/pdf" /></label>
+            <label>Bin master (CSV or Excel: bin_code, rack, level, position, zone, sku, product, qty, capacity)<input id="ns-bins" type="file" accept=".csv,.xlsx,.xls" /></label>
+            <label>Store width in metres <small>(optional — sets the scale; otherwise a rack's short side is read as 0.7 m)</small><input id="ns-width" type="number" min="5" max="200" step="0.1" placeholder="e.g. 30" /></label>
+            <div class="samples">Samples: <a href="/samples/generic_darkstore_layout.pdf" download>layout PDF</a> · <a href="/samples/generic_darkstore_bins.csv" download>bin master CSV</a></div>
+            <div class="btns"><button id="ns-preview" class="go">Preview</button><button id="ns-save" disabled>Save &amp; open</button><button id="ns-cancel">Cancel</button></div>
+          </div>
+          <div class="out"><canvas id="ns-plan" width="620" height="300"></canvas><div id="ns-report"></div></div>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

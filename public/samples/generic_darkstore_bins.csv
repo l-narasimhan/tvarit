@@ -1,0 +1,1389 @@
+bin_code,rack,level,position,zone,sku,product,qty,capacity
+A1-01-A1,A1-01,A,1,ambient,STA-008,"MDH Garam Masala 100 g",19,36
+A1-01-A2,A1-01,A,2,ambient,STA-007,"Madhur Pure Sugar 1 kg",8,36
+A1-01-A3,A1-01,A,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",3,36
+A1-01-A4,A1-01,A,4,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",23,36
+A1-01-B1,A1-01,B,1,ambient,STA-011,"Bru Instant Coffee 100 g",0,36
+A1-01-B2,A1-01,B,2,ambient,STA-010,"Tata Tea Premium 500 g",32,36
+A1-01-B3,A1-01,B,3,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",9,36
+A1-01-B4,A1-01,B,4,ambient,STA-011,"Bru Instant Coffee 100 g",31,36
+A1-01-C1,A1-01,C,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",22,36
+A1-01-C2,A1-01,C,2,ambient,STA-005,"India Gate Basmati Rice 1 kg",7,36
+A1-01-C3,A1-01,C,3,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",22,36
+A1-01-C4,A1-01,C,4,ambient,STA-011,"Bru Instant Coffee 100 g",7,36
+A1-01-D1,A1-01,D,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",14,36
+A1-01-D2,A1-01,D,2,ambient,STA-007,"Madhur Pure Sugar 1 kg",4,36
+A1-01-D3,A1-01,D,3,ambient,STA-008,"MDH Garam Masala 100 g",34,36
+A1-01-D4,A1-01,D,4,ambient,STA-007,"Madhur Pure Sugar 1 kg",0,36
+A1-01-E1,A1-01,E,1,ambient,STA-005,"India Gate Basmati Rice 1 kg",28,36
+A1-01-E2,A1-01,E,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",28,36
+A1-01-E3,A1-01,E,3,ambient,STA-009,"Everest Tikhalal Chilli 100 g",0,36
+A1-01-E4,A1-01,E,4,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",14,36
+A2-01-A1,A2-01,A,1,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",33,36
+A2-01-A2,A2-01,A,2,ambient,STA-007,"Madhur Pure Sugar 1 kg",26,36
+A2-01-A3,A2-01,A,3,ambient,STA-005,"India Gate Basmati Rice 1 kg",28,36
+A2-01-A4,A2-01,A,4,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",13,36
+A2-01-B1,A2-01,B,1,ambient,STA-011,"Bru Instant Coffee 100 g",7,36
+A2-01-B2,A2-01,B,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",8,36
+A2-01-B3,A2-01,B,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",10,36
+A2-01-B4,A2-01,B,4,ambient,STA-002,"Tata Salt 1 kg",9,36
+A2-01-C1,A2-01,C,1,ambient,STA-005,"India Gate Basmati Rice 1 kg",22,36
+A2-01-C2,A2-01,C,2,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",11,36
+A2-01-C3,A2-01,C,3,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",20,36
+A2-01-C4,A2-01,C,4,ambient,STA-009,"Everest Tikhalal Chilli 100 g",7,36
+A2-01-D1,A2-01,D,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",19,36
+A2-01-D2,A2-01,D,2,ambient,STA-010,"Tata Tea Premium 500 g",35,36
+A2-01-D3,A2-01,D,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",9,36
+A2-01-D4,A2-01,D,4,ambient,STA-010,"Tata Tea Premium 500 g",3,36
+A2-01-E1,A2-01,E,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",18,36
+A2-01-E2,A2-01,E,2,ambient,STA-003,"Fortune Sunflower Oil 1 L",35,36
+A2-01-E3,A2-01,E,3,ambient,STA-009,"Everest Tikhalal Chilli 100 g",10,36
+A2-01-E4,A2-01,E,4,ambient,STA-007,"Madhur Pure Sugar 1 kg",0,36
+A1-02-A1,A1-02,A,1,ambient,STA-002,"Tata Salt 1 kg",21,36
+A1-02-A2,A1-02,A,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",32,36
+A1-02-A3,A1-02,A,3,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",26,36
+A1-02-A4,A1-02,A,4,ambient,STA-004,"Saffola Gold Oil 1 L",20,36
+A1-02-A5,A1-02,A,5,ambient,STA-008,"MDH Garam Masala 100 g",9,36
+A1-02-B1,A1-02,B,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",28,36
+A1-02-B2,A1-02,B,2,ambient,STA-002,"Tata Salt 1 kg",7,36
+A1-02-B3,A1-02,B,3,ambient,STA-003,"Fortune Sunflower Oil 1 L",24,36
+A1-02-B4,A1-02,B,4,ambient,STA-011,"Bru Instant Coffee 100 g",5,36
+A1-02-B5,A1-02,B,5,ambient,STA-003,"Fortune Sunflower Oil 1 L",0,36
+A1-02-C1,A1-02,C,1,ambient,STA-002,"Tata Salt 1 kg",29,36
+A1-02-C2,A1-02,C,2,ambient,STA-002,"Tata Salt 1 kg",23,36
+A1-02-C3,A1-02,C,3,ambient,STA-004,"Saffola Gold Oil 1 L",27,36
+A1-02-C4,A1-02,C,4,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",16,36
+A1-02-C5,A1-02,C,5,ambient,STA-008,"MDH Garam Masala 100 g",14,36
+A1-02-D1,A1-02,D,1,ambient,STA-010,"Tata Tea Premium 500 g",0,36
+A1-02-D2,A1-02,D,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",22,36
+A1-02-D3,A1-02,D,3,ambient,STA-003,"Fortune Sunflower Oil 1 L",9,36
+A1-02-D4,A1-02,D,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",0,36
+A1-02-D5,A1-02,D,5,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",10,36
+A1-02-E1,A1-02,E,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",27,36
+A1-02-E2,A1-02,E,2,ambient,STA-003,"Fortune Sunflower Oil 1 L",35,36
+A1-02-E3,A1-02,E,3,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",11,36
+A1-02-E4,A1-02,E,4,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",15,36
+A1-02-E5,A1-02,E,5,ambient,STA-007,"Madhur Pure Sugar 1 kg",18,36
+A2-02-A1,A2-02,A,1,ambient,STA-004,"Saffola Gold Oil 1 L",16,36
+A2-02-A2,A2-02,A,2,ambient,STA-009,"Everest Tikhalal Chilli 100 g",10,36
+A2-02-A3,A2-02,A,3,ambient,STA-004,"Saffola Gold Oil 1 L",18,36
+A2-02-A4,A2-02,A,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",30,36
+A2-02-A5,A2-02,A,5,ambient,STA-007,"Madhur Pure Sugar 1 kg",31,36
+A2-02-B1,A2-02,B,1,ambient,STA-004,"Saffola Gold Oil 1 L",28,36
+A2-02-B2,A2-02,B,2,ambient,STA-008,"MDH Garam Masala 100 g",34,36
+A2-02-B3,A2-02,B,3,ambient,STA-004,"Saffola Gold Oil 1 L",28,36
+A2-02-B4,A2-02,B,4,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",4,36
+A2-02-B5,A2-02,B,5,ambient,STA-008,"MDH Garam Masala 100 g",31,36
+A2-02-C1,A2-02,C,1,ambient,STA-004,"Saffola Gold Oil 1 L",31,36
+A2-02-C2,A2-02,C,2,ambient,STA-003,"Fortune Sunflower Oil 1 L",26,36
+A2-02-C3,A2-02,C,3,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",28,36
+A2-02-C4,A2-02,C,4,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",12,36
+A2-02-C5,A2-02,C,5,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",14,36
+A2-02-D1,A2-02,D,1,ambient,STA-003,"Fortune Sunflower Oil 1 L",20,36
+A2-02-D2,A2-02,D,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",24,36
+A2-02-D3,A2-02,D,3,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",16,36
+A2-02-D4,A2-02,D,4,ambient,STA-007,"Madhur Pure Sugar 1 kg",4,36
+A2-02-D5,A2-02,D,5,ambient,STA-009,"Everest Tikhalal Chilli 100 g",3,36
+A2-02-E1,A2-02,E,1,ambient,STA-002,"Tata Salt 1 kg",5,36
+A2-02-E2,A2-02,E,2,ambient,STA-008,"MDH Garam Masala 100 g",5,36
+A2-02-E3,A2-02,E,3,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",34,36
+A2-02-E4,A2-02,E,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",7,36
+A2-02-E5,A2-02,E,5,ambient,STA-008,"MDH Garam Masala 100 g",27,36
+A1-03-A1,A1-03,A,1,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",0,36
+A1-03-A2,A1-03,A,2,ambient,STA-011,"Bru Instant Coffee 100 g",25,36
+A1-03-A3,A1-03,A,3,ambient,STA-005,"India Gate Basmati Rice 1 kg",3,36
+A1-03-A4,A1-03,A,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",27,36
+A1-03-B1,A1-03,B,1,ambient,STA-008,"MDH Garam Masala 100 g",18,36
+A1-03-B2,A1-03,B,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",10,36
+A1-03-B3,A1-03,B,3,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",10,36
+A1-03-B4,A1-03,B,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",9,36
+A1-03-C1,A1-03,C,1,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",0,36
+A1-03-C2,A1-03,C,2,ambient,STA-009,"Everest Tikhalal Chilli 100 g",33,36
+A1-03-C3,A1-03,C,3,ambient,STA-002,"Tata Salt 1 kg",4,36
+A1-03-C4,A1-03,C,4,ambient,STA-010,"Tata Tea Premium 500 g",11,36
+A1-03-D1,A1-03,D,1,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",8,36
+A1-03-D2,A1-03,D,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",20,36
+A1-03-D3,A1-03,D,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",8,36
+A1-03-D4,A1-03,D,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",19,36
+A1-03-E1,A1-03,E,1,ambient,STA-011,"Bru Instant Coffee 100 g",6,36
+A1-03-E2,A1-03,E,2,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",31,36
+A1-03-E3,A1-03,E,3,ambient,STA-003,"Fortune Sunflower Oil 1 L",32,36
+A1-03-E4,A1-03,E,4,ambient,STA-007,"Madhur Pure Sugar 1 kg",0,36
+A2-03-A1,A2-03,A,1,ambient,STA-008,"MDH Garam Masala 100 g",0,36
+A2-03-A2,A2-03,A,2,ambient,STA-007,"Madhur Pure Sugar 1 kg",24,36
+A2-03-A3,A2-03,A,3,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",7,36
+A2-03-A4,A2-03,A,4,ambient,STA-008,"MDH Garam Masala 100 g",26,36
+A2-03-B1,A2-03,B,1,ambient,STA-004,"Saffola Gold Oil 1 L",24,36
+A2-03-B2,A2-03,B,2,ambient,STA-005,"India Gate Basmati Rice 1 kg",17,36
+A2-03-B3,A2-03,B,3,ambient,STA-008,"MDH Garam Masala 100 g",30,36
+A2-03-B4,A2-03,B,4,ambient,STA-009,"Everest Tikhalal Chilli 100 g",6,36
+A2-03-C1,A2-03,C,1,ambient,STA-011,"Bru Instant Coffee 100 g",7,36
+A2-03-C2,A2-03,C,2,ambient,STA-004,"Saffola Gold Oil 1 L",4,36
+A2-03-C3,A2-03,C,3,ambient,STA-009,"Everest Tikhalal Chilli 100 g",15,36
+A2-03-C4,A2-03,C,4,ambient,STA-002,"Tata Salt 1 kg",20,36
+A2-03-D1,A2-03,D,1,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",28,36
+A2-03-D2,A2-03,D,2,ambient,STA-011,"Bru Instant Coffee 100 g",10,36
+A2-03-D3,A2-03,D,3,ambient,STA-004,"Saffola Gold Oil 1 L",13,36
+A2-03-D4,A2-03,D,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",0,36
+A2-03-E1,A2-03,E,1,ambient,STA-010,"Tata Tea Premium 500 g",23,36
+A2-03-E2,A2-03,E,2,ambient,STA-004,"Saffola Gold Oil 1 L",16,36
+A2-03-E3,A2-03,E,3,ambient,STA-003,"Fortune Sunflower Oil 1 L",22,36
+A2-03-E4,A2-03,E,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",4,36
+A1-04-A1,A1-04,A,1,ambient,STA-008,"MDH Garam Masala 100 g",21,36
+A1-04-A2,A1-04,A,2,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",26,36
+A1-04-A3,A1-04,A,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",25,36
+A1-04-A4,A1-04,A,4,ambient,STA-009,"Everest Tikhalal Chilli 100 g",14,36
+A1-04-B1,A1-04,B,1,ambient,STA-004,"Saffola Gold Oil 1 L",21,36
+A1-04-B2,A1-04,B,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",0,36
+A1-04-B3,A1-04,B,3,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",20,36
+A1-04-B4,A1-04,B,4,ambient,STA-009,"Everest Tikhalal Chilli 100 g",5,36
+A1-04-C1,A1-04,C,1,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",0,36
+A1-04-C2,A1-04,C,2,ambient,STA-009,"Everest Tikhalal Chilli 100 g",9,36
+A1-04-C3,A1-04,C,3,ambient,STA-003,"Fortune Sunflower Oil 1 L",5,36
+A1-04-C4,A1-04,C,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",16,36
+A1-04-D1,A1-04,D,1,ambient,STA-008,"MDH Garam Masala 100 g",16,36
+A1-04-D2,A1-04,D,2,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",29,36
+A1-04-D3,A1-04,D,3,ambient,STA-011,"Bru Instant Coffee 100 g",28,36
+A1-04-D4,A1-04,D,4,ambient,STA-010,"Tata Tea Premium 500 g",19,36
+A1-04-E1,A1-04,E,1,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",8,36
+A1-04-E2,A1-04,E,2,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",19,36
+A1-04-E3,A1-04,E,3,ambient,STA-011,"Bru Instant Coffee 100 g",21,36
+A1-04-E4,A1-04,E,4,ambient,STA-004,"Saffola Gold Oil 1 L",32,36
+A2-04-A1,A2-04,A,1,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",9,36
+A2-04-A2,A2-04,A,2,ambient,STA-011,"Bru Instant Coffee 100 g",9,36
+A2-04-A3,A2-04,A,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",24,36
+A2-04-A4,A2-04,A,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",17,36
+A2-04-B1,A2-04,B,1,ambient,STA-011,"Bru Instant Coffee 100 g",27,36
+A2-04-B2,A2-04,B,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",9,36
+A2-04-B3,A2-04,B,3,ambient,STA-010,"Tata Tea Premium 500 g",9,36
+A2-04-B4,A2-04,B,4,ambient,STA-003,"Fortune Sunflower Oil 1 L",16,36
+A2-04-C1,A2-04,C,1,ambient,STA-004,"Saffola Gold Oil 1 L",15,36
+A2-04-C2,A2-04,C,2,ambient,STA-011,"Bru Instant Coffee 100 g",17,36
+A2-04-C3,A2-04,C,3,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",25,36
+A2-04-C4,A2-04,C,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",23,36
+A2-04-D1,A2-04,D,1,ambient,STA-009,"Everest Tikhalal Chilli 100 g",24,36
+A2-04-D2,A2-04,D,2,ambient,STA-007,"Madhur Pure Sugar 1 kg",17,36
+A2-04-D3,A2-04,D,3,ambient,STA-004,"Saffola Gold Oil 1 L",35,36
+A2-04-D4,A2-04,D,4,ambient,STA-002,"Tata Salt 1 kg",12,36
+A2-04-E1,A2-04,E,1,ambient,STA-011,"Bru Instant Coffee 100 g",26,36
+A2-04-E2,A2-04,E,2,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",11,36
+A2-04-E3,A2-04,E,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",3,36
+A2-04-E4,A2-04,E,4,ambient,STA-010,"Tata Tea Premium 500 g",31,36
+A1-05-A1,A1-05,A,1,ambient,STA-005,"India Gate Basmati Rice 1 kg",21,36
+A1-05-A2,A1-05,A,2,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",14,36
+A1-05-A3,A1-05,A,3,ambient,STA-011,"Bru Instant Coffee 100 g",20,36
+A1-05-A4,A1-05,A,4,ambient,STA-004,"Saffola Gold Oil 1 L",30,36
+A1-05-B1,A1-05,B,1,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",18,36
+A1-05-B2,A1-05,B,2,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",20,36
+A1-05-B3,A1-05,B,3,ambient,STA-005,"India Gate Basmati Rice 1 kg",23,36
+A1-05-B4,A1-05,B,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",0,36
+A1-05-C1,A1-05,C,1,ambient,STA-007,"Madhur Pure Sugar 1 kg",13,36
+A1-05-C2,A1-05,C,2,ambient,STA-008,"MDH Garam Masala 100 g",0,36
+A1-05-C3,A1-05,C,3,ambient,STA-011,"Bru Instant Coffee 100 g",12,36
+A1-05-C4,A1-05,C,4,ambient,STA-002,"Tata Salt 1 kg",10,36
+A1-05-D1,A1-05,D,1,ambient,STA-011,"Bru Instant Coffee 100 g",29,36
+A1-05-D2,A1-05,D,2,ambient,STA-009,"Everest Tikhalal Chilli 100 g",12,36
+A1-05-D3,A1-05,D,3,ambient,STA-005,"India Gate Basmati Rice 1 kg",0,36
+A1-05-D4,A1-05,D,4,ambient,STA-008,"MDH Garam Masala 100 g",24,36
+A1-05-E1,A1-05,E,1,ambient,STA-002,"Tata Salt 1 kg",9,36
+A1-05-E2,A1-05,E,2,ambient,STA-011,"Bru Instant Coffee 100 g",18,36
+A1-05-E3,A1-05,E,3,ambient,STA-007,"Madhur Pure Sugar 1 kg",21,36
+A1-05-E4,A1-05,E,4,ambient,STA-008,"MDH Garam Masala 100 g",19,36
+A2-05-A1,A2-05,A,1,ambient,STA-006,"Tata Sampann Toor Dal 1 kg",18,36
+A2-05-A2,A2-05,A,2,ambient,STA-007,"Madhur Pure Sugar 1 kg",22,36
+A2-05-A3,A2-05,A,3,ambient,STA-010,"Tata Tea Premium 500 g",11,36
+A2-05-A4,A2-05,A,4,ambient,STA-004,"Saffola Gold Oil 1 L",3,36
+A2-05-B1,A2-05,B,1,ambient,STA-008,"MDH Garam Masala 100 g",18,36
+A2-05-B2,A2-05,B,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",32,36
+A2-05-B3,A2-05,B,3,ambient,STA-011,"Bru Instant Coffee 100 g",11,36
+A2-05-B4,A2-05,B,4,ambient,STA-005,"India Gate Basmati Rice 1 kg",13,36
+A2-05-C1,A2-05,C,1,ambient,STA-002,"Tata Salt 1 kg",27,36
+A2-05-C2,A2-05,C,2,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",22,36
+A2-05-C3,A2-05,C,3,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",32,36
+A2-05-C4,A2-05,C,4,ambient,STA-010,"Tata Tea Premium 500 g",31,36
+A2-05-D1,A2-05,D,1,ambient,STA-004,"Saffola Gold Oil 1 L",9,36
+A2-05-D2,A2-05,D,2,ambient,STA-009,"Everest Tikhalal Chilli 100 g",29,36
+A2-05-D3,A2-05,D,3,ambient,STA-004,"Saffola Gold Oil 1 L",35,36
+A2-05-D4,A2-05,D,4,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",6,36
+A2-05-E1,A2-05,E,1,ambient,STA-008,"MDH Garam Masala 100 g",19,36
+A2-05-E2,A2-05,E,2,ambient,STA-001,"Aashirvaad Shudh Chakki Atta 5 kg",32,36
+A2-05-E3,A2-05,E,3,ambient,STA-012,"Kissan Fresh Tomato Ketchup 950 g",13,36
+A2-05-E4,A2-05,E,4,ambient,STA-009,"Everest Tikhalal Chilli 100 g",25,36
+B1-01-A1,B1-01,A,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",27,36
+B1-01-A2,B1-01,A,2,ambient,BRE-006,"Saffola Masala Oats 500 g",34,36
+B1-01-A3,B1-01,A,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",12,36
+B1-01-A4,B1-01,A,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",30,36
+B1-01-B1,B1-01,B,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",24,36
+B1-01-B2,B1-01,B,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",22,36
+B1-01-B3,B1-01,B,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",13,36
+B1-01-B4,B1-01,B,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",28,36
+B1-01-C1,B1-01,C,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",21,36
+B1-01-C2,B1-01,C,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",17,36
+B1-01-C3,B1-01,C,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",28,36
+B1-01-C4,B1-01,C,4,ambient,BRE-006,"Saffola Masala Oats 500 g",4,36
+B1-01-D1,B1-01,D,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",7,36
+B1-01-D2,B1-01,D,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",12,36
+B1-01-D3,B1-01,D,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",3,36
+B1-01-D4,B1-01,D,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",23,36
+B1-01-E1,B1-01,E,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",33,36
+B1-01-E2,B1-01,E,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",27,36
+B1-01-E3,B1-01,E,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",5,36
+B1-01-E4,B1-01,E,4,ambient,BRE-005,"Knorr Tomato Soup 53 g",5,36
+B2-01-A1,B2-01,A,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",21,36
+B2-01-A2,B2-01,A,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",4,36
+B2-01-A3,B2-01,A,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",27,36
+B2-01-A4,B2-01,A,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",8,36
+B2-01-B1,B2-01,B,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",35,36
+B2-01-B2,B2-01,B,2,ambient,BRE-006,"Saffola Masala Oats 500 g",18,36
+B2-01-B3,B2-01,B,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",24,36
+B2-01-B4,B2-01,B,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",28,36
+B2-01-C1,B2-01,C,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",6,36
+B2-01-C2,B2-01,C,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",4,36
+B2-01-C3,B2-01,C,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",34,36
+B2-01-C4,B2-01,C,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",25,36
+B2-01-D1,B2-01,D,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",27,36
+B2-01-D2,B2-01,D,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",0,36
+B2-01-D3,B2-01,D,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",27,36
+B2-01-D4,B2-01,D,4,ambient,BRE-006,"Saffola Masala Oats 500 g",5,36
+B2-01-E1,B2-01,E,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",13,36
+B2-01-E2,B2-01,E,2,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",22,36
+B2-01-E3,B2-01,E,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",31,36
+B2-01-E4,B2-01,E,4,ambient,BRE-006,"Saffola Masala Oats 500 g",35,36
+B1-02-A1,B1-02,A,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",23,36
+B1-02-A2,B1-02,A,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",20,36
+B1-02-A3,B1-02,A,3,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",28,36
+B1-02-A4,B1-02,A,4,ambient,BRE-006,"Saffola Masala Oats 500 g",16,36
+B1-02-A5,B1-02,A,5,ambient,BRE-005,"Knorr Tomato Soup 53 g",0,36
+B1-02-B1,B1-02,B,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",35,36
+B1-02-B2,B1-02,B,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",19,36
+B1-02-B3,B1-02,B,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",23,36
+B1-02-B4,B1-02,B,4,ambient,BRE-004,"MTR Rava Idli Mix 500 g",18,36
+B1-02-B5,B1-02,B,5,ambient,BRE-005,"Knorr Tomato Soup 53 g",26,36
+B1-02-C1,B1-02,C,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",10,36
+B1-02-C2,B1-02,C,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",12,36
+B1-02-C3,B1-02,C,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",17,36
+B1-02-C4,B1-02,C,4,ambient,BRE-005,"Knorr Tomato Soup 53 g",20,36
+B1-02-C5,B1-02,C,5,ambient,BRE-004,"MTR Rava Idli Mix 500 g",25,36
+B1-02-D1,B1-02,D,1,ambient,BRE-006,"Saffola Masala Oats 500 g",6,36
+B1-02-D2,B1-02,D,2,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",20,36
+B1-02-D3,B1-02,D,3,ambient,BRE-006,"Saffola Masala Oats 500 g",34,36
+B1-02-D4,B1-02,D,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",29,36
+B1-02-D5,B1-02,D,5,ambient,BRE-004,"MTR Rava Idli Mix 500 g",19,36
+B1-02-E1,B1-02,E,1,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",28,36
+B1-02-E2,B1-02,E,2,ambient,BRE-006,"Saffola Masala Oats 500 g",33,36
+B1-02-E3,B1-02,E,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",18,36
+B1-02-E4,B1-02,E,4,ambient,BRE-005,"Knorr Tomato Soup 53 g",14,36
+B1-02-E5,B1-02,E,5,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",26,36
+B2-02-A1,B2-02,A,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",32,36
+B2-02-A2,B2-02,A,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",22,36
+B2-02-A3,B2-02,A,3,ambient,BRE-006,"Saffola Masala Oats 500 g",20,36
+B2-02-A4,B2-02,A,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",3,36
+B2-02-A5,B2-02,A,5,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",14,36
+B2-02-B1,B2-02,B,1,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",10,36
+B2-02-B2,B2-02,B,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",35,36
+B2-02-B3,B2-02,B,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",26,36
+B2-02-B4,B2-02,B,4,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",20,36
+B2-02-B5,B2-02,B,5,ambient,BRE-004,"MTR Rava Idli Mix 500 g",32,36
+B2-02-C1,B2-02,C,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",23,36
+B2-02-C2,B2-02,C,2,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",7,36
+B2-02-C3,B2-02,C,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",15,36
+B2-02-C4,B2-02,C,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",26,36
+B2-02-C5,B2-02,C,5,ambient,BRE-004,"MTR Rava Idli Mix 500 g",9,36
+B2-02-D1,B2-02,D,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",15,36
+B2-02-D2,B2-02,D,2,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",7,36
+B2-02-D3,B2-02,D,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",14,36
+B2-02-D4,B2-02,D,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",12,36
+B2-02-D5,B2-02,D,5,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",13,36
+B2-02-E1,B2-02,E,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",30,36
+B2-02-E2,B2-02,E,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",10,36
+B2-02-E3,B2-02,E,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",32,36
+B2-02-E4,B2-02,E,4,ambient,BRE-004,"MTR Rava Idli Mix 500 g",24,36
+B2-02-E5,B2-02,E,5,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",8,36
+B1-03-A1,B1-03,A,1,ambient,BRE-006,"Saffola Masala Oats 500 g",23,36
+B1-03-A2,B1-03,A,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",19,36
+B1-03-A3,B1-03,A,3,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",5,36
+B1-03-A4,B1-03,A,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",9,36
+B1-03-B1,B1-03,B,1,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",28,36
+B1-03-B2,B1-03,B,2,ambient,BRE-006,"Saffola Masala Oats 500 g",7,36
+B1-03-B3,B1-03,B,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",33,36
+B1-03-B4,B1-03,B,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",9,36
+B1-03-C1,B1-03,C,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",18,36
+B1-03-C2,B1-03,C,2,ambient,BRE-006,"Saffola Masala Oats 500 g",17,36
+B1-03-C3,B1-03,C,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",9,36
+B1-03-C4,B1-03,C,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",16,36
+B1-03-D1,B1-03,D,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",20,36
+B1-03-D2,B1-03,D,2,ambient,BRE-006,"Saffola Masala Oats 500 g",9,36
+B1-03-D3,B1-03,D,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",30,36
+B1-03-D4,B1-03,D,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",14,36
+B1-03-E1,B1-03,E,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",3,36
+B1-03-E2,B1-03,E,2,ambient,BRE-004,"MTR Rava Idli Mix 500 g",13,36
+B1-03-E3,B1-03,E,3,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",35,36
+B1-03-E4,B1-03,E,4,ambient,BRE-006,"Saffola Masala Oats 500 g",30,36
+B2-03-A1,B2-03,A,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",3,36
+B2-03-A2,B2-03,A,2,ambient,BRE-006,"Saffola Masala Oats 500 g",20,36
+B2-03-A3,B2-03,A,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",28,36
+B2-03-A4,B2-03,A,4,ambient,BRE-005,"Knorr Tomato Soup 53 g",33,36
+B2-03-B1,B2-03,B,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",6,36
+B2-03-B2,B2-03,B,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",34,36
+B2-03-B3,B2-03,B,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",19,36
+B2-03-B4,B2-03,B,4,ambient,BRE-006,"Saffola Masala Oats 500 g",0,36
+B2-03-C1,B2-03,C,1,ambient,BRE-004,"MTR Rava Idli Mix 500 g",12,36
+B2-03-C2,B2-03,C,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",10,36
+B2-03-C3,B2-03,C,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",31,36
+B2-03-C4,B2-03,C,4,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",22,36
+B2-03-D1,B2-03,D,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",13,36
+B2-03-D2,B2-03,D,2,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",19,36
+B2-03-D3,B2-03,D,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",11,36
+B2-03-D4,B2-03,D,4,ambient,BRE-006,"Saffola Masala Oats 500 g",19,36
+B2-03-E1,B2-03,E,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",28,36
+B2-03-E2,B2-03,E,2,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",4,36
+B2-03-E3,B2-03,E,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",16,36
+B2-03-E4,B2-03,E,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",0,36
+B1-04-A1,B1-04,A,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",31,36
+B1-04-A2,B1-04,A,2,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",22,36
+B1-04-A3,B1-04,A,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",32,36
+B1-04-A4,B1-04,A,4,ambient,BRE-004,"MTR Rava Idli Mix 500 g",34,36
+B1-04-B1,B1-04,B,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",14,36
+B1-04-B2,B1-04,B,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",19,36
+B1-04-B3,B1-04,B,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",11,36
+B1-04-B4,B1-04,B,4,ambient,BRE-006,"Saffola Masala Oats 500 g",22,36
+B1-04-C1,B1-04,C,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",29,36
+B1-04-C2,B1-04,C,2,ambient,BRE-006,"Saffola Masala Oats 500 g",9,36
+B1-04-C3,B1-04,C,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",28,36
+B1-04-C4,B1-04,C,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",30,36
+B1-04-D1,B1-04,D,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",32,36
+B1-04-D2,B1-04,D,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",0,36
+B1-04-D3,B1-04,D,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",27,36
+B1-04-D4,B1-04,D,4,ambient,BRE-005,"Knorr Tomato Soup 53 g",9,36
+B1-04-E1,B1-04,E,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",20,36
+B1-04-E2,B1-04,E,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",25,36
+B1-04-E3,B1-04,E,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",21,36
+B1-04-E4,B1-04,E,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",8,36
+B2-04-A1,B2-04,A,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",19,36
+B2-04-A2,B2-04,A,2,ambient,BRE-006,"Saffola Masala Oats 500 g",30,36
+B2-04-A3,B2-04,A,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",16,36
+B2-04-A4,B2-04,A,4,ambient,BRE-004,"MTR Rava Idli Mix 500 g",14,36
+B2-04-B1,B2-04,B,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",14,36
+B2-04-B2,B2-04,B,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",32,36
+B2-04-B3,B2-04,B,3,ambient,BRE-004,"MTR Rava Idli Mix 500 g",7,36
+B2-04-B4,B2-04,B,4,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",17,36
+B2-04-C1,B2-04,C,1,ambient,BRE-006,"Saffola Masala Oats 500 g",6,36
+B2-04-C2,B2-04,C,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",3,36
+B2-04-C3,B2-04,C,3,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",19,36
+B2-04-C4,B2-04,C,4,ambient,BRE-006,"Saffola Masala Oats 500 g",16,36
+B2-04-D1,B2-04,D,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",19,36
+B2-04-D2,B2-04,D,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",24,36
+B2-04-D3,B2-04,D,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",16,36
+B2-04-D4,B2-04,D,4,ambient,BRE-006,"Saffola Masala Oats 500 g",31,36
+B2-04-E1,B2-04,E,1,ambient,BRE-006,"Saffola Masala Oats 500 g",0,36
+B2-04-E2,B2-04,E,2,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",0,36
+B2-04-E3,B2-04,E,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",25,36
+B2-04-E4,B2-04,E,4,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",24,36
+B1-05-A1,B1-05,A,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",23,36
+B1-05-A2,B1-05,A,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",34,36
+B1-05-A3,B1-05,A,3,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",14,36
+B1-05-A4,B1-05,A,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",5,36
+B1-05-B1,B1-05,B,1,ambient,BRE-006,"Saffola Masala Oats 500 g",23,36
+B1-05-B2,B1-05,B,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",27,36
+B1-05-B3,B1-05,B,3,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",24,36
+B1-05-B4,B1-05,B,4,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",14,36
+B1-05-C1,B1-05,C,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",4,36
+B1-05-C2,B1-05,C,2,ambient,BRE-006,"Saffola Masala Oats 500 g",18,36
+B1-05-C3,B1-05,C,3,ambient,BRE-006,"Saffola Masala Oats 500 g",12,36
+B1-05-C4,B1-05,C,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",25,36
+B1-05-D1,B1-05,D,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",4,36
+B1-05-D2,B1-05,D,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",31,36
+B1-05-D3,B1-05,D,3,ambient,BRE-006,"Saffola Masala Oats 500 g",30,36
+B1-05-D4,B1-05,D,4,ambient,BRE-006,"Saffola Masala Oats 500 g",3,36
+B1-05-E1,B1-05,E,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",24,36
+B1-05-E2,B1-05,E,2,ambient,BRE-005,"Knorr Tomato Soup 53 g",16,36
+B1-05-E3,B1-05,E,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",13,36
+B1-05-E4,B1-05,E,4,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",34,36
+B2-05-A1,B2-05,A,1,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",21,36
+B2-05-A2,B2-05,A,2,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",16,36
+B2-05-A3,B2-05,A,3,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",14,36
+B2-05-A4,B2-05,A,4,ambient,BRE-004,"MTR Rava Idli Mix 500 g",30,36
+B2-05-B1,B2-05,B,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",21,36
+B2-05-B2,B2-05,B,2,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",8,36
+B2-05-B3,B2-05,B,3,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",3,36
+B2-05-B4,B2-05,B,4,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",21,36
+B2-05-C1,B2-05,C,1,ambient,BRE-001,"Maggi 2-Minute Noodles 4-pack",8,36
+B2-05-C2,B2-05,C,2,ambient,BRE-006,"Saffola Masala Oats 500 g",10,36
+B2-05-C3,B2-05,C,3,ambient,BRE-006,"Saffola Masala Oats 500 g",20,36
+B2-05-C4,B2-05,C,4,ambient,BRE-006,"Saffola Masala Oats 500 g",35,36
+B2-05-D1,B2-05,D,1,ambient,BRE-005,"Knorr Tomato Soup 53 g",15,36
+B2-05-D2,B2-05,D,2,ambient,BRE-002,"Sunfeast YiPPee! Noodles 4-pack",19,36
+B2-05-D3,B2-05,D,3,ambient,BRE-005,"Knorr Tomato Soup 53 g",34,36
+B2-05-D4,B2-05,D,4,ambient,BRE-006,"Saffola Masala Oats 500 g",26,36
+B2-05-E1,B2-05,E,1,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",5,36
+B2-05-E2,B2-05,E,2,ambient,BRE-003,"Kellogg's Corn Flakes 475 g",34,36
+B2-05-E3,B2-05,E,3,ambient,BRE-006,"Saffola Masala Oats 500 g",9,36
+B2-05-E4,B2-05,E,4,ambient,BRE-006,"Saffola Masala Oats 500 g",20,36
+C1-01-A1,C1-01,A,1,ambient,PER-001,"Colgate Strong Teeth 200 g",13,36
+C1-01-A2,C1-01,A,2,ambient,PER-003,"Head & Shoulders 340 ml",5,36
+C1-01-A3,C1-01,A,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",10,36
+C1-01-A4,C1-01,A,4,ambient,PER-007,"Dettol Liquid Handwash 200 ml",3,36
+C1-01-B1,C1-01,B,1,ambient,PER-003,"Head & Shoulders 340 ml",10,36
+C1-01-B2,C1-01,B,2,ambient,PER-006,"Whisper Choice XL 20 pads",4,36
+C1-01-B3,C1-01,B,3,ambient,PER-003,"Head & Shoulders 340 ml",12,36
+C1-01-B4,C1-01,B,4,ambient,PER-003,"Head & Shoulders 340 ml",22,36
+C1-01-C1,C1-01,C,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",6,36
+C1-01-C2,C1-01,C,2,ambient,PER-006,"Whisper Choice XL 20 pads",28,36
+C1-01-C3,C1-01,C,3,ambient,PER-006,"Whisper Choice XL 20 pads",19,36
+C1-01-C4,C1-01,C,4,ambient,PER-005,"Nivea Body Lotion 400 ml",8,36
+C1-01-D1,C1-01,D,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",9,36
+C1-01-D2,C1-01,D,2,ambient,PER-003,"Head & Shoulders 340 ml",22,36
+C1-01-D3,C1-01,D,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",14,36
+C1-01-D4,C1-01,D,4,ambient,PER-006,"Whisper Choice XL 20 pads",28,36
+C1-01-E1,C1-01,E,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",3,36
+C1-01-E2,C1-01,E,2,ambient,PER-008,"Parachute Coconut Oil 250 ml",27,36
+C1-01-E3,C1-01,E,3,ambient,PER-003,"Head & Shoulders 340 ml",27,36
+C1-01-E4,C1-01,E,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",29,36
+C2-01-A1,C2-01,A,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",32,36
+C2-01-A2,C2-01,A,2,ambient,PER-001,"Colgate Strong Teeth 200 g",23,36
+C2-01-A3,C2-01,A,3,ambient,PER-001,"Colgate Strong Teeth 200 g",13,36
+C2-01-A4,C2-01,A,4,ambient,PER-001,"Colgate Strong Teeth 200 g",35,36
+C2-01-B1,C2-01,B,1,ambient,PER-005,"Nivea Body Lotion 400 ml",27,36
+C2-01-B2,C2-01,B,2,ambient,PER-004,"Clinic Plus Shampoo 355 ml",25,36
+C2-01-B3,C2-01,B,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",32,36
+C2-01-B4,C2-01,B,4,ambient,PER-003,"Head & Shoulders 340 ml",29,36
+C2-01-C1,C2-01,C,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",12,36
+C2-01-C2,C2-01,C,2,ambient,PER-008,"Parachute Coconut Oil 250 ml",35,36
+C2-01-C3,C2-01,C,3,ambient,PER-001,"Colgate Strong Teeth 200 g",17,36
+C2-01-C4,C2-01,C,4,ambient,PER-008,"Parachute Coconut Oil 250 ml",22,36
+C2-01-D1,C2-01,D,1,ambient,PER-001,"Colgate Strong Teeth 200 g",3,36
+C2-01-D2,C2-01,D,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",28,36
+C2-01-D3,C2-01,D,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",7,36
+C2-01-D4,C2-01,D,4,ambient,PER-006,"Whisper Choice XL 20 pads",25,36
+C2-01-E1,C2-01,E,1,ambient,PER-001,"Colgate Strong Teeth 200 g",26,36
+C2-01-E2,C2-01,E,2,ambient,PER-001,"Colgate Strong Teeth 200 g",26,36
+C2-01-E3,C2-01,E,3,ambient,PER-008,"Parachute Coconut Oil 250 ml",3,36
+C2-01-E4,C2-01,E,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",35,36
+C1-02-A1,C1-02,A,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",28,36
+C1-02-A2,C1-02,A,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",30,36
+C1-02-A3,C1-02,A,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",4,36
+C1-02-A4,C1-02,A,4,ambient,PER-003,"Head & Shoulders 340 ml",23,36
+C1-02-A5,C1-02,A,5,ambient,PER-004,"Clinic Plus Shampoo 355 ml",5,36
+C1-02-B1,C1-02,B,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",12,36
+C1-02-B2,C1-02,B,2,ambient,PER-006,"Whisper Choice XL 20 pads",9,36
+C1-02-B3,C1-02,B,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",12,36
+C1-02-B4,C1-02,B,4,ambient,PER-003,"Head & Shoulders 340 ml",5,36
+C1-02-B5,C1-02,B,5,ambient,PER-008,"Parachute Coconut Oil 250 ml",30,36
+C1-02-C1,C1-02,C,1,ambient,PER-001,"Colgate Strong Teeth 200 g",23,36
+C1-02-C2,C1-02,C,2,ambient,PER-005,"Nivea Body Lotion 400 ml",9,36
+C1-02-C3,C1-02,C,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",27,36
+C1-02-C4,C1-02,C,4,ambient,PER-007,"Dettol Liquid Handwash 200 ml",9,36
+C1-02-C5,C1-02,C,5,ambient,PER-003,"Head & Shoulders 340 ml",0,36
+C1-02-D1,C1-02,D,1,ambient,PER-005,"Nivea Body Lotion 400 ml",28,36
+C1-02-D2,C1-02,D,2,ambient,PER-006,"Whisper Choice XL 20 pads",6,36
+C1-02-D3,C1-02,D,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",20,36
+C1-02-D4,C1-02,D,4,ambient,PER-008,"Parachute Coconut Oil 250 ml",6,36
+C1-02-D5,C1-02,D,5,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",35,36
+C1-02-E1,C1-02,E,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",19,36
+C1-02-E2,C1-02,E,2,ambient,PER-006,"Whisper Choice XL 20 pads",30,36
+C1-02-E3,C1-02,E,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",8,36
+C1-02-E4,C1-02,E,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",22,36
+C1-02-E5,C1-02,E,5,ambient,PER-006,"Whisper Choice XL 20 pads",4,36
+C2-02-A1,C2-02,A,1,ambient,PER-006,"Whisper Choice XL 20 pads",4,36
+C2-02-A2,C2-02,A,2,ambient,PER-006,"Whisper Choice XL 20 pads",4,36
+C2-02-A3,C2-02,A,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",21,36
+C2-02-A4,C2-02,A,4,ambient,PER-006,"Whisper Choice XL 20 pads",7,36
+C2-02-A5,C2-02,A,5,ambient,PER-007,"Dettol Liquid Handwash 200 ml",18,36
+C2-02-B1,C2-02,B,1,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",23,36
+C2-02-B2,C2-02,B,2,ambient,PER-001,"Colgate Strong Teeth 200 g",31,36
+C2-02-B3,C2-02,B,3,ambient,PER-006,"Whisper Choice XL 20 pads",14,36
+C2-02-B4,C2-02,B,4,ambient,PER-005,"Nivea Body Lotion 400 ml",22,36
+C2-02-B5,C2-02,B,5,ambient,PER-006,"Whisper Choice XL 20 pads",18,36
+C2-02-C1,C2-02,C,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",25,36
+C2-02-C2,C2-02,C,2,ambient,PER-004,"Clinic Plus Shampoo 355 ml",12,36
+C2-02-C3,C2-02,C,3,ambient,PER-005,"Nivea Body Lotion 400 ml",7,36
+C2-02-C4,C2-02,C,4,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",13,36
+C2-02-C5,C2-02,C,5,ambient,PER-007,"Dettol Liquid Handwash 200 ml",30,36
+C2-02-D1,C2-02,D,1,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",12,36
+C2-02-D2,C2-02,D,2,ambient,PER-004,"Clinic Plus Shampoo 355 ml",32,36
+C2-02-D3,C2-02,D,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",28,36
+C2-02-D4,C2-02,D,4,ambient,PER-006,"Whisper Choice XL 20 pads",13,36
+C2-02-D5,C2-02,D,5,ambient,PER-007,"Dettol Liquid Handwash 200 ml",13,36
+C2-02-E1,C2-02,E,1,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",5,36
+C2-02-E2,C2-02,E,2,ambient,PER-004,"Clinic Plus Shampoo 355 ml",16,36
+C2-02-E3,C2-02,E,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",23,36
+C2-02-E4,C2-02,E,4,ambient,PER-003,"Head & Shoulders 340 ml",6,36
+C2-02-E5,C2-02,E,5,ambient,PER-008,"Parachute Coconut Oil 250 ml",35,36
+C1-03-A1,C1-03,A,1,ambient,PER-006,"Whisper Choice XL 20 pads",33,36
+C1-03-A2,C1-03,A,2,ambient,PER-003,"Head & Shoulders 340 ml",11,36
+C1-03-A3,C1-03,A,3,ambient,PER-005,"Nivea Body Lotion 400 ml",23,36
+C1-03-A4,C1-03,A,4,ambient,PER-006,"Whisper Choice XL 20 pads",28,36
+C1-03-B1,C1-03,B,1,ambient,PER-005,"Nivea Body Lotion 400 ml",3,36
+C1-03-B2,C1-03,B,2,ambient,PER-004,"Clinic Plus Shampoo 355 ml",0,36
+C1-03-B3,C1-03,B,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",8,36
+C1-03-B4,C1-03,B,4,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",21,36
+C1-03-C1,C1-03,C,1,ambient,PER-005,"Nivea Body Lotion 400 ml",28,36
+C1-03-C2,C1-03,C,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",6,36
+C1-03-C3,C1-03,C,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",24,36
+C1-03-C4,C1-03,C,4,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",32,36
+C1-03-D1,C1-03,D,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",23,36
+C1-03-D2,C1-03,D,2,ambient,PER-006,"Whisper Choice XL 20 pads",31,36
+C1-03-D3,C1-03,D,3,ambient,PER-001,"Colgate Strong Teeth 200 g",5,36
+C1-03-D4,C1-03,D,4,ambient,PER-005,"Nivea Body Lotion 400 ml",12,36
+C1-03-E1,C1-03,E,1,ambient,PER-005,"Nivea Body Lotion 400 ml",16,36
+C1-03-E2,C1-03,E,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",19,36
+C1-03-E3,C1-03,E,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",17,36
+C1-03-E4,C1-03,E,4,ambient,PER-008,"Parachute Coconut Oil 250 ml",25,36
+C2-03-A1,C2-03,A,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",17,36
+C2-03-A2,C2-03,A,2,ambient,PER-003,"Head & Shoulders 340 ml",16,36
+C2-03-A3,C2-03,A,3,ambient,PER-003,"Head & Shoulders 340 ml",12,36
+C2-03-A4,C2-03,A,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",21,36
+C2-03-B1,C2-03,B,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",23,36
+C2-03-B2,C2-03,B,2,ambient,PER-005,"Nivea Body Lotion 400 ml",16,36
+C2-03-B3,C2-03,B,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",10,36
+C2-03-B4,C2-03,B,4,ambient,PER-006,"Whisper Choice XL 20 pads",23,36
+C2-03-C1,C2-03,C,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",16,36
+C2-03-C2,C2-03,C,2,ambient,PER-007,"Dettol Liquid Handwash 200 ml",25,36
+C2-03-C3,C2-03,C,3,ambient,PER-005,"Nivea Body Lotion 400 ml",15,36
+C2-03-C4,C2-03,C,4,ambient,PER-001,"Colgate Strong Teeth 200 g",31,36
+C2-03-D1,C2-03,D,1,ambient,PER-003,"Head & Shoulders 340 ml",35,36
+C2-03-D2,C2-03,D,2,ambient,PER-001,"Colgate Strong Teeth 200 g",19,36
+C2-03-D3,C2-03,D,3,ambient,PER-001,"Colgate Strong Teeth 200 g",33,36
+C2-03-D4,C2-03,D,4,ambient,PER-006,"Whisper Choice XL 20 pads",13,36
+C2-03-E1,C2-03,E,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",9,36
+C2-03-E2,C2-03,E,2,ambient,PER-001,"Colgate Strong Teeth 200 g",12,36
+C2-03-E3,C2-03,E,3,ambient,PER-003,"Head & Shoulders 340 ml",31,36
+C2-03-E4,C2-03,E,4,ambient,PER-007,"Dettol Liquid Handwash 200 ml",4,36
+C1-04-A1,C1-04,A,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",26,36
+C1-04-A2,C1-04,A,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",0,36
+C1-04-A3,C1-04,A,3,ambient,PER-003,"Head & Shoulders 340 ml",0,36
+C1-04-A4,C1-04,A,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",33,36
+C1-04-B1,C1-04,B,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",25,36
+C1-04-B2,C1-04,B,2,ambient,PER-007,"Dettol Liquid Handwash 200 ml",25,36
+C1-04-B3,C1-04,B,3,ambient,PER-008,"Parachute Coconut Oil 250 ml",29,36
+C1-04-B4,C1-04,B,4,ambient,PER-007,"Dettol Liquid Handwash 200 ml",31,36
+C1-04-C1,C1-04,C,1,ambient,PER-001,"Colgate Strong Teeth 200 g",10,36
+C1-04-C2,C1-04,C,2,ambient,PER-005,"Nivea Body Lotion 400 ml",16,36
+C1-04-C3,C1-04,C,3,ambient,PER-003,"Head & Shoulders 340 ml",11,36
+C1-04-C4,C1-04,C,4,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",30,36
+C1-04-D1,C1-04,D,1,ambient,PER-004,"Clinic Plus Shampoo 355 ml",17,36
+C1-04-D2,C1-04,D,2,ambient,PER-007,"Dettol Liquid Handwash 200 ml",3,36
+C1-04-D3,C1-04,D,3,ambient,PER-003,"Head & Shoulders 340 ml",20,36
+C1-04-D4,C1-04,D,4,ambient,PER-005,"Nivea Body Lotion 400 ml",13,36
+C1-04-E1,C1-04,E,1,ambient,PER-004,"Clinic Plus Shampoo 355 ml",22,36
+C1-04-E2,C1-04,E,2,ambient,PER-003,"Head & Shoulders 340 ml",28,36
+C1-04-E3,C1-04,E,3,ambient,PER-008,"Parachute Coconut Oil 250 ml",28,36
+C1-04-E4,C1-04,E,4,ambient,PER-003,"Head & Shoulders 340 ml",12,36
+C2-04-A1,C2-04,A,1,ambient,PER-001,"Colgate Strong Teeth 200 g",23,36
+C2-04-A2,C2-04,A,2,ambient,PER-005,"Nivea Body Lotion 400 ml",31,36
+C2-04-A3,C2-04,A,3,ambient,PER-003,"Head & Shoulders 340 ml",19,36
+C2-04-A4,C2-04,A,4,ambient,PER-005,"Nivea Body Lotion 400 ml",3,36
+C2-04-B1,C2-04,B,1,ambient,PER-003,"Head & Shoulders 340 ml",23,36
+C2-04-B2,C2-04,B,2,ambient,PER-004,"Clinic Plus Shampoo 355 ml",11,36
+C2-04-B3,C2-04,B,3,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",21,36
+C2-04-B4,C2-04,B,4,ambient,PER-008,"Parachute Coconut Oil 250 ml",35,36
+C2-04-C1,C2-04,C,1,ambient,PER-007,"Dettol Liquid Handwash 200 ml",19,36
+C2-04-C2,C2-04,C,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",11,36
+C2-04-C3,C2-04,C,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",31,36
+C2-04-C4,C2-04,C,4,ambient,PER-005,"Nivea Body Lotion 400 ml",21,36
+C2-04-D1,C2-04,D,1,ambient,PER-005,"Nivea Body Lotion 400 ml",5,36
+C2-04-D2,C2-04,D,2,ambient,PER-006,"Whisper Choice XL 20 pads",16,36
+C2-04-D3,C2-04,D,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",33,36
+C2-04-D4,C2-04,D,4,ambient,PER-006,"Whisper Choice XL 20 pads",14,36
+C2-04-E1,C2-04,E,1,ambient,PER-004,"Clinic Plus Shampoo 355 ml",11,36
+C2-04-E2,C2-04,E,2,ambient,PER-006,"Whisper Choice XL 20 pads",6,36
+C2-04-E3,C2-04,E,3,ambient,PER-005,"Nivea Body Lotion 400 ml",9,36
+C2-04-E4,C2-04,E,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",15,36
+C1-05-A1,C1-05,A,1,ambient,PER-005,"Nivea Body Lotion 400 ml",25,36
+C1-05-A2,C1-05,A,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",22,36
+C1-05-A3,C1-05,A,3,ambient,PER-008,"Parachute Coconut Oil 250 ml",4,36
+C1-05-A4,C1-05,A,4,ambient,PER-007,"Dettol Liquid Handwash 200 ml",22,36
+C1-05-B1,C1-05,B,1,ambient,PER-003,"Head & Shoulders 340 ml",29,36
+C1-05-B2,C1-05,B,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",35,36
+C1-05-B3,C1-05,B,3,ambient,PER-008,"Parachute Coconut Oil 250 ml",31,36
+C1-05-B4,C1-05,B,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",11,36
+C1-05-C1,C1-05,C,1,ambient,PER-004,"Clinic Plus Shampoo 355 ml",29,36
+C1-05-C2,C1-05,C,2,ambient,PER-006,"Whisper Choice XL 20 pads",34,36
+C1-05-C3,C1-05,C,3,ambient,PER-008,"Parachute Coconut Oil 250 ml",21,36
+C1-05-C4,C1-05,C,4,ambient,PER-006,"Whisper Choice XL 20 pads",4,36
+C1-05-D1,C1-05,D,1,ambient,PER-005,"Nivea Body Lotion 400 ml",0,36
+C1-05-D2,C1-05,D,2,ambient,PER-001,"Colgate Strong Teeth 200 g",24,36
+C1-05-D3,C1-05,D,3,ambient,PER-003,"Head & Shoulders 340 ml",17,36
+C1-05-D4,C1-05,D,4,ambient,PER-005,"Nivea Body Lotion 400 ml",18,36
+C1-05-E1,C1-05,E,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",3,36
+C1-05-E2,C1-05,E,2,ambient,PER-006,"Whisper Choice XL 20 pads",12,36
+C1-05-E3,C1-05,E,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",30,36
+C1-05-E4,C1-05,E,4,ambient,PER-006,"Whisper Choice XL 20 pads",30,36
+C2-05-A1,C2-05,A,1,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",26,36
+C2-05-A2,C2-05,A,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",32,36
+C2-05-A3,C2-05,A,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",32,36
+C2-05-A4,C2-05,A,4,ambient,PER-003,"Head & Shoulders 340 ml",22,36
+C2-05-B1,C2-05,B,1,ambient,PER-001,"Colgate Strong Teeth 200 g",13,36
+C2-05-B2,C2-05,B,2,ambient,PER-002,"Dove Cream Beauty Bar 3×100 g",30,36
+C2-05-B3,C2-05,B,3,ambient,PER-005,"Nivea Body Lotion 400 ml",33,36
+C2-05-B4,C2-05,B,4,ambient,PER-003,"Head & Shoulders 340 ml",24,36
+C2-05-C1,C2-05,C,1,ambient,PER-008,"Parachute Coconut Oil 250 ml",35,36
+C2-05-C2,C2-05,C,2,ambient,PER-007,"Dettol Liquid Handwash 200 ml",26,36
+C2-05-C3,C2-05,C,3,ambient,PER-007,"Dettol Liquid Handwash 200 ml",24,36
+C2-05-C4,C2-05,C,4,ambient,PER-008,"Parachute Coconut Oil 250 ml",25,36
+C2-05-D1,C2-05,D,1,ambient,PER-004,"Clinic Plus Shampoo 355 ml",14,36
+C2-05-D2,C2-05,D,2,ambient,PER-003,"Head & Shoulders 340 ml",18,36
+C2-05-D3,C2-05,D,3,ambient,PER-005,"Nivea Body Lotion 400 ml",15,36
+C2-05-D4,C2-05,D,4,ambient,PER-004,"Clinic Plus Shampoo 355 ml",22,36
+C2-05-E1,C2-05,E,1,ambient,PER-005,"Nivea Body Lotion 400 ml",6,36
+C2-05-E2,C2-05,E,2,ambient,PER-005,"Nivea Body Lotion 400 ml",33,36
+C2-05-E3,C2-05,E,3,ambient,PER-004,"Clinic Plus Shampoo 355 ml",18,36
+C2-05-E4,C2-05,E,4,ambient,PER-001,"Colgate Strong Teeth 200 g",10,36
+D1-01-A1,D1-01,A,1,ambient,HOU-009,"Origami Facial Tissue 100 pulls",21,36
+D1-01-A2,D1-01,A,2,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",18,36
+D1-01-A3,D1-01,A,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",12,36
+D1-01-A4,D1-01,A,4,ambient,HOU-009,"Origami Facial Tissue 100 pulls",20,36
+D1-01-B1,D1-01,B,1,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",17,36
+D1-01-B2,D1-01,B,2,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",17,36
+D1-01-B3,D1-01,B,3,ambient,HOU-007,"Good Knight Refill",30,36
+D1-01-B4,D1-01,B,4,ambient,HOU-009,"Origami Facial Tissue 100 pulls",21,36
+D1-01-C1,D1-01,C,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",6,36
+D1-01-C2,D1-01,C,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",29,36
+D1-01-C3,D1-01,C,3,ambient,HOU-007,"Good Knight Refill",21,36
+D1-01-C4,D1-01,C,4,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",23,36
+D1-01-D1,D1-01,D,1,ambient,HOU-005,"Harpic Power Plus 500 ml",10,36
+D1-01-D2,D1-01,D,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",27,36
+D1-01-D3,D1-01,D,3,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",20,36
+D1-01-D4,D1-01,D,4,ambient,HOU-007,"Good Knight Refill",10,36
+D1-01-E1,D1-01,E,1,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",30,36
+D1-01-E2,D1-01,E,2,ambient,HOU-009,"Origami Facial Tissue 100 pulls",25,36
+D1-01-E3,D1-01,E,3,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",25,36
+D1-01-E4,D1-01,E,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",0,36
+D2-01-A1,D2-01,A,1,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",9,36
+D2-01-A2,D2-01,A,2,ambient,HOU-002,"Ariel Matic Front Load 1 kg",11,36
+D2-01-A3,D2-01,A,3,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",11,36
+D2-01-A4,D2-01,A,4,ambient,HOU-007,"Good Knight Refill",9,36
+D2-01-B1,D2-01,B,1,ambient,HOU-009,"Origami Facial Tissue 100 pulls",23,36
+D2-01-B2,D2-01,B,2,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",18,36
+D2-01-B3,D2-01,B,3,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",0,36
+D2-01-B4,D2-01,B,4,ambient,HOU-002,"Ariel Matic Front Load 1 kg",6,36
+D2-01-C1,D2-01,C,1,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",8,36
+D2-01-C2,D2-01,C,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",32,36
+D2-01-C3,D2-01,C,3,ambient,HOU-005,"Harpic Power Plus 500 ml",21,36
+D2-01-C4,D2-01,C,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",7,36
+D2-01-D1,D2-01,D,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",11,36
+D2-01-D2,D2-01,D,2,ambient,HOU-005,"Harpic Power Plus 500 ml",15,36
+D2-01-D3,D2-01,D,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",16,36
+D2-01-D4,D2-01,D,4,ambient,HOU-002,"Ariel Matic Front Load 1 kg",12,36
+D2-01-E1,D2-01,E,1,ambient,HOU-009,"Origami Facial Tissue 100 pulls",18,36
+D2-01-E2,D2-01,E,2,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",34,36
+D2-01-E3,D2-01,E,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",8,36
+D2-01-E4,D2-01,E,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",26,36
+D1-02-A1,D1-02,A,1,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",26,36
+D1-02-A2,D1-02,A,2,ambient,HOU-007,"Good Knight Refill",34,36
+D1-02-A3,D1-02,A,3,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",10,36
+D1-02-A4,D1-02,A,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",14,36
+D1-02-A5,D1-02,A,5,ambient,HOU-005,"Harpic Power Plus 500 ml",26,36
+D1-02-B1,D1-02,B,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",26,36
+D1-02-B2,D1-02,B,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",13,36
+D1-02-B3,D1-02,B,3,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",9,36
+D1-02-B4,D1-02,B,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",14,36
+D1-02-B5,D1-02,B,5,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",21,36
+D1-02-C1,D1-02,C,1,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",8,36
+D1-02-C2,D1-02,C,2,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",21,36
+D1-02-C3,D1-02,C,3,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",10,36
+D1-02-C4,D1-02,C,4,ambient,HOU-007,"Good Knight Refill",4,36
+D1-02-C5,D1-02,C,5,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",22,36
+D1-02-D1,D1-02,D,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",15,36
+D1-02-D2,D1-02,D,2,ambient,HOU-002,"Ariel Matic Front Load 1 kg",4,36
+D1-02-D3,D1-02,D,3,ambient,HOU-005,"Harpic Power Plus 500 ml",26,36
+D1-02-D4,D1-02,D,4,ambient,HOU-005,"Harpic Power Plus 500 ml",22,36
+D1-02-D5,D1-02,D,5,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",29,36
+D1-02-E1,D1-02,E,1,ambient,HOU-007,"Good Knight Refill",15,36
+D1-02-E2,D1-02,E,2,ambient,HOU-007,"Good Knight Refill",15,36
+D1-02-E3,D1-02,E,3,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",14,36
+D1-02-E4,D1-02,E,4,ambient,HOU-007,"Good Knight Refill",14,36
+D1-02-E5,D1-02,E,5,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",34,36
+D2-02-A1,D2-02,A,1,ambient,HOU-007,"Good Knight Refill",7,36
+D2-02-A2,D2-02,A,2,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",19,36
+D2-02-A3,D2-02,A,3,ambient,HOU-005,"Harpic Power Plus 500 ml",23,36
+D2-02-A4,D2-02,A,4,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",0,36
+D2-02-A5,D2-02,A,5,ambient,HOU-009,"Origami Facial Tissue 100 pulls",15,36
+D2-02-B1,D2-02,B,1,ambient,HOU-005,"Harpic Power Plus 500 ml",16,36
+D2-02-B2,D2-02,B,2,ambient,HOU-007,"Good Knight Refill",4,36
+D2-02-B3,D2-02,B,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",16,36
+D2-02-B4,D2-02,B,4,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",23,36
+D2-02-B5,D2-02,B,5,ambient,HOU-005,"Harpic Power Plus 500 ml",27,36
+D2-02-C1,D2-02,C,1,ambient,HOU-007,"Good Knight Refill",13,36
+D2-02-C2,D2-02,C,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",11,36
+D2-02-C3,D2-02,C,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",16,36
+D2-02-C4,D2-02,C,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",29,36
+D2-02-C5,D2-02,C,5,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",27,36
+D2-02-D1,D2-02,D,1,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",3,36
+D2-02-D2,D2-02,D,2,ambient,HOU-002,"Ariel Matic Front Load 1 kg",9,36
+D2-02-D3,D2-02,D,3,ambient,HOU-005,"Harpic Power Plus 500 ml",35,36
+D2-02-D4,D2-02,D,4,ambient,HOU-007,"Good Knight Refill",27,36
+D2-02-D5,D2-02,D,5,ambient,HOU-009,"Origami Facial Tissue 100 pulls",23,36
+D2-02-E1,D2-02,E,1,ambient,HOU-005,"Harpic Power Plus 500 ml",12,36
+D2-02-E2,D2-02,E,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",15,36
+D2-02-E3,D2-02,E,3,ambient,HOU-009,"Origami Facial Tissue 100 pulls",0,36
+D2-02-E4,D2-02,E,4,ambient,HOU-009,"Origami Facial Tissue 100 pulls",14,36
+D2-02-E5,D2-02,E,5,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",7,36
+D1-03-A1,D1-03,A,1,ambient,HOU-007,"Good Knight Refill",8,36
+D1-03-A2,D1-03,A,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",3,36
+D1-03-A3,D1-03,A,3,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",14,36
+D1-03-A4,D1-03,A,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",7,36
+D1-03-B1,D1-03,B,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",21,36
+D1-03-B2,D1-03,B,2,ambient,HOU-005,"Harpic Power Plus 500 ml",9,36
+D1-03-B3,D1-03,B,3,ambient,HOU-007,"Good Knight Refill",24,36
+D1-03-B4,D1-03,B,4,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",23,36
+D1-03-C1,D1-03,C,1,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",3,36
+D1-03-C2,D1-03,C,2,ambient,HOU-007,"Good Knight Refill",29,36
+D1-03-C3,D1-03,C,3,ambient,HOU-009,"Origami Facial Tissue 100 pulls",7,36
+D1-03-C4,D1-03,C,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",8,36
+D1-03-D1,D1-03,D,1,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",3,36
+D1-03-D2,D1-03,D,2,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",14,36
+D1-03-D3,D1-03,D,3,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",6,36
+D1-03-D4,D1-03,D,4,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",21,36
+D1-03-E1,D1-03,E,1,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",19,36
+D1-03-E2,D1-03,E,2,ambient,HOU-007,"Good Knight Refill",27,36
+D1-03-E3,D1-03,E,3,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",12,36
+D1-03-E4,D1-03,E,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",7,36
+D2-03-A1,D2-03,A,1,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",11,36
+D2-03-A2,D2-03,A,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",35,36
+D2-03-A3,D2-03,A,3,ambient,HOU-005,"Harpic Power Plus 500 ml",27,36
+D2-03-A4,D2-03,A,4,ambient,HOU-005,"Harpic Power Plus 500 ml",18,36
+D2-03-B1,D2-03,B,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",26,36
+D2-03-B2,D2-03,B,2,ambient,HOU-009,"Origami Facial Tissue 100 pulls",20,36
+D2-03-B3,D2-03,B,3,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",16,36
+D2-03-B4,D2-03,B,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",27,36
+D2-03-C1,D2-03,C,1,ambient,HOU-009,"Origami Facial Tissue 100 pulls",35,36
+D2-03-C2,D2-03,C,2,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",10,36
+D2-03-C3,D2-03,C,3,ambient,HOU-009,"Origami Facial Tissue 100 pulls",25,36
+D2-03-C4,D2-03,C,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",16,36
+D2-03-D1,D2-03,D,1,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",0,36
+D2-03-D2,D2-03,D,2,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",4,36
+D2-03-D3,D2-03,D,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",17,36
+D2-03-D4,D2-03,D,4,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",33,36
+D2-03-E1,D2-03,E,1,ambient,HOU-009,"Origami Facial Tissue 100 pulls",10,36
+D2-03-E2,D2-03,E,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",3,36
+D2-03-E3,D2-03,E,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",35,36
+D2-03-E4,D2-03,E,4,ambient,HOU-005,"Harpic Power Plus 500 ml",14,36
+D1-04-A1,D1-04,A,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",21,36
+D1-04-A2,D1-04,A,2,ambient,HOU-002,"Ariel Matic Front Load 1 kg",18,36
+D1-04-A3,D1-04,A,3,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",22,36
+D1-04-A4,D1-04,A,4,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",31,36
+D1-04-B1,D1-04,B,1,ambient,HOU-007,"Good Knight Refill",13,36
+D1-04-B2,D1-04,B,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",15,36
+D1-04-B3,D1-04,B,3,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",18,36
+D1-04-B4,D1-04,B,4,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",20,36
+D1-04-C1,D1-04,C,1,ambient,HOU-007,"Good Knight Refill",34,36
+D1-04-C2,D1-04,C,2,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",15,36
+D1-04-C3,D1-04,C,3,ambient,HOU-007,"Good Knight Refill",27,36
+D1-04-C4,D1-04,C,4,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",28,36
+D1-04-D1,D1-04,D,1,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",14,36
+D1-04-D2,D1-04,D,2,ambient,HOU-005,"Harpic Power Plus 500 ml",26,36
+D1-04-D3,D1-04,D,3,ambient,HOU-007,"Good Knight Refill",6,36
+D1-04-D4,D1-04,D,4,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",32,36
+D1-04-E1,D1-04,E,1,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",27,36
+D1-04-E2,D1-04,E,2,ambient,HOU-005,"Harpic Power Plus 500 ml",5,36
+D1-04-E3,D1-04,E,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",13,36
+D1-04-E4,D1-04,E,4,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",30,36
+D2-04-A1,D2-04,A,1,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",5,36
+D2-04-A2,D2-04,A,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",16,36
+D2-04-A3,D2-04,A,3,ambient,HOU-005,"Harpic Power Plus 500 ml",27,36
+D2-04-A4,D2-04,A,4,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",29,36
+D2-04-B1,D2-04,B,1,ambient,HOU-005,"Harpic Power Plus 500 ml",28,36
+D2-04-B2,D2-04,B,2,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",25,36
+D2-04-B3,D2-04,B,3,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",30,36
+D2-04-B4,D2-04,B,4,ambient,HOU-005,"Harpic Power Plus 500 ml",13,36
+D2-04-C1,D2-04,C,1,ambient,HOU-005,"Harpic Power Plus 500 ml",35,36
+D2-04-C2,D2-04,C,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",9,36
+D2-04-C3,D2-04,C,3,ambient,HOU-005,"Harpic Power Plus 500 ml",21,36
+D2-04-C4,D2-04,C,4,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",30,36
+D2-04-D1,D2-04,D,1,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",14,36
+D2-04-D2,D2-04,D,2,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",33,36
+D2-04-D3,D2-04,D,3,ambient,HOU-007,"Good Knight Refill",0,36
+D2-04-D4,D2-04,D,4,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",9,36
+D2-04-E1,D2-04,E,1,ambient,HOU-007,"Good Knight Refill",27,36
+D2-04-E2,D2-04,E,2,ambient,HOU-009,"Origami Facial Tissue 100 pulls",6,36
+D2-04-E3,D2-04,E,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",8,36
+D2-04-E4,D2-04,E,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",26,36
+D1-05-A1,D1-05,A,1,ambient,HOU-007,"Good Knight Refill",29,36
+D1-05-A2,D1-05,A,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",33,36
+D1-05-A3,D1-05,A,3,ambient,HOU-007,"Good Knight Refill",33,36
+D1-05-A4,D1-05,A,4,ambient,HOU-002,"Ariel Matic Front Load 1 kg",12,36
+D1-05-B1,D1-05,B,1,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",17,36
+D1-05-B2,D1-05,B,2,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",32,36
+D1-05-B3,D1-05,B,3,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",9,36
+D1-05-B4,D1-05,B,4,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",8,36
+D1-05-C1,D1-05,C,1,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",18,36
+D1-05-C2,D1-05,C,2,ambient,HOU-009,"Origami Facial Tissue 100 pulls",30,36
+D1-05-C3,D1-05,C,3,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",30,36
+D1-05-C4,D1-05,C,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",27,36
+D1-05-D1,D1-05,D,1,ambient,HOU-002,"Ariel Matic Front Load 1 kg",26,36
+D1-05-D2,D1-05,D,2,ambient,HOU-002,"Ariel Matic Front Load 1 kg",35,36
+D1-05-D3,D1-05,D,3,ambient,HOU-007,"Good Knight Refill",35,36
+D1-05-D4,D1-05,D,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",8,36
+D1-05-E1,D1-05,E,1,ambient,HOU-005,"Harpic Power Plus 500 ml",4,36
+D1-05-E2,D1-05,E,2,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",31,36
+D1-05-E3,D1-05,E,3,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",31,36
+D1-05-E4,D1-05,E,4,ambient,HOU-002,"Ariel Matic Front Load 1 kg",14,36
+D2-05-A1,D2-05,A,1,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",20,36
+D2-05-A2,D2-05,A,2,ambient,HOU-009,"Origami Facial Tissue 100 pulls",21,36
+D2-05-A3,D2-05,A,3,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",16,36
+D2-05-A4,D2-05,A,4,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",25,36
+D2-05-B1,D2-05,B,1,ambient,HOU-008,"Comfort Fabric Conditioner 860 ml",18,36
+D2-05-B2,D2-05,B,2,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",33,36
+D2-05-B3,D2-05,B,3,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",35,36
+D2-05-B4,D2-05,B,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",31,36
+D2-05-C1,D2-05,C,1,ambient,HOU-005,"Harpic Power Plus 500 ml",26,36
+D2-05-C2,D2-05,C,2,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",11,36
+D2-05-C3,D2-05,C,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",3,36
+D2-05-C4,D2-05,C,4,ambient,HOU-009,"Origami Facial Tissue 100 pulls",30,36
+D2-05-D1,D2-05,D,1,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",5,36
+D2-05-D2,D2-05,D,2,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",10,36
+D2-05-D3,D2-05,D,3,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",13,36
+D2-05-D4,D2-05,D,4,ambient,HOU-001,"Surf Excel Easy Wash 1 kg",14,36
+D2-05-E1,D2-05,E,1,ambient,HOU-003,"Vim Dishwash Bar 3×200 g",31,36
+D2-05-E2,D2-05,E,2,ambient,HOU-006,"Lizol Floor Cleaner 500 ml",26,36
+D2-05-E3,D2-05,E,3,ambient,HOU-002,"Ariel Matic Front Load 1 kg",18,36
+D2-05-E4,D2-05,E,4,ambient,HOU-004,"Vim Dishwash Liquid 500 ml",6,36
+E1-01-A1,E1-01,A,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",18,24
+E1-01-A2,E1-01,A,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",12,24
+E1-01-A3,E1-01,A,3,chiller,DAI-004,"Amul Butter 500 g",19,24
+E1-01-A4,E1-01,A,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",16,24
+E1-01-A5,E1-01,A,5,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",14,24
+E1-01-B1,E1-01,B,1,chiller,DAI-003,"Amul Butter 100 g",12,24
+E1-01-B2,E1-01,B,2,chiller,DAI-006,"Amul Cheese Slices 200 g",19,24
+E1-01-B3,E1-01,B,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",6,24
+E1-01-B4,E1-01,B,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",19,24
+E1-01-B5,E1-01,B,5,chiller,DAI-003,"Amul Butter 100 g",13,24
+E1-01-C1,E1-01,C,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",11,24
+E1-01-C2,E1-01,C,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",10,24
+E1-01-C3,E1-01,C,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",18,24
+E1-01-C4,E1-01,C,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",0,24
+E1-01-C5,E1-01,C,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",3,24
+E1-01-D1,E1-01,D,1,chiller,DAI-004,"Amul Butter 500 g",17,24
+E1-01-D2,E1-01,D,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",16,24
+E1-01-D3,E1-01,D,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",10,24
+E1-01-D4,E1-01,D,4,chiller,DAI-006,"Amul Cheese Slices 200 g",0,24
+E1-01-D5,E1-01,D,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",4,24
+E1-01-E1,E1-01,E,1,chiller,DAI-006,"Amul Cheese Slices 200 g",13,24
+E1-01-E2,E1-01,E,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",11,24
+E1-01-E3,E1-01,E,3,chiller,DAI-003,"Amul Butter 100 g",5,24
+E1-01-E4,E1-01,E,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",23,24
+E1-01-E5,E1-01,E,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",21,24
+E2-01-A1,E2-01,A,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",0,24
+E2-01-A2,E2-01,A,2,chiller,DAI-004,"Amul Butter 500 g",12,24
+E2-01-A3,E2-01,A,3,chiller,DAI-003,"Amul Butter 100 g",14,24
+E2-01-A4,E2-01,A,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",20,24
+E2-01-A5,E2-01,A,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",7,24
+E2-01-B1,E2-01,B,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",4,24
+E2-01-B2,E2-01,B,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",8,24
+E2-01-B3,E2-01,B,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",3,24
+E2-01-B4,E2-01,B,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",9,24
+E2-01-B5,E2-01,B,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",15,24
+E2-01-C1,E2-01,C,1,chiller,DAI-006,"Amul Cheese Slices 200 g",12,24
+E2-01-C2,E2-01,C,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",5,24
+E2-01-C3,E2-01,C,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",18,24
+E2-01-C4,E2-01,C,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",19,24
+E2-01-C5,E2-01,C,5,chiller,DAI-003,"Amul Butter 100 g",0,24
+E2-01-D1,E2-01,D,1,chiller,DAI-004,"Amul Butter 500 g",18,24
+E2-01-D2,E2-01,D,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",15,24
+E2-01-D3,E2-01,D,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",5,24
+E2-01-D4,E2-01,D,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",16,24
+E2-01-D5,E2-01,D,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",0,24
+E2-01-E1,E2-01,E,1,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",15,24
+E2-01-E2,E2-01,E,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",8,24
+E2-01-E3,E2-01,E,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",21,24
+E2-01-E4,E2-01,E,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",0,24
+E2-01-E5,E2-01,E,5,chiller,DAI-006,"Amul Cheese Slices 200 g",22,24
+E3-01-A1,E3-01,A,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",3,24
+E3-01-A2,E3-01,A,2,chiller,DAI-006,"Amul Cheese Slices 200 g",19,24
+E3-01-A3,E3-01,A,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",15,24
+E3-01-A4,E3-01,A,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",17,24
+E3-01-A5,E3-01,A,5,chiller,DAI-004,"Amul Butter 500 g",20,24
+E3-01-B1,E3-01,B,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",8,24
+E3-01-B2,E3-01,B,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",14,24
+E3-01-B3,E3-01,B,3,chiller,DAI-004,"Amul Butter 500 g",20,24
+E3-01-B4,E3-01,B,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",20,24
+E3-01-B5,E3-01,B,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",16,24
+E3-01-C1,E3-01,C,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",8,24
+E3-01-C2,E3-01,C,2,chiller,DAI-004,"Amul Butter 500 g",17,24
+E3-01-C3,E3-01,C,3,chiller,DAI-007,"Amul Fresh Paneer 200 g",17,24
+E3-01-C4,E3-01,C,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",13,24
+E3-01-C5,E3-01,C,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",15,24
+E3-01-D1,E3-01,D,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",5,24
+E3-01-D2,E3-01,D,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",5,24
+E3-01-D3,E3-01,D,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",15,24
+E3-01-D4,E3-01,D,4,chiller,DAI-004,"Amul Butter 500 g",12,24
+E3-01-D5,E3-01,D,5,chiller,DAI-006,"Amul Cheese Slices 200 g",7,24
+E3-01-E1,E3-01,E,1,chiller,DAI-006,"Amul Cheese Slices 200 g",19,24
+E3-01-E2,E3-01,E,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",18,24
+E3-01-E3,E3-01,E,3,chiller,DAI-003,"Amul Butter 100 g",8,24
+E3-01-E4,E3-01,E,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",9,24
+E3-01-E5,E3-01,E,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",8,24
+E4-01-A1,E4-01,A,1,chiller,DAI-006,"Amul Cheese Slices 200 g",4,24
+E4-01-A2,E4-01,A,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",11,24
+E4-01-A3,E4-01,A,3,chiller,DAI-006,"Amul Cheese Slices 200 g",20,24
+E4-01-A4,E4-01,A,4,chiller,DAI-003,"Amul Butter 100 g",18,24
+E4-01-A5,E4-01,A,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",18,24
+E4-01-B1,E4-01,B,1,chiller,DAI-006,"Amul Cheese Slices 200 g",16,24
+E4-01-B2,E4-01,B,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",16,24
+E4-01-B3,E4-01,B,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",3,24
+E4-01-B4,E4-01,B,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",6,24
+E4-01-B5,E4-01,B,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",7,24
+E4-01-C1,E4-01,C,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",12,24
+E4-01-C2,E4-01,C,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",5,24
+E4-01-C3,E4-01,C,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",22,24
+E4-01-C4,E4-01,C,4,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",23,24
+E4-01-C5,E4-01,C,5,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",3,24
+E4-01-D1,E4-01,D,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",19,24
+E4-01-D2,E4-01,D,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",4,24
+E4-01-D3,E4-01,D,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",13,24
+E4-01-D4,E4-01,D,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",9,24
+E4-01-D5,E4-01,D,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",8,24
+E4-01-E1,E4-01,E,1,chiller,DAI-004,"Amul Butter 500 g",17,24
+E4-01-E2,E4-01,E,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",10,24
+E4-01-E3,E4-01,E,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",11,24
+E4-01-E4,E4-01,E,4,chiller,DAI-006,"Amul Cheese Slices 200 g",12,24
+E4-01-E5,E4-01,E,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",16,24
+E1-02-A1,E1-02,A,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",8,24
+E1-02-A2,E1-02,A,2,chiller,DAI-006,"Amul Cheese Slices 200 g",22,24
+E1-02-A3,E1-02,A,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",23,24
+E1-02-A4,E1-02,A,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",9,24
+E1-02-A5,E1-02,A,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",17,24
+E1-02-B1,E1-02,B,1,chiller,DAI-006,"Amul Cheese Slices 200 g",20,24
+E1-02-B2,E1-02,B,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",4,24
+E1-02-B3,E1-02,B,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",5,24
+E1-02-B4,E1-02,B,4,chiller,DAI-004,"Amul Butter 500 g",4,24
+E1-02-B5,E1-02,B,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",13,24
+E1-02-C1,E1-02,C,1,chiller,DAI-003,"Amul Butter 100 g",17,24
+E1-02-C2,E1-02,C,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",5,24
+E1-02-C3,E1-02,C,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",16,24
+E1-02-C4,E1-02,C,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",8,24
+E1-02-C5,E1-02,C,5,chiller,DAI-003,"Amul Butter 100 g",19,24
+E1-02-D1,E1-02,D,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",4,24
+E1-02-D2,E1-02,D,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",12,24
+E1-02-D3,E1-02,D,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",19,24
+E1-02-D4,E1-02,D,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",20,24
+E1-02-D5,E1-02,D,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",6,24
+E1-02-E1,E1-02,E,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",11,24
+E1-02-E2,E1-02,E,2,chiller,DAI-003,"Amul Butter 100 g",19,24
+E1-02-E3,E1-02,E,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",21,24
+E1-02-E4,E1-02,E,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",11,24
+E1-02-E5,E1-02,E,5,chiller,DAI-003,"Amul Butter 100 g",13,24
+E2-02-A1,E2-02,A,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",11,24
+E2-02-A2,E2-02,A,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",3,24
+E2-02-A3,E2-02,A,3,chiller,DAI-003,"Amul Butter 100 g",11,24
+E2-02-A4,E2-02,A,4,chiller,DAI-003,"Amul Butter 100 g",20,24
+E2-02-A5,E2-02,A,5,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",14,24
+E2-02-B1,E2-02,B,1,chiller,DAI-003,"Amul Butter 100 g",7,24
+E2-02-B2,E2-02,B,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",6,24
+E2-02-B3,E2-02,B,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",4,24
+E2-02-B4,E2-02,B,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",15,24
+E2-02-B5,E2-02,B,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",10,24
+E2-02-C1,E2-02,C,1,chiller,DAI-006,"Amul Cheese Slices 200 g",17,24
+E2-02-C2,E2-02,C,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",17,24
+E2-02-C3,E2-02,C,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",17,24
+E2-02-C4,E2-02,C,4,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",11,24
+E2-02-C5,E2-02,C,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",17,24
+E2-02-D1,E2-02,D,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",18,24
+E2-02-D2,E2-02,D,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",14,24
+E2-02-D3,E2-02,D,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",15,24
+E2-02-D4,E2-02,D,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",21,24
+E2-02-D5,E2-02,D,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",13,24
+E2-02-E1,E2-02,E,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",8,24
+E2-02-E2,E2-02,E,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",3,24
+E2-02-E3,E2-02,E,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",13,24
+E2-02-E4,E2-02,E,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",20,24
+E2-02-E5,E2-02,E,5,chiller,DAI-006,"Amul Cheese Slices 200 g",11,24
+E3-02-A1,E3-02,A,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",8,24
+E3-02-A2,E3-02,A,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",22,24
+E3-02-A3,E3-02,A,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",19,24
+E3-02-A4,E3-02,A,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",0,24
+E3-02-A5,E3-02,A,5,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",13,24
+E3-02-B1,E3-02,B,1,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",15,24
+E3-02-B2,E3-02,B,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",15,24
+E3-02-B3,E3-02,B,3,chiller,DAI-004,"Amul Butter 500 g",19,24
+E3-02-B4,E3-02,B,4,chiller,DAI-003,"Amul Butter 100 g",0,24
+E3-02-B5,E3-02,B,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",21,24
+E3-02-C1,E3-02,C,1,chiller,DAI-003,"Amul Butter 100 g",21,24
+E3-02-C2,E3-02,C,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",19,24
+E3-02-C3,E3-02,C,3,chiller,DAI-007,"Amul Fresh Paneer 200 g",23,24
+E3-02-C4,E3-02,C,4,chiller,DAI-003,"Amul Butter 100 g",10,24
+E3-02-C5,E3-02,C,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",10,24
+E3-02-D1,E3-02,D,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",3,24
+E3-02-D2,E3-02,D,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",6,24
+E3-02-D3,E3-02,D,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",0,24
+E3-02-D4,E3-02,D,4,chiller,DAI-003,"Amul Butter 100 g",6,24
+E3-02-D5,E3-02,D,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",21,24
+E3-02-E1,E3-02,E,1,chiller,DAI-006,"Amul Cheese Slices 200 g",3,24
+E3-02-E2,E3-02,E,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",6,24
+E3-02-E3,E3-02,E,3,chiller,DAI-007,"Amul Fresh Paneer 200 g",23,24
+E3-02-E4,E3-02,E,4,chiller,DAI-006,"Amul Cheese Slices 200 g",14,24
+E3-02-E5,E3-02,E,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",20,24
+E4-02-A1,E4-02,A,1,chiller,DAI-004,"Amul Butter 500 g",6,24
+E4-02-A2,E4-02,A,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",5,24
+E4-02-A3,E4-02,A,3,chiller,DAI-003,"Amul Butter 100 g",12,24
+E4-02-A4,E4-02,A,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",17,24
+E4-02-A5,E4-02,A,5,chiller,DAI-006,"Amul Cheese Slices 200 g",23,24
+E4-02-B1,E4-02,B,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",21,24
+E4-02-B2,E4-02,B,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",5,24
+E4-02-B3,E4-02,B,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",9,24
+E4-02-B4,E4-02,B,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",6,24
+E4-02-B5,E4-02,B,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",19,24
+E4-02-C1,E4-02,C,1,chiller,DAI-004,"Amul Butter 500 g",11,24
+E4-02-C2,E4-02,C,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",20,24
+E4-02-C3,E4-02,C,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",20,24
+E4-02-C4,E4-02,C,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",10,24
+E4-02-C5,E4-02,C,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",4,24
+E4-02-D1,E4-02,D,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",23,24
+E4-02-D2,E4-02,D,2,chiller,DAI-006,"Amul Cheese Slices 200 g",9,24
+E4-02-D3,E4-02,D,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",16,24
+E4-02-D4,E4-02,D,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",5,24
+E4-02-D5,E4-02,D,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",5,24
+E4-02-E1,E4-02,E,1,chiller,DAI-006,"Amul Cheese Slices 200 g",22,24
+E4-02-E2,E4-02,E,2,chiller,DAI-003,"Amul Butter 100 g",4,24
+E4-02-E3,E4-02,E,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",13,24
+E4-02-E4,E4-02,E,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",13,24
+E4-02-E5,E4-02,E,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",7,24
+E1-03-A1,E1-03,A,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",21,24
+E1-03-A2,E1-03,A,2,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",17,24
+E1-03-A3,E1-03,A,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",4,24
+E1-03-A4,E1-03,A,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",8,24
+E1-03-A5,E1-03,A,5,chiller,DAI-004,"Amul Butter 500 g",11,24
+E1-03-B1,E1-03,B,1,chiller,DAI-011,"Yakult Probiotic 5×65 ml",5,24
+E1-03-B2,E1-03,B,2,chiller,DAI-004,"Amul Butter 500 g",22,24
+E1-03-B3,E1-03,B,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",15,24
+E1-03-B4,E1-03,B,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",16,24
+E1-03-B5,E1-03,B,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",6,24
+E1-03-C1,E1-03,C,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",11,24
+E1-03-C2,E1-03,C,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",13,24
+E1-03-C3,E1-03,C,3,chiller,DAI-003,"Amul Butter 100 g",8,24
+E1-03-C4,E1-03,C,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",20,24
+E1-03-C5,E1-03,C,5,chiller,DAI-006,"Amul Cheese Slices 200 g",5,24
+E1-03-D1,E1-03,D,1,chiller,DAI-006,"Amul Cheese Slices 200 g",22,24
+E1-03-D2,E1-03,D,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",10,24
+E1-03-D3,E1-03,D,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",10,24
+E1-03-D4,E1-03,D,4,chiller,DAI-006,"Amul Cheese Slices 200 g",7,24
+E1-03-D5,E1-03,D,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",21,24
+E1-03-E1,E1-03,E,1,chiller,DAI-004,"Amul Butter 500 g",10,24
+E1-03-E2,E1-03,E,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",20,24
+E1-03-E3,E1-03,E,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",22,24
+E1-03-E4,E1-03,E,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",4,24
+E1-03-E5,E1-03,E,5,chiller,DAI-006,"Amul Cheese Slices 200 g",17,24
+E2-03-A1,E2-03,A,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",3,24
+E2-03-A2,E2-03,A,2,chiller,DAI-006,"Amul Cheese Slices 200 g",13,24
+E2-03-A3,E2-03,A,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",3,24
+E2-03-A4,E2-03,A,4,chiller,DAI-006,"Amul Cheese Slices 200 g",19,24
+E2-03-A5,E2-03,A,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",7,24
+E2-03-B1,E2-03,B,1,chiller,DAI-004,"Amul Butter 500 g",9,24
+E2-03-B2,E2-03,B,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",5,24
+E2-03-B3,E2-03,B,3,chiller,DAI-004,"Amul Butter 500 g",17,24
+E2-03-B4,E2-03,B,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",21,24
+E2-03-B5,E2-03,B,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",0,24
+E2-03-C1,E2-03,C,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",15,24
+E2-03-C2,E2-03,C,2,chiller,DAI-004,"Amul Butter 500 g",13,24
+E2-03-C3,E2-03,C,3,chiller,DAI-004,"Amul Butter 500 g",6,24
+E2-03-C4,E2-03,C,4,chiller,DAI-003,"Amul Butter 100 g",10,24
+E2-03-C5,E2-03,C,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",15,24
+E2-03-D1,E2-03,D,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",12,24
+E2-03-D2,E2-03,D,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",7,24
+E2-03-D3,E2-03,D,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",23,24
+E2-03-D4,E2-03,D,4,chiller,DAI-004,"Amul Butter 500 g",0,24
+E2-03-D5,E2-03,D,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",13,24
+E2-03-E1,E2-03,E,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",7,24
+E2-03-E2,E2-03,E,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",7,24
+E2-03-E3,E2-03,E,3,chiller,DAI-006,"Amul Cheese Slices 200 g",14,24
+E2-03-E4,E2-03,E,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",22,24
+E2-03-E5,E2-03,E,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",5,24
+E3-03-A1,E3-03,A,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",7,24
+E3-03-A2,E3-03,A,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",11,24
+E3-03-A3,E3-03,A,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",23,24
+E3-03-A4,E3-03,A,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",5,24
+E3-03-A5,E3-03,A,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",14,24
+E3-03-B1,E3-03,B,1,chiller,DAI-004,"Amul Butter 500 g",19,24
+E3-03-B2,E3-03,B,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",21,24
+E3-03-B3,E3-03,B,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",18,24
+E3-03-B4,E3-03,B,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",15,24
+E3-03-B5,E3-03,B,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",6,24
+E3-03-C1,E3-03,C,1,chiller,DAI-003,"Amul Butter 100 g",0,24
+E3-03-C2,E3-03,C,2,chiller,DAI-003,"Amul Butter 100 g",18,24
+E3-03-C3,E3-03,C,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",15,24
+E3-03-C4,E3-03,C,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",4,24
+E3-03-C5,E3-03,C,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",0,24
+E3-03-D1,E3-03,D,1,chiller,DAI-011,"Yakult Probiotic 5×65 ml",16,24
+E3-03-D2,E3-03,D,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",7,24
+E3-03-D3,E3-03,D,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",8,24
+E3-03-D4,E3-03,D,4,chiller,DAI-006,"Amul Cheese Slices 200 g",11,24
+E3-03-D5,E3-03,D,5,chiller,DAI-006,"Amul Cheese Slices 200 g",16,24
+E3-03-E1,E3-03,E,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",10,24
+E3-03-E2,E3-03,E,2,chiller,DAI-003,"Amul Butter 100 g",12,24
+E3-03-E3,E3-03,E,3,chiller,DAI-003,"Amul Butter 100 g",11,24
+E3-03-E4,E3-03,E,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",0,24
+E3-03-E5,E3-03,E,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",20,24
+E4-03-A1,E4-03,A,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",9,24
+E4-03-A2,E4-03,A,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",9,24
+E4-03-A3,E4-03,A,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",23,24
+E4-03-A4,E4-03,A,4,chiller,DAI-009,"Amul Kool Kesar 180 ml",18,24
+E4-03-A5,E4-03,A,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",20,24
+E4-03-B1,E4-03,B,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",9,24
+E4-03-B2,E4-03,B,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",20,24
+E4-03-B3,E4-03,B,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",14,24
+E4-03-B4,E4-03,B,4,chiller,DAI-009,"Amul Kool Kesar 180 ml",13,24
+E4-03-B5,E4-03,B,5,chiller,DAI-003,"Amul Butter 100 g",19,24
+E4-03-C1,E4-03,C,1,chiller,DAI-006,"Amul Cheese Slices 200 g",16,24
+E4-03-C2,E4-03,C,2,chiller,DAI-004,"Amul Butter 500 g",20,24
+E4-03-C3,E4-03,C,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",15,24
+E4-03-C4,E4-03,C,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",15,24
+E4-03-C5,E4-03,C,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",16,24
+E4-03-D1,E4-03,D,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",15,24
+E4-03-D2,E4-03,D,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",6,24
+E4-03-D3,E4-03,D,3,chiller,DAI-003,"Amul Butter 100 g",4,24
+E4-03-D4,E4-03,D,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",8,24
+E4-03-D5,E4-03,D,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",22,24
+E4-03-E1,E4-03,E,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",20,24
+E4-03-E2,E4-03,E,2,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",14,24
+E4-03-E3,E4-03,E,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",17,24
+E4-03-E4,E4-03,E,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",3,24
+E4-03-E5,E4-03,E,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",4,24
+E1-04-A1,E1-04,A,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",5,24
+E1-04-A2,E1-04,A,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",21,24
+E1-04-A3,E1-04,A,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",18,24
+E1-04-A4,E1-04,A,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",14,24
+E1-04-A5,E1-04,A,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",3,24
+E1-04-B1,E1-04,B,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",22,24
+E1-04-B2,E1-04,B,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",8,24
+E1-04-B3,E1-04,B,3,chiller,DAI-007,"Amul Fresh Paneer 200 g",16,24
+E1-04-B4,E1-04,B,4,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",10,24
+E1-04-B5,E1-04,B,5,chiller,DAI-003,"Amul Butter 100 g",5,24
+E1-04-C1,E1-04,C,1,chiller,DAI-004,"Amul Butter 500 g",20,24
+E1-04-C2,E1-04,C,2,chiller,DAI-006,"Amul Cheese Slices 200 g",4,24
+E1-04-C3,E1-04,C,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",4,24
+E1-04-C4,E1-04,C,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",16,24
+E1-04-C5,E1-04,C,5,chiller,DAI-003,"Amul Butter 100 g",23,24
+E1-04-D1,E1-04,D,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",11,24
+E1-04-D2,E1-04,D,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",5,24
+E1-04-D3,E1-04,D,3,chiller,DAI-006,"Amul Cheese Slices 200 g",20,24
+E1-04-D4,E1-04,D,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",21,24
+E1-04-D5,E1-04,D,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",10,24
+E1-04-E1,E1-04,E,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",5,24
+E1-04-E2,E1-04,E,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",4,24
+E1-04-E3,E1-04,E,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",18,24
+E1-04-E4,E1-04,E,4,chiller,DAI-003,"Amul Butter 100 g",10,24
+E1-04-E5,E1-04,E,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",18,24
+E2-04-A1,E2-04,A,1,chiller,DAI-006,"Amul Cheese Slices 200 g",8,24
+E2-04-A2,E2-04,A,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",18,24
+E2-04-A3,E2-04,A,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",11,24
+E2-04-A4,E2-04,A,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",3,24
+E2-04-A5,E2-04,A,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",17,24
+E2-04-B1,E2-04,B,1,chiller,DAI-004,"Amul Butter 500 g",7,24
+E2-04-B2,E2-04,B,2,chiller,DAI-006,"Amul Cheese Slices 200 g",4,24
+E2-04-B3,E2-04,B,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",11,24
+E2-04-B4,E2-04,B,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",7,24
+E2-04-B5,E2-04,B,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",3,24
+E2-04-C1,E2-04,C,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",9,24
+E2-04-C2,E2-04,C,2,chiller,DAI-006,"Amul Cheese Slices 200 g",0,24
+E2-04-C3,E2-04,C,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",12,24
+E2-04-C4,E2-04,C,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",19,24
+E2-04-C5,E2-04,C,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",19,24
+E2-04-D1,E2-04,D,1,chiller,DAI-006,"Amul Cheese Slices 200 g",16,24
+E2-04-D2,E2-04,D,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",17,24
+E2-04-D3,E2-04,D,3,chiller,DAI-003,"Amul Butter 100 g",17,24
+E2-04-D4,E2-04,D,4,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",8,24
+E2-04-D5,E2-04,D,5,chiller,DAI-003,"Amul Butter 100 g",21,24
+E2-04-E1,E2-04,E,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",12,24
+E2-04-E2,E2-04,E,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",7,24
+E2-04-E3,E2-04,E,3,chiller,DAI-003,"Amul Butter 100 g",16,24
+E2-04-E4,E2-04,E,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",0,24
+E2-04-E5,E2-04,E,5,chiller,DAI-006,"Amul Cheese Slices 200 g",9,24
+E3-04-A1,E3-04,A,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",20,24
+E3-04-A2,E3-04,A,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",7,24
+E3-04-A3,E3-04,A,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",5,24
+E3-04-A4,E3-04,A,4,chiller,DAI-004,"Amul Butter 500 g",23,24
+E3-04-A5,E3-04,A,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",14,24
+E3-04-B1,E3-04,B,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",23,24
+E3-04-B2,E3-04,B,2,chiller,DAI-006,"Amul Cheese Slices 200 g",0,24
+E3-04-B3,E3-04,B,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",21,24
+E3-04-B4,E3-04,B,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",0,24
+E3-04-B5,E3-04,B,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",4,24
+E3-04-C1,E3-04,C,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",15,24
+E3-04-C2,E3-04,C,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",15,24
+E3-04-C3,E3-04,C,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",16,24
+E3-04-C4,E3-04,C,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",22,24
+E3-04-C5,E3-04,C,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",15,24
+E3-04-D1,E3-04,D,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",21,24
+E3-04-D2,E3-04,D,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",12,24
+E3-04-D3,E3-04,D,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",5,24
+E3-04-D4,E3-04,D,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",12,24
+E3-04-D5,E3-04,D,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",18,24
+E3-04-E1,E3-04,E,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",20,24
+E3-04-E2,E3-04,E,2,chiller,DAI-006,"Amul Cheese Slices 200 g",17,24
+E3-04-E3,E3-04,E,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",21,24
+E3-04-E4,E3-04,E,4,chiller,DAI-009,"Amul Kool Kesar 180 ml",10,24
+E3-04-E5,E3-04,E,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",3,24
+E4-04-A1,E4-04,A,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",10,24
+E4-04-A2,E4-04,A,2,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",8,24
+E4-04-A3,E4-04,A,3,chiller,DAI-006,"Amul Cheese Slices 200 g",15,24
+E4-04-A4,E4-04,A,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",23,24
+E4-04-A5,E4-04,A,5,chiller,DAI-004,"Amul Butter 500 g",17,24
+E4-04-B1,E4-04,B,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",6,24
+E4-04-B2,E4-04,B,2,chiller,DAI-003,"Amul Butter 100 g",11,24
+E4-04-B3,E4-04,B,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",7,24
+E4-04-B4,E4-04,B,4,chiller,DAI-006,"Amul Cheese Slices 200 g",5,24
+E4-04-B5,E4-04,B,5,chiller,DAI-004,"Amul Butter 500 g",7,24
+E4-04-C1,E4-04,C,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",21,24
+E4-04-C2,E4-04,C,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",4,24
+E4-04-C3,E4-04,C,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",13,24
+E4-04-C4,E4-04,C,4,chiller,DAI-003,"Amul Butter 100 g",4,24
+E4-04-C5,E4-04,C,5,chiller,DAI-004,"Amul Butter 500 g",3,24
+E4-04-D1,E4-04,D,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",5,24
+E4-04-D2,E4-04,D,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",19,24
+E4-04-D3,E4-04,D,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",18,24
+E4-04-D4,E4-04,D,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",8,24
+E4-04-D5,E4-04,D,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",21,24
+E4-04-E1,E4-04,E,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",0,24
+E4-04-E2,E4-04,E,2,chiller,DAI-011,"Yakult Probiotic 5×65 ml",17,24
+E4-04-E3,E4-04,E,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",8,24
+E4-04-E4,E4-04,E,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",4,24
+E4-04-E5,E4-04,E,5,chiller,DAI-004,"Amul Butter 500 g",19,24
+E1-05-A1,E1-05,A,1,chiller,DAI-004,"Amul Butter 500 g",8,24
+E1-05-A2,E1-05,A,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",10,24
+E1-05-A3,E1-05,A,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",3,24
+E1-05-A4,E1-05,A,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",10,24
+E1-05-A5,E1-05,A,5,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",10,24
+E1-05-B1,E1-05,B,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",16,24
+E1-05-B2,E1-05,B,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",16,24
+E1-05-B3,E1-05,B,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",15,24
+E1-05-B4,E1-05,B,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",3,24
+E1-05-B5,E1-05,B,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",22,24
+E1-05-C1,E1-05,C,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",6,24
+E1-05-C2,E1-05,C,2,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",4,24
+E1-05-C3,E1-05,C,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",3,24
+E1-05-C4,E1-05,C,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",8,24
+E1-05-C5,E1-05,C,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",19,24
+E1-05-D1,E1-05,D,1,chiller,DAI-004,"Amul Butter 500 g",23,24
+E1-05-D2,E1-05,D,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",9,24
+E1-05-D3,E1-05,D,3,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",5,24
+E1-05-D4,E1-05,D,4,chiller,DAI-006,"Amul Cheese Slices 200 g",13,24
+E1-05-D5,E1-05,D,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",23,24
+E1-05-E1,E1-05,E,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",10,24
+E1-05-E2,E1-05,E,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",8,24
+E1-05-E3,E1-05,E,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",15,24
+E1-05-E4,E1-05,E,4,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",15,24
+E1-05-E5,E1-05,E,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",14,24
+E2-05-A1,E2-05,A,1,chiller,DAI-003,"Amul Butter 100 g",6,24
+E2-05-A2,E2-05,A,2,chiller,DAI-007,"Amul Fresh Paneer 200 g",14,24
+E2-05-A3,E2-05,A,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",7,24
+E2-05-A4,E2-05,A,4,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",20,24
+E2-05-A5,E2-05,A,5,chiller,DAI-006,"Amul Cheese Slices 200 g",3,24
+E2-05-B1,E2-05,B,1,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",12,24
+E2-05-B2,E2-05,B,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",17,24
+E2-05-B3,E2-05,B,3,chiller,DAI-009,"Amul Kool Kesar 180 ml",3,24
+E2-05-B4,E2-05,B,4,chiller,DAI-006,"Amul Cheese Slices 200 g",15,24
+E2-05-B5,E2-05,B,5,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",9,24
+E2-05-C1,E2-05,C,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",7,24
+E2-05-C2,E2-05,C,2,chiller,DAI-004,"Amul Butter 500 g",3,24
+E2-05-C3,E2-05,C,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",3,24
+E2-05-C4,E2-05,C,4,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",0,24
+E2-05-C5,E2-05,C,5,chiller,DAI-009,"Amul Kool Kesar 180 ml",8,24
+E2-05-D1,E2-05,D,1,chiller,DAI-009,"Amul Kool Kesar 180 ml",9,24
+E2-05-D2,E2-05,D,2,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",5,24
+E2-05-D3,E2-05,D,3,chiller,DAI-006,"Amul Cheese Slices 200 g",22,24
+E2-05-D4,E2-05,D,4,chiller,DAI-006,"Amul Cheese Slices 200 g",23,24
+E2-05-D5,E2-05,D,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",0,24
+E2-05-E1,E2-05,E,1,chiller,DAI-003,"Amul Butter 100 g",3,24
+E2-05-E2,E2-05,E,2,chiller,DAI-004,"Amul Butter 500 g",14,24
+E2-05-E3,E2-05,E,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",0,24
+E2-05-E4,E2-05,E,4,chiller,DAI-006,"Amul Cheese Slices 200 g",14,24
+E2-05-E5,E2-05,E,5,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",13,24
+E3-05-A1,E3-05,A,1,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",6,24
+E3-05-A2,E3-05,A,2,chiller,DAI-003,"Amul Butter 100 g",7,24
+E3-05-A3,E3-05,A,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",19,24
+E3-05-A4,E3-05,A,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",14,24
+E3-05-A5,E3-05,A,5,chiller,DAI-003,"Amul Butter 100 g",14,24
+E3-05-B1,E3-05,B,1,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",19,24
+E3-05-B2,E3-05,B,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",3,24
+E3-05-B3,E3-05,B,3,chiller,DAI-004,"Amul Butter 500 g",3,24
+E3-05-B4,E3-05,B,4,chiller,DAI-004,"Amul Butter 500 g",5,24
+E3-05-B5,E3-05,B,5,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",23,24
+E3-05-C1,E3-05,C,1,chiller,DAI-003,"Amul Butter 100 g",3,24
+E3-05-C2,E3-05,C,2,chiller,DAI-003,"Amul Butter 100 g",17,24
+E3-05-C3,E3-05,C,3,chiller,DAI-007,"Amul Fresh Paneer 200 g",13,24
+E3-05-C4,E3-05,C,4,chiller,DAI-007,"Amul Fresh Paneer 200 g",4,24
+E3-05-C5,E3-05,C,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",11,24
+E3-05-D1,E3-05,D,1,chiller,DAI-003,"Amul Butter 100 g",7,24
+E3-05-D2,E3-05,D,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",17,24
+E3-05-D3,E3-05,D,3,chiller,DAI-004,"Amul Butter 500 g",7,24
+E3-05-D4,E3-05,D,4,chiller,DAI-003,"Amul Butter 100 g",12,24
+E3-05-D5,E3-05,D,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",13,24
+E3-05-E1,E3-05,E,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",11,24
+E3-05-E2,E3-05,E,2,chiller,DAI-004,"Amul Butter 500 g",10,24
+E3-05-E3,E3-05,E,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",21,24
+E3-05-E4,E3-05,E,4,chiller,DAI-006,"Amul Cheese Slices 200 g",14,24
+E3-05-E5,E3-05,E,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",10,24
+E4-05-A1,E4-05,A,1,chiller,DAI-011,"Yakult Probiotic 5×65 ml",23,24
+E4-05-A2,E4-05,A,2,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",22,24
+E4-05-A3,E4-05,A,3,chiller,DAI-005,"Mother Dairy Classic Dahi 400 g",6,24
+E4-05-A4,E4-05,A,4,chiller,DAI-003,"Amul Butter 100 g",14,24
+E4-05-A5,E4-05,A,5,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",19,24
+E4-05-B1,E4-05,B,1,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",8,24
+E4-05-B2,E4-05,B,2,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",5,24
+E4-05-B3,E4-05,B,3,chiller,DAI-001,"Amul Taaza Toned Milk 500 ml",18,24
+E4-05-B4,E4-05,B,4,chiller,DAI-003,"Amul Butter 100 g",20,24
+E4-05-B5,E4-05,B,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",22,24
+E4-05-C1,E4-05,C,1,chiller,DAI-006,"Amul Cheese Slices 200 g",7,24
+E4-05-C2,E4-05,C,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",16,24
+E4-05-C3,E4-05,C,3,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",5,24
+E4-05-C4,E4-05,C,4,chiller,DAI-011,"Yakult Probiotic 5×65 ml",19,24
+E4-05-C5,E4-05,C,5,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",23,24
+E4-05-D1,E4-05,D,1,chiller,DAI-007,"Amul Fresh Paneer 200 g",3,24
+E4-05-D2,E4-05,D,2,chiller,DAI-009,"Amul Kool Kesar 180 ml",0,24
+E4-05-D3,E4-05,D,3,chiller,DAI-011,"Yakult Probiotic 5×65 ml",15,24
+E4-05-D4,E4-05,D,4,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",21,24
+E4-05-D5,E4-05,D,5,chiller,DAI-011,"Yakult Probiotic 5×65 ml",10,24
+E4-05-E1,E4-05,E,1,chiller,DAI-008,"Epigamia Greek Yogurt 90 g",15,24
+E4-05-E2,E4-05,E,2,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",18,24
+E4-05-E3,E4-05,E,3,chiller,DAI-002,"Mother Dairy Full Cream Milk 500 ml",17,24
+E4-05-E4,E4-05,E,4,chiller,DAI-010,"iD Idly & Dosa Batter 1 kg",22,24
+E4-05-E5,E4-05,E,5,chiller,DAI-007,"Amul Fresh Paneer 200 g",8,24
+K1-01-A1,K1-01,A,1,hv,HV-003,"Toblerone Milk 100 g",2,12
+K1-01-A2,K1-01,A,2,hv,HV-005,"Lakmé 9to5 Lipstick",2,12
+K1-01-A3,K1-01,A,3,hv,HV-001,"Ferrero Rocher 16 pcs",8,12
+K1-01-B1,K1-01,B,1,hv,HV-001,"Ferrero Rocher 16 pcs",3,12
+K1-01-B2,K1-01,B,2,hv,HV-002,"Cadbury Celebrations Premium",2,12
+K1-01-B3,K1-01,B,3,hv,HV-008,"Nutraj California Almonds 500 g",5,12
+K1-01-C1,K1-01,C,1,hv,HV-003,"Toblerone Milk 100 g",3,12
+K1-01-C2,K1-01,C,2,hv,HV-009,"Happilo Whole Cashews 200 g",5,12
+K1-01-C3,K1-01,C,3,hv,HV-001,"Ferrero Rocher 16 pcs",4,12
+K1-01-D1,K1-01,D,1,hv,HV-004,"Maybelline Fit Me Foundation",8,12
+K1-01-D2,K1-01,D,2,hv,HV-006,"Gillette Mach3 Cartridges 4",8,12
+K1-01-D3,K1-01,D,3,hv,HV-005,"Lakmé 9to5 Lipstick",7,12
+K1-02-A1,K1-02,A,1,hv,HV-003,"Toblerone Milk 100 g",2,12
+K1-02-A2,K1-02,A,2,hv,HV-008,"Nutraj California Almonds 500 g",6,12
+K1-02-A3,K1-02,A,3,hv,HV-009,"Happilo Whole Cashews 200 g",6,12
+K1-02-B1,K1-02,B,1,hv,HV-007,"boAt Airdopes 141",4,12
+K1-02-B2,K1-02,B,2,hv,HV-001,"Ferrero Rocher 16 pcs",4,12
+K1-02-B3,K1-02,B,3,hv,HV-009,"Happilo Whole Cashews 200 g",8,12
+K1-02-C1,K1-02,C,1,hv,HV-009,"Happilo Whole Cashews 200 g",1,12
+K1-02-C2,K1-02,C,2,hv,HV-008,"Nutraj California Almonds 500 g",1,12
+K1-02-C3,K1-02,C,3,hv,HV-009,"Happilo Whole Cashews 200 g",5,12
+K1-02-D1,K1-02,D,1,hv,HV-008,"Nutraj California Almonds 500 g",3,12
+K1-02-D2,K1-02,D,2,hv,HV-009,"Happilo Whole Cashews 200 g",0,12
+K1-02-D3,K1-02,D,3,hv,HV-001,"Ferrero Rocher 16 pcs",5,12
+K1-03-A1,K1-03,A,1,hv,HV-005,"Lakmé 9to5 Lipstick",6,12
+K1-03-A2,K1-03,A,2,hv,HV-003,"Toblerone Milk 100 g",5,12
+K1-03-A3,K1-03,A,3,hv,HV-007,"boAt Airdopes 141",0,12
+K1-03-B1,K1-03,B,1,hv,HV-009,"Happilo Whole Cashews 200 g",5,12
+K1-03-B2,K1-03,B,2,hv,HV-006,"Gillette Mach3 Cartridges 4",4,12
+K1-03-B3,K1-03,B,3,hv,HV-006,"Gillette Mach3 Cartridges 4",5,12
+K1-03-C1,K1-03,C,1,hv,HV-002,"Cadbury Celebrations Premium",7,12
+K1-03-C2,K1-03,C,2,hv,HV-005,"Lakmé 9to5 Lipstick",0,12
+K1-03-C3,K1-03,C,3,hv,HV-009,"Happilo Whole Cashews 200 g",6,12
+K1-03-D1,K1-03,D,1,hv,HV-001,"Ferrero Rocher 16 pcs",3,12
+K1-03-D2,K1-03,D,2,hv,HV-008,"Nutraj California Almonds 500 g",8,12
+K1-03-D3,K1-03,D,3,hv,HV-010,"Davidoff Rich Aroma Coffee 100 g",4,12
+K1-04-A1,K1-04,A,1,hv,HV-003,"Toblerone Milk 100 g",5,12
+K1-04-A2,K1-04,A,2,hv,HV-002,"Cadbury Celebrations Premium",5,12
+K1-04-A3,K1-04,A,3,hv,HV-008,"Nutraj California Almonds 500 g",2,12
+K1-04-B1,K1-04,B,1,hv,HV-007,"boAt Airdopes 141",5,12
+K1-04-B2,K1-04,B,2,hv,HV-010,"Davidoff Rich Aroma Coffee 100 g",2,12
+K1-04-B3,K1-04,B,3,hv,HV-001,"Ferrero Rocher 16 pcs",6,12
+K1-04-C1,K1-04,C,1,hv,HV-005,"Lakmé 9to5 Lipstick",4,12
+K1-04-C2,K1-04,C,2,hv,HV-002,"Cadbury Celebrations Premium",0,12
+K1-04-C3,K1-04,C,3,hv,HV-001,"Ferrero Rocher 16 pcs",1,12
+K1-04-D1,K1-04,D,1,hv,HV-004,"Maybelline Fit Me Foundation",7,12
+K1-04-D2,K1-04,D,2,hv,HV-010,"Davidoff Rich Aroma Coffee 100 g",7,12
+K1-04-D3,K1-04,D,3,hv,HV-010,"Davidoff Rich Aroma Coffee 100 g",1,12

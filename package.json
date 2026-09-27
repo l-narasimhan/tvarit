@@ -10,10 +10,13 @@
     "shot": "node scripts/shot.mjs"
   },
   "dependencies": {
-    "three": "^0.184.0"
+    "pdfjs-dist": "^4.10.38",
+    "three": "^0.184.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@types/three": "^0.184.0",
+    "pdf-lib": "^1.17.1",
     "typescript": "~5.9.2",
     "vite": "^7.1.0"
   }

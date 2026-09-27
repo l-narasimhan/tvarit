@@ -3,7 +3,8 @@
 //
 // World frame: x runs along the sheet's columns (left -> right), z along its rows (top -> bottom), y is up.
 
-import { CATALOG, byGroup, groupForRack, type Group, type Product } from './catalog'
+import { CATALOG, byGroup, groupForRack, type Group, type Product, type Shape } from './catalog'
+import type { BinRow } from './intake/bins'
 import type { SheetItem, SheetLayout } from './layout/schema'
 import { hash, rng } from './rng'
 
@@ -113,7 +114,45 @@ export function toWorld(cx: number, cz: number, ry: number, lx: number, lz: numb
   return [cx + lx * c + lz * s, cz - lx * s + lz * c]
 }
 
-export function buildStore(L: SheetLayout): Store {
+/** A product for a bin-master row: the catalogue's if the SKU or name matches, else one made from the row. */
+function productFor(row: BinRow, zone: Zone): Product {
+  const byName = row.product?.toLowerCase()
+  const hit = CATALOG.find(p => (row.sku && p.sku === row.sku) || (byName && p.name.toLowerCase() === byName))
+  if (hit) return hit
+  const name = row.product || row.sku || row.bin
+  const n = name.toLowerCase()
+  const shape: Shape = /\b(ml|l|ltr|litre)\b|bottle|juice|oil|shampoo|lotion|cola|water/.test(n) ? 'bottle'
+    : /chips|namkeen|pouch|kurkure|bhujia|masala|noodle/.test(n) ? 'pouch'
+    : /\b(kg)\b|atta|rice|flour|dal/.test(n) ? 'bag'
+    : /curd|dahi|yogurt|ice cream/.test(n) ? 'tub' : 'box'
+  const dims: Record<string, [number, number, number]> = { bottle: [0.075, 0.24, 0.075], pouch: [0.16, 0.24, 0.07], bag: [0.26, 0.38, 0.1], tub: [0.1, 0.08, 0.1], box: [0.14, 0.18, 0.07] }
+  const [w, h, d] = dims[shape]
+  // A steady colour per product, from its name.
+  const hue = hash(name) % 360, sat = 0.62, lig = 0.46
+  const f = (k: number) => { const a = sat * Math.min(lig, 1 - lig); const v = (k + hue / 30) % 12; return Math.round(255 * (lig - a * Math.max(-1, Math.min(v - 3, 9 - v, 1)))) }
+  const color = (f(0) << 16) | (f(8) << 8) | f(4)
+  const group: Group = zone === 'chiller' ? 'dairy' : zone === 'hv' ? 'hv' : 'misc'
+  return { sku: row.sku || `BIN-${row.bin}`, name, group, shape, w, h, d, color, mrp: 0 }
+}
+
+export function buildStore(L: SheetLayout, bins?: BinRow[]): Store {
+  // From the bin master: each rack's levels, bins per level, zone, and each bin's row.
+  const binAt = new Map<string, BinRow>()
+  const rackInfo = new Map<string, { levels: number; per: number; zones: Record<string, number> }>()
+  for (const b of bins ?? []) {
+    binAt.set(`${b.rack}|${b.level}|${b.pos}`, b)
+    const li = Math.max(0, LEVEL.indexOf(b.level))
+    const inf = rackInfo.get(b.rack) ?? { levels: 0, per: 0, zones: {} }
+    inf.levels = Math.max(inf.levels, li + 1); inf.per = Math.max(inf.per, b.pos)
+    if (b.zone) inf.zones[b.zone] = (inf.zones[b.zone] ?? 0) + 1
+    rackInfo.set(b.rack, inf)
+  }
+  const rackZone = (id: string): Zone | null => {
+    const z = rackInfo.get(id)?.zones
+    if (!z) return null
+    return (Object.entries(z).sort((a, b) => b[1] - a[1])[0]?.[0] as Zone) ?? null
+  }
+
   const { w: cw, h: ch } = L.cell
   const W = L.cols * cw, D = L.rows * ch
   const m = (i: SheetItem): Rect => ({ x0: i.c0 * cw, z0: i.r0 * ch, x1: i.c1 * cw, z1: i.r1 * ch })
@@ -149,8 +188,10 @@ export function buildStore(L: SheetLayout): Store {
       const w = openness(t => [f.x0 - probe, f.z0 + t * fd]), e = openness(t => [f.x1 + probe, f.z0 + t * fd])
       face = w > e ? 'W' : 'E'
     }
-    const zone = zoneAt(mx, mz)
+    const zone = rackZone(id) ?? zoneAt(mx, mz)
     const spec = SPEC[zone]
+    const info = rackInfo.get(id)
+    const levels = Math.min(8, info?.levels || spec.levels)
     const len = (across ? fw : fd) - 0.03
     const depth = Math.min(spec.depth, across ? fd : fw)
     // The shelving stands against its back edge; the rest of the cell is aisle.
@@ -160,12 +201,12 @@ export function buildStore(L: SheetLayout): Store {
     if (face === 'E') cx = f.x0 + depth / 2
     if (face === 'W') cx = f.x1 - depth / 2
     const base = 0.1, top = 0.06
-    const gap = (spec.height - base - top) / spec.levels
+    const gap = (spec.height - base - top) / levels
     racks.push({
       id, zone, group: groupForRack(id, zone), inferred: !!it.inferred, foot: f, face,
-      cx, cz, ry: FACE_RY[face], len, depth, height: spec.height, levels: spec.levels,
-      perLevel: Math.max(1, Math.round(len / spec.bin)),
-      shelfY: Array.from({ length: spec.levels }, (_, k) => base + k * gap + 0.02), gap: gap - 0.02,
+      cx, cz, ry: FACE_RY[face], len, depth, height: spec.height, levels,
+      perLevel: Math.min(12, info?.per || Math.max(1, Math.round(len / spec.bin))),
+      shelfY: Array.from({ length: levels }, (_, k) => base + k * gap + 0.02), gap: gap - 0.02,
     })
   }
 
@@ -176,14 +217,18 @@ export function buildStore(L: SheetLayout): Store {
     const bw = r.len / r.perLevel
     r.shelfY.forEach((sy, k) => {
       for (let j = 0; j < r.perLevel; j++) {
-        const code = `${r.id}-${LEVEL[k]}${j + 1}`
+        const row = binAt.get(`${r.id}|${LEVEL[k]}|${j + 1}`)
+        const code = row?.bin ?? `${r.id}-${LEVEL[k]}${j + 1}`
         const rand = rng(hash(code))
         const lx = -r.len / 2 + (j + 0.5) * bw
         const [x, z] = toWorld(r.cx, r.cz, r.ry, lx, 0)
         const empty = rand() < 0.04
-        const sku = pool[Math.floor(rand() * pool.length)]
-        const cap = r.zone === 'hv' ? 12 : r.zone === 'chiller' ? 24 : 36
-        const qty = empty ? 0 : r.zone === 'hv' ? 1 + Math.floor(rand() * 8) : 3 + Math.floor(rand() * (cap - 3))
+        const defCap = r.zone === 'hv' ? 12 : r.zone === 'chiller' ? 24 : 36
+        // With a bin master, a position it does not list is an unused bin.
+        const listed = !bins?.length || !!row
+        const sku = !listed ? null : row && (row.sku || row.product) ? productFor(row, r.zone) : pool[Math.floor(rand() * pool.length)]
+        const cap = row?.cap ?? defCap
+        const qty = !listed ? 0 : row?.qty != null ? Math.min(cap, row.qty) : empty ? 0 : r.zone === 'hv' ? 1 + Math.floor(rand() * 8) : 3 + Math.floor(rand() * (cap - 3))
         slots.push({
           code, kind: 'bin', owner: r.id, zone: r.zone, level: LEVEL[k], pos: j + 1,
           x, y: sy + r.gap / 2, z, w: bw - 0.01, h: r.gap, d: r.depth - 0.02, ry: r.ry,
