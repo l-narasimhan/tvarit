@@ -21,6 +21,7 @@
         <span class="sep"></span>
         <span class="simctl"><b id="simclock">--:--:--</b>
           <button data-speed="0" title="Pause">⏸</button><button data-speed="1" class="on">1×</button><button data-speed="5">5×</button><button data-speed="20">20×</button><button data-speed="60">60×</button></span>
+        <button id="labopen" class="lab" title="Compare how the store runs under different settings">🧪 Scenario lab</button>
         <button id="jump" title="Jump to just before the first lorry (01:00)">⏭ Night inbound</button>
         <button id="neworder" class="go" title="Trace one live order end to end">▶ Follow an order</button>
         <button id="walk" title="First-person walk (V)">🚶 Walk</button>
@@ -56,6 +57,35 @@
       <div class="cross"></div>
       <div id="aim" hidden></div>
       <div class="help"><b>Click</b> to look around · <b>↑↓</b> move · <b>←→</b> turn · <b>A D</b> sidestep · <b>Shift</b> hurry · <b>Click</b> a bin to scan it · <b>Esc</b> free mouse · <b>V</b> leave walk</div>
+    </div>
+    <div id="replay" hidden></div>
+    <div id="lab" hidden>
+      <div class="sheet">
+        <div class="lhead"><h2>Scenario lab · <span id="lab-store"></span></h2><button id="lab-close" aria-label="Close">×</button></div>
+        <p class="sub">Change B, run both over the same simulated days, compare. Each day is a full 24 h of this store with night inbound.</p>
+        <div class="lgrid">
+          <div>
+            <table id="lab-knobs" class="knobs"></table>
+            <div class="presets"><span>Try for B:</span><span id="lab-presets"></span><button id="lab-reset">B = A</button></div>
+            <div class="runrow">
+              <label>Days per scenario <input id="lab-seeds" type="number" value="5" min="1" max="20" /></label>
+              <button id="lab-run" class="go">▶ Run A and B</button>
+              <div id="lab-progress" data-text="Not run yet"></div>
+            </div>
+          </div>
+          <div>
+            <table id="lab-kpis" class="kpis"><tr><td class="same">Run the lab to see A and B side by side.</td></tr></table>
+            <div class="replayrow">See it in 3D:
+              <select id="lab-which"><option value="B">B · the change</option><option value="A">A · today</option></select>
+              <select id="lab-seed"><option value="1">day 1</option></select>
+              <select id="lab-hour"><option value="0">from 00:00</option><option value="1">from 01:00</option><option value="2">from 02:00</option><option value="3">from 03:00</option><option value="4">from 04:00</option><option value="5">from 05:00</option><option value="6">from 06:00</option><option value="7">from 07:00</option><option value="8">from 08:00</option><option value="9">from 09:00</option><option value="10">from 10:00</option><option value="11">from 11:00</option><option value="12">from 12:00</option><option value="13">from 13:00</option><option value="14">from 14:00</option><option value="15">from 15:00</option><option value="16">from 16:00</option><option value="17">from 17:00</option><option value="18">from 18:00</option><option value="19" selected>from 19:00</option><option value="20">from 20:00</option><option value="21">from 21:00</option><option value="22">from 22:00</option><option value="23">from 23:00</option></select>
+              <button id="lab-3d">Open in 3D</button>
+            </div>
+          </div>
+        </div>
+        <div id="lab-charts"></div>
+      </div>
+      <div id="lab-tip" hidden></div>
     </div>
     <div id="newstore" hidden>
       <div class="sheet">

@@ -24,6 +24,8 @@ import './style.css'
 import type { BinRow } from './intake/bins'
 import { getStore, lastStore, rememberStore } from './intake/registry'
 import { demoImport, mountForm, mountStorePicker } from './intake/ui'
+import { BASE, toConfig, type Knobs } from './lab/run'
+import { mountLab, mountLabHover, openLab } from './lab/ui'
 
 // ---- Renderer, camera, lights ----------------------------------------------------------------------------
 const canvas = document.querySelector<HTMLCanvasElement>('#c')!
@@ -82,8 +84,19 @@ function load(layout = STORE01, bins?: BinRow[]) {
   // mid-shift: orders flowing, riders out, stock already moved.
   const qs0 = new URLSearchParams(location.search)
   const startHour = Number(qs0.get('hour') ?? 19)
-  sim = new Sim(store, new NavGrid(store), { seed: Number(qs0.get('seed') ?? 1) }, startHour - 0.5)
-  sim.advance(1800)
+  const scn = qs0.get('scn')
+  if (scn) {
+    // Replaying a lab run: the same settings and day, run from midnight up to the chosen hour.
+    const k: Knobs = { ...BASE, ...JSON.parse(atob(scn)) }
+    sim = new Sim(store, new NavGrid(store), { ...toConfig(k), seed: Number(qs0.get('seed') ?? 1) }, 0)
+    sim.advance(startHour * 3600)
+    const el = document.querySelector<HTMLElement>('#replay')!
+    el.hidden = false
+    el.innerHTML = `Replay · scenario ${qs0.get('scnname') ?? ''} · day ${qs0.get('seed') ?? 1} · from ${String(startHour).padStart(2, '0')}:00<a href="?store=${encodeURIComponent(qs0.get('store') ?? '')}">✕ exit</a>`
+  } else {
+    sim = new Sim(store, new NavGrid(store), { seed: Number(qs0.get('seed') ?? 1) }, startHour - 0.5)
+    sim.advance(1800)
+  }
   const goods = new Goods()
   for (const s of store.slots) if (s.kind === 'bin') goods.stockBin(s)
   sim.onPick = s => goods.setBinQty(s)
@@ -464,6 +477,15 @@ rememberStore(record.name)
 load(record.layout, record.bins ?? undefined)
 await mountStorePicker(record.name)
 mountForm()
+mountLab(record)
+mountLabHover()
+if (bootQs.get('lab')) openLab()
+if (bootQs.get('lab') === 'run') {
+  // Check hook: B = the "More riders" preset, 3 days each, run.
+  document.querySelector<HTMLButtonElement>('#lab-presets [data-p="4"]')!.click()
+  document.querySelector<HTMLInputElement>('#lab-seeds')!.value = '3'
+  document.querySelector<HTMLButtonElement>('#lab-run')!.click()
+}
 if (bootQs.get('nsdemo')) demoImport()
 resize()
 // URL hooks for screenshot checks: ?view=top | chiller | hv | ph | aisle, ?find=A5-06-C3, ?walls=low

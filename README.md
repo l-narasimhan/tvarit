@@ -17,3 +17,4 @@ Layout-driven 3D twin of a quick-commerce darkstore. `npm run dev` → http://lo
 - `src/intake/` — `pdf.ts` (PDF → layout), `bins.ts` (bin master), `registry.ts` (saved stores), `ui.ts` (picker + form)
 - `npx tsx scripts/check-intake.ts <layout.pdf> <bins.csv>` — read files headless and report; `scripts/make-samples.ts` — render a layout as a sheet-style PDF + bin CSV
 - `node scripts/cdp-shot.mjs "<query>" <secs> "<selector>" <out.png>` — real-time headless check (workers/IndexedDB work)
+- **Scenario lab (M6):** header 🧪 → knobs for A (today) and B (the change) → run N simulated days each in Web Workers → KPIs side by side, hourly charts, "Open in 3D" replays any run (`?scn=…&seed=&hour=`). `src/lab/` — `run.ts` (knobs → config → day → KPIs), `worker.ts`, `ui.ts`

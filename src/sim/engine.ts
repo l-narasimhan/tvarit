@@ -20,11 +20,16 @@ export interface SimConfig {
   demand: number[]
   /** Demand multiplier, for peak-day scenarios. */
   demandScale: number
+  /** Pickers employed (the most on shift at once). */
   pickers: number
+  /** Pickers on shift by hour; defaults to all of them every hour. */
+  pickerRoster?: number[]
   /** Riders employed (the most on shift at once). */
   riders: number
   /** Riders on shift by hour; defaults to demand ÷ 3 trips an hour × 1.35 headroom, capped at `riders`. */
   riderRoster?: number[]
+  /** Headroom over demand when sizing the default rider roster (0.35 = 35 % more riders than trips need). */
+  riderHeadroom: number
   /** Order-to-dispatch target, seconds. */
   sla: number
   /** Mean lines per order. */
@@ -65,6 +70,7 @@ export const DEFAULTS: SimConfig = {
   demandScale: 1,
   pickers: 8,
   riders: 36,
+  riderHeadroom: 0.35,
   sla: 120,
   linesMean: 4,
   walk: 1.3,
@@ -137,6 +143,20 @@ type Step =
   | { kind: 'call'; fn: () => void }
   | { kind: 'drive'; to: P2; speed: number; status: string }
 
+/** What happened in one hour of the day. */
+export interface HourStat {
+  orders: number       // dispatched in this hour
+  o2d: number          // sum of their O2D, seconds
+  hit: number          // of them within the SLA
+  arrived: number
+  maxOpen: number
+  pickerOn: number     // picker-seconds on shift
+  pickerBusy: number   // picker-seconds on an order or inbound task
+  riderOn: number
+  riderBusy: number
+}
+const hourStat = (): HourStat => ({ orders: 0, o2d: 0, hit: 0, arrived: 0, maxOpen: 0, pickerOn: 0, pickerBusy: 0, riderOn: 0, riderBusy: 0 })
+
 export interface Worker {
   id: string
   role: 'picker' | 'rider'
@@ -200,6 +220,9 @@ export class Sim {
   private lorryDone = new Set<string>()
   private caseSeq = 1
   readonly roster: number[] = []
+  readonly pickerRoster: number[] = []
+  /** Per hour since midnight of day 0. */
+  readonly hours: HourStat[] = []
   /** When the last case went onto a shelf. */
   lastPutaway = 0
   onPH: (s: Slot) => void = () => {}
@@ -266,9 +289,11 @@ export class Sim {
       if (w.act === 'phone') w.z += 0.55
       this.workers.push(w)
     }
-    this.roster = this.cfg.riderRoster ?? this.cfg.demand.map(d => Math.min(this.cfg.riders, Math.max(3, Math.ceil((d * this.cfg.demandScale / 3) * 1.35))))
-    // Start with the hour's roster on shift; the rest are off.
+    this.roster = this.cfg.riderRoster ?? this.cfg.demand.map(d => Math.min(this.cfg.riders, Math.max(3, Math.ceil((d * this.cfg.demandScale / 3) * (1 + this.cfg.riderHeadroom)))))
+    this.pickerRoster = this.cfg.pickerRoster ?? this.cfg.demand.map(() => this.cfg.pickers)
+    // Start with the hour's rosters on shift; the rest are off.
     this.workers.filter(w => w.role === 'rider').forEach((w, i) => { if (i >= this.roster[this.hour]) this.setShift(w, false) })
+    this.workers.filter(w => w.role === 'picker').forEach((w, i) => { if (i >= this.pickerRoster[this.hour]) this.setShift(w, false) })
   }
 
   private worker(role: Worker['role'], name: string, home: P2, bay: P2 | null): Worker {
@@ -300,6 +325,20 @@ export class Sim {
     this.dispatch()
     for (const w of this.workers) this.move(w)
     for (const l of this.lorries) this.drive(l)
+    const h = this.stat()
+    h.maxOpen = Math.max(h.maxOpen, this.open.length)
+    for (const w of this.workers) {
+      if (!w.onShift) continue
+      const busy = !!(w.order || w.task)
+      if (w.role === 'picker') { h.pickerOn += STEP; if (busy) h.pickerBusy += STEP }
+      else { h.riderOn += STEP; if (busy) h.riderBusy += STEP }
+    }
+  }
+
+  private stat(): HourStat {
+    const i = Math.floor(this.t / 3600)
+    while (this.hours.length <= i) this.hours.push(hourStat())
+    return this.hours[i]
   }
 
   private gap() {
@@ -331,6 +370,7 @@ export class Sim {
     }
     this.log(o, 'order', `Order placed · ${lines.length} line${lines.length > 1 ? 's' : ''}, ${o.units} unit${o.units > 1 ? 's' : ''}`)
     this.open.push(o)
+    this.stat().arrived++
   }
 
   private sample(zone: string, not: Set<Slot>): Slot | null {
@@ -377,7 +417,7 @@ export class Sim {
     // stay by the unloading area for the next job.
     const live = this.inboundLive()
     for (const w of this.workers) {
-      if (w.role !== 'picker' || w.order || w.task || w.plan.length) continue
+      if (w.role !== 'picker' || !w.onShift || w.order || w.task || w.plan.length) continue
       if (live) continue
       if (Math.hypot(w.x - w.home[0], w.z - w.home[1]) > 1.5) {
         w.homing = true
@@ -388,18 +428,25 @@ export class Sim {
 
   // ---- Rider shifts: bring riders on or send idle ones home to match the hour's roster ----
   private shiftChange() {
-    const riders = this.workers.filter(w => w.role === 'rider')
-    const want = this.roster[this.hour]
-    let on = riders.filter(w => w.onShift).length
-    for (const w of riders) {
-      if (on < want && !w.onShift && !w.order) { this.setShift(w, true); on++ }
-      else if (on > want && w.onShift && !w.order && !w.plan.length) { this.setShift(w, false); on-- }
+    for (const [role, roster] of [['rider', this.roster], ['picker', this.pickerRoster]] as const) {
+      const crew = this.workers.filter(w => w.role === role)
+      const want = roster[this.hour]
+      let on = crew.filter(w => w.onShift).length
+      for (const w of crew) {
+        if (on < want && !w.onShift && !w.order) { this.setShift(w, true); on++ }
+        else if (on > want && w.onShift && !w.order && !w.task && !w.plan.length) { this.setShift(w, false); on-- }
+      }
     }
   }
 
   private setShift(w: Worker, on: boolean) {
     w.onShift = on
     w.visible = on
+    if (w.role === 'picker') {
+      if (on) { w.x = w.home[0]; w.z = w.home[1]; w.act = 'idle'; w.idleSince = this.t }
+      w.status = on ? 'At the table · waiting for an order' : 'Off shift'
+      return
+    }
     if (w.scooter) { w.scooter.visible = on; w.scooter.x = w.bay![0]; w.scooter.z = w.bay![1]; w.scooter.yaw = -Math.PI / 2 }
     if (on) { w.x = w.bay![0] + 0.3; w.z = w.bay![1]; w.yaw = -Math.PI / 2; w.act = 'ride'; w.idleSince = this.t; w.status = 'In rider bay · waiting' }
     else w.status = 'Off shift'
@@ -654,6 +701,8 @@ export class Sim {
         this.open = this.open.filter(x => x !== o)
         this.done.push(o)
         const o2d = o.tOut - o.t0
+        const hs = this.stat()
+        hs.orders++; hs.o2d += o2d; if (o2d <= this.cfg.sla) hs.hit++
         this.log(o, 'done', `Collected from ${ph.code} · dispatched · O2D ${fmt(o2d)} ${o2d <= this.cfg.sla ? '✓' : '✗'} (target ${fmt(this.cfg.sla)})`)
       } },
       { kind: 'go', to: stand, status: `Order ${o.id} · back to the scooter` },
@@ -692,7 +741,7 @@ export class Sim {
     if (w.order || w.task) w.busyTime += STEP
     while (w.plan[0]?.kind === 'call') (w.plan.shift() as { fn: () => void }).fn()
     const s = w.plan[0]
-    if (!s) { if (w.role === 'picker') this.idle(w); return }
+    if (!s) { if (w.role === 'picker' && w.onShift) this.idle(w); return }
     w.status = s.status
     if (s.kind === 'go') {
       s.path ??= this.path([w.x, w.z], s.to)
@@ -742,7 +791,7 @@ export class Sim {
       // Turn to the nearest other waiting picker.
       let best: Worker | null = null, bd = 3
       for (const o of this.workers) {
-        if (o === w || o.role !== 'picker' || o.order || o.task || o.plan.length) continue
+        if (o === w || o.role !== 'picker' || !o.onShift || o.order || o.task || o.plan.length) continue
         const d = Math.hypot(o.x - w.x, o.z - w.z)
         if (d < bd) { bd = d; best = o }
       }
@@ -762,6 +811,7 @@ export class Sim {
   ridersIn() { return this.workers.filter(w => w.role === 'rider' && w.onShift && !w.order).length }
   ridersOnShift() { return this.workers.filter(w => w.role === 'rider' && w.onShift).length }
   pickersBusy() { return this.workers.filter(w => w.role === 'picker' && (w.order || w.task)).length }
+  pickersOnShift() { return this.workers.filter(w => w.role === 'picker' && w.onShift).length }
   inbound() {
     const n = (s: CaseState) => this.cases.filter(c => c.state === s).length
     return {
