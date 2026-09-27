@@ -1,6 +1,6 @@
 # Tvarit — status
 
-Paused 2026-09-27. Run: `npm run dev` in `~/dtwin/darkstore` → http://localhost:5220
+Paused 2026-09-27 (last update: Pendency TV fix, commit a5f3bc6). Run: `npm run dev` in `~/dtwin/darkstore` → http://localhost:5220
 
 ## Built
 | Milestone | What |
@@ -12,6 +12,7 @@ Paused 2026-09-27. Run: `npm run dev` in `~/dtwin/darkstore` → http://localhos
 | M5 | Night inbound 01:00–04:00: lorries dock, unload → GRN check → putaway by pickers; orders-first rule |
 | Intake | ＋ New darkstore: name + layout PDF (Google Sheets export) + bin master CSV/XLSX → preview → saved in the browser; header dropdown switches stores; generic darkstore + samples |
 | Roster | Rider shifts by hour (up to 36 at the evening peak); natural idle behaviour |
+| Fixes | Pendency TV opens as a full-size live panel (works in every store); dev server falls back to a free port if 5220 is taken — open the URL it prints |
 | M6 | Scenario lab: A vs B knobs, multi-day runs in Web Workers, KPI comparison, hourly charts, replay any run in 3D |
 
 ## Resume here
