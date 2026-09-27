@@ -106,7 +106,7 @@ export class Inbound {
 
   constructor(private sim: Sim) {
     this.group.name = 'inbound'
-    this.staged = new THREE.InstancedMesh(new THREE.BoxGeometry(0.42, 0.3, 0.34), std(0xffffff, 0.85, 0), Math.max(1, sim.spots.length * 4))
+    this.staged = new THREE.InstancedMesh(new THREE.BoxGeometry(0.42, 0.3, 0.34), std(0xffffff, 0.85, 0), Math.max(1, sim.spots.length * 5))
     this.staged.castShadow = true
     this.staged.count = 0
     this.group.add(this.staged)
@@ -123,11 +123,12 @@ export class Inbound {
     const stack = this.sim.spots.map(() => 0)
     let n = 0
     for (const c of this.sim.cases) {
-      if (c.state !== 'staged' || c.spot < 0) continue
+      if (!(c.state === 'unloaded' || c.state === 'checking' || c.state === 'received') || c.spot < 0) continue
       const [x, z] = this.sim.spots[c.spot]
       this.m.makeTranslation(x, 0.15 + stack[c.spot]++ * 0.31, z)
       this.staged.setMatrixAt(n, this.m)
-      this.staged.setColorAt(n, this.color.set(0xb98b57).lerp(this.color.clone().set(c.color), 0.25))
+      // Unchecked cases plain kraft; checked (received) ones take a green tint, ready for putaway.
+      this.staged.setColorAt(n, this.color.set(c.state === 'received' ? 0x9fc79a : 0xb98b57))
       n++
     }
     this.staged.count = n

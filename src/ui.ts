@@ -138,7 +138,7 @@ export function renderKpis(sim: Sim) {
   const hr = sim.recent(3600)
   const ib = sim.inbound()
   const inbound = ib.total && (ib.lorry || ib.staged || ib.moving || ib.onLorry)
-    ? `<div class="inb"><b>Inbound</b> ${ib.lorry ? `lorry ${ib.lorry.id} ${ib.lorry.state}` : ''} · ${ib.onLorry} on lorry · ${ib.staged} at GRN · ${ib.moving} being put away · ${ib.done}/${ib.total} done · ${ib.onInbound} pickers on inbound</div>`
+    ? `<div class="inb"><b>Inbound</b> ${ib.lorry ? `lorry ${ib.lorry.id} ${ib.lorry.state}` : ''} · ${ib.onLorry} on lorry · ${ib.unloaded} to check · ${ib.received} checked · ${ib.moving} being put away · ${ib.done}/${ib.total} done · ${ib.onInbound} pickers on inbound</div>`
     : ib.total ? `<div class="inb"><b>Inbound</b> ${ib.done}/${ib.total} cases put away · last at ${clock(sim.lastPutaway)}</div>` : ''
   $('#kpis').innerHTML = `<div class="sub">Since the run started · last hour</div>
     <div class="grid kp">
