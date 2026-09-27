@@ -1,4 +1,6 @@
-# Darkstore Twin
+# Tvarit
+
+Tvarit (त्वरित, "swift") — a layout-driven 3D digital twin and simulator of a quick-commerce darkstore.
 
 Layout-driven 3D twin of a quick-commerce darkstore. `npm run dev` → http://localhost:5220
 

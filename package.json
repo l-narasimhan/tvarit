@@ -1,9 +1,9 @@
 {
-  "name": "darkstore",
+  "name": "tvarit",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Darkstore twin — a layout-driven 3D digital twin of a quick-commerce darkstore (Three.js, 1 unit = 1 metre)",
+  "description": "Tvarit — a layout-driven 3D digital twin of a quick-commerce darkstore (Three.js, 1 unit = 1 metre)",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
