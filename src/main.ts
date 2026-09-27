@@ -173,8 +173,16 @@ function view(name: string, instant = false) {
     return fly(V(p.cx + 4.5, 2.6, p.cz - 3), V(p.cx, 1, p.cz), instant)
   }
   if (name === 'tv') {
+    // Step back from the screen, slightly off-axis, until the next step would enter a wall or a rack —
+    // however far that is in this store (a fixed offset put the camera inside the generic store's chiller).
     const p = tv.pos.clone()
-    return fly(p.clone().add(V(6.2, -0.85, 1.4)), p.clone().add(V(0, -0.35, 0)), instant)
+    const dir = tv.normal.clone().add(V(0, 0, 0.22)).normalize()
+    const blockers = [...store.walls, ...store.racks.map(r => r.foot)]
+    const hit = (x: number, z: number) => blockers.some(b => x > b.x0 - 0.35 && x < b.x1 + 0.35 && z > b.z0 - 0.35 && z < b.z1 + 0.35)
+    let s = 1.5
+    while (s < 6.2 && !hit(p.x + dir.x * (s + 0.1), p.z + dir.z * (s + 0.1))) s += 0.1
+    const eye = V(p.x + dir.x * s, 1.75, p.z + dir.z * s)
+    return fly(eye, p.clone().add(V(0, -0.2, 0)), instant)
   }
   if (name === 'aisle') return fly(V(W * 0.2, 1.7, D * 0.26), V(W * 0.32, 1.1, D * 0.26), instant)
   return fly(V(W * 0.5 + 6, 26, D + 16), V(W / 2, 0, D / 2 - 1), instant)
