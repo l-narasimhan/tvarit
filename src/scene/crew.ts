@@ -7,7 +7,7 @@ import type { Person } from '../people'
 import type { Act, Sim, Worker } from '../sim/engine'
 import { Figure, makeScooter, nameTag, type Pose } from './figure'
 
-const POSE: Record<Act, Pose> = { idle: 'stand', walk: 'walk', scan: 'scan', reach: 'reach', pack: 'pack', ride: 'ride', phone: 'phone', away: 'stand' }
+const POSE: Record<Act, Pose> = { idle: 'stand', walk: 'walk', scan: 'scan', reach: 'reach', pack: 'pack', ride: 'ride', phone: 'phone', away: 'stand', check: 'check', talk: 'talk' }
 
 /** A worker as the inspector and picking see a person. */
 class Member implements Person {
@@ -39,7 +39,10 @@ class Member implements Person {
     const w = this.w
     this.fig.root.visible = w.visible
     this.fig.root.position.set(w.x, 0, w.z)
-    this.fig.root.rotation.y = w.yaw
+    // Turn smoothly to the heading the engine sets.
+    const r = this.fig.root.rotation
+    const d = Math.atan2(Math.sin(w.yaw - r.y), Math.cos(w.yaw - r.y))
+    r.y += Math.abs(d) > 2.5 && w.act === 'walk' ? d : d * Math.min(1, dt * 7)
     const pose = w.cases.length ? (w.act === 'walk' ? 'carry' : w.act === 'reach' ? 'reach' : 'carry') : POSE[w.act]
     this.fig.pose(pose, dt * Math.min(speed, 4), w.role === 'rider' ? 1.25 : 1.3)
     this.fig.setCases(w.cases)

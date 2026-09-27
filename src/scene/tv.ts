@@ -77,7 +77,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
       txt(v, x + 146, y + 70, 70, col, 'center', 800)
       txt(label, x + 146, y + 128, 19, '#94a3b8', 'center', 700)
     })
-    txt(`Dispatched last hour: ${f.lastHour().length}  ·  Pickers ${f.pickersBusy()}/${f.pickers} busy  ·  Riders in bay ${f.ridersIn()}/${f.riders}`,
+    txt(`Dispatched last hour: ${f.lastHour().length}  ·  Pickers ${f.pickersBusy()}/${f.pickers} busy  ·  Riders in bay ${f.ridersIn()} of ${f.ridersOnShift()} on shift`,
       20 + 300, 632, 19, '#94a3b8', 'center', 600)
 
     // Oldest open orders.

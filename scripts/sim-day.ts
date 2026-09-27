@@ -23,7 +23,7 @@ export function runDay(seed: number, pickers: number, riders: number) {
   return { sim, rows, digest }
 }
 
-const [seed = 1, pickers = 8, riders = 28] = process.argv.slice(2).map(Number)
+const [seed = 1, pickers = 8, riders = 36] = process.argv.slice(2).map(Number)
 const t0 = performance.now()
 const a = runDay(seed, pickers, riders)
 const ms = performance.now() - t0

@@ -10,7 +10,7 @@
 
 import type { Slot, Store } from '../model'
 import { NavGrid, type P2 } from '../nav'
-import { rng } from '../rng'
+import { hash, rng } from '../rng'
 
 // ---- Config --------------------------------------------------------------------------------------------------
 
@@ -21,7 +21,10 @@ export interface SimConfig {
   /** Demand multiplier, for peak-day scenarios. */
   demandScale: number
   pickers: number
+  /** Riders employed (the most on shift at once). */
   riders: number
+  /** Riders on shift by hour; defaults to demand ÷ 3 trips an hour × 1.35 headroom, capped at `riders`. */
+  riderRoster?: number[]
   /** Order-to-dispatch target, seconds. */
   sla: number
   /** Mean lines per order. */
@@ -61,7 +64,7 @@ export const DEFAULTS: SimConfig = {
   demand: [18, 12, 8, 6, 6, 8, 20, 40, 60, 62, 58, 60, 66, 64, 60, 58, 62, 70, 76, 80, 80, 72, 50, 30],
   demandScale: 1,
   pickers: 8,
-  riders: 28,
+  riders: 36,
   sla: 120,
   linesMean: 4,
   walk: 1.3,
@@ -93,7 +96,7 @@ export const DEFAULTS: SimConfig = {
 // ---- Model ---------------------------------------------------------------------------------------------------
 
 export type Stage = 'queued' | 'picking' | 'bagging' | 'ready' | 'collecting' | 'out'
-export type Act = 'idle' | 'walk' | 'scan' | 'reach' | 'pack' | 'ride' | 'phone' | 'away'
+export type Act = 'idle' | 'walk' | 'scan' | 'reach' | 'pack' | 'ride' | 'phone' | 'away' | 'check' | 'talk'
 
 /** lorry → unloading → unloaded (on the GRN floor, not yet checked) → checking → received → putaway → done */
 export type CaseState = 'lorry' | 'unloading' | 'unloaded' | 'checking' | 'received' | 'putaway' | 'done'
@@ -160,6 +163,8 @@ export interface Worker {
   home: P2
   bay: P2 | null
   scooter: { x: number; z: number; yaw: number; visible: boolean } | null
+  /** Riders only: on shift now (off-shift riders are not at the store). */
+  onShift: boolean
 }
 
 const PICKERS = ['Ravi', 'Sunita', 'Imran', 'Deepak', 'Kavya', 'Manoj', 'Pooja', 'Arjun', 'Farhan', 'Neha', 'Sameer', 'Divya']
@@ -194,6 +199,7 @@ export class Sim {
   private pendingIn = new Map<Slot, number>()
   private lorryDone = new Set<string>()
   private caseSeq = 1
+  readonly roster: number[] = []
   /** When the last case went onto a shelf. */
   lastPutaway = 0
   onPH: (s: Slot) => void = () => {}
@@ -243,7 +249,11 @@ export class Sim {
     // Pickers wait along the packing table; riders in the bay.
     const tz0 = pack ? pack.z0 + 0.5 : store.D / 2, tz1 = pack ? pack.z1 - 0.5 : store.D / 2
     for (let i = 0; i < this.cfg.pickers; i++) {
-      const home: P2 = [loadX + 0.25, tz0 + ((i + 0.5) / this.cfg.pickers) * (tz1 - tz0)]
+      // Waiting spots: loosely in twos and threes on the floor beside the table, not a drilled line.
+      const j = (k: number) => (hash(`home-${i}-${k}`) % 1000) / 1000
+      const group = Math.floor(i / 2.5), groups = Math.ceil(this.cfg.pickers / 2.5)
+      const want: P2 = [loadX + 0.45 + j(1) * 1.1, tz0 + ((group + 0.5) / groups) * (tz1 - tz0) + (j(2) - 0.5) * 1.2]
+      const home: P2 = nav.nearestFree(...want) ?? want
       this.workers.push(this.worker('picker', PICKERS[i % PICKERS.length], home, null))
     }
     const bays = store.riderBays
@@ -256,6 +266,9 @@ export class Sim {
       if (w.act === 'phone') w.z += 0.55
       this.workers.push(w)
     }
+    this.roster = this.cfg.riderRoster ?? this.cfg.demand.map(d => Math.min(this.cfg.riders, Math.max(3, Math.ceil((d * this.cfg.demandScale / 3) * 1.35))))
+    // Start with the hour's roster on shift; the rest are off.
+    this.workers.filter(w => w.role === 'rider').forEach((w, i) => { if (i >= this.roster[this.hour]) this.setShift(w, false) })
   }
 
   private worker(role: Worker['role'], name: string, home: P2, bay: P2 | null): Worker {
@@ -263,7 +276,7 @@ export class Sim {
     return {
       id: `${role}-${n}`, role, name, x: home[0], z: home[1], yaw: role === 'picker' ? this.table.faceLoad + Math.PI : 0,
       act: role === 'rider' ? 'ride' : 'idle', status: role === 'rider' ? 'In rider bay · waiting' : 'At the table · waiting for an order',
-      order: null, plan: [], carry: [], bag: false, cases: [], task: null, homing: false, visible: true, idleSince: this.t, busyTime: 0, done: 0, home, bay, scooter: null,
+      order: null, plan: [], carry: [], bag: false, cases: [], task: null, homing: false, visible: true, onShift: true, idleSince: this.t, busyTime: 0, done: 0, home, bay, scooter: null,
     }
   }
 
@@ -283,6 +296,7 @@ export class Sim {
     this.t += STEP
     while (this.t >= this.nextArrival) { this.arrive(); this.nextArrival += this.gap() }
     this.inboundArrivals()
+    if (Math.floor(this.t) % 60 === 0 && Math.floor(this.t - STEP) % 60 !== 0) this.shiftChange()
     this.dispatch()
     for (const w of this.workers) this.move(w)
     for (const l of this.lorries) this.drive(l)
@@ -344,7 +358,7 @@ export class Sim {
   // ---- Dispatch: oldest order to the longest-idle picker; ready bags to the longest-waiting rider ----
   private dispatch() {
     const idle = (role: Worker['role']) => this.workers
-      .filter(w => w.role === role && !w.order && !w.task && (!w.plan.length || w.homing))
+      .filter(w => w.role === role && w.onShift && !w.order && !w.task && (!w.plan.length || w.homing))
       .sort((a, b) => a.idleSince - b.idleSince)
     for (const o of this.open) {
       if (o.stage !== 'queued') continue
@@ -370,6 +384,25 @@ export class Sim {
         w.plan.push({ kind: 'go', to: w.home, status: 'Back to the table' }, { kind: 'call', fn: () => { w.homing = false; w.status = 'At the table · waiting for an order' } })
       }
     }
+  }
+
+  // ---- Rider shifts: bring riders on or send idle ones home to match the hour's roster ----
+  private shiftChange() {
+    const riders = this.workers.filter(w => w.role === 'rider')
+    const want = this.roster[this.hour]
+    let on = riders.filter(w => w.onShift).length
+    for (const w of riders) {
+      if (on < want && !w.onShift && !w.order) { this.setShift(w, true); on++ }
+      else if (on > want && w.onShift && !w.order && !w.plan.length) { this.setShift(w, false); on-- }
+    }
+  }
+
+  private setShift(w: Worker, on: boolean) {
+    w.onShift = on
+    w.visible = on
+    if (w.scooter) { w.scooter.visible = on; w.scooter.x = w.bay![0]; w.scooter.z = w.bay![1]; w.scooter.yaw = -Math.PI / 2 }
+    if (on) { w.x = w.bay![0] + 0.3; w.z = w.bay![1]; w.yaw = -Math.PI / 2; w.act = 'ride'; w.idleSince = this.t; w.status = 'In rider bay · waiting' }
+    else w.status = 'Off shift'
   }
 
   // ---- Inbound: lorries, unload + GRN, putaway ----
@@ -659,7 +692,7 @@ export class Sim {
     if (w.order || w.task) w.busyTime += STEP
     while (w.plan[0]?.kind === 'call') (w.plan.shift() as { fn: () => void }).fn()
     const s = w.plan[0]
-    if (!s) { if (w.role === 'picker') w.act = 'idle'; return }
+    if (!s) { if (w.role === 'picker') this.idle(w); return }
     w.status = s.status
     if (s.kind === 'go') {
       s.path ??= this.path([w.x, w.z], s.to)
@@ -690,6 +723,35 @@ export class Sim {
     }
   }
 
+  /**
+   * What a waiting picker does: stands facing the pigeon holes and the TV, checks the handheld, or chats with the
+   * nearest colleague — changing every 15–30 s. Chosen by hashing, not the random stream, so the day's
+   * outcome is unchanged.
+   */
+  private idle(w: Worker) {
+    const i = this.workers.indexOf(w)
+    const bucket = Math.floor((this.t + i * 7) / 22)
+    const h = hash(`${w.id}:${bucket}`) % 100
+    if (h < 45) {
+      w.act = 'idle'
+      w.yaw = this.table.faceLoad + ((hash(`${w.id}:y${bucket}`) % 60) - 30) / 60
+    } else if (h < 75) {
+      w.act = 'check'
+      w.yaw = this.table.faceLoad + 0.6 * (i % 2 ? 1 : -1)
+    } else {
+      // Turn to the nearest other waiting picker.
+      let best: Worker | null = null, bd = 3
+      for (const o of this.workers) {
+        if (o === w || o.role !== 'picker' || o.order || o.task || o.plan.length) continue
+        const d = Math.hypot(o.x - w.x, o.z - w.z)
+        if (d < bd) { bd = d; best = o }
+      }
+      w.act = best ? 'talk' : 'check'
+      if (best) w.yaw = yawTo(best.x - w.x, best.z - w.z)
+    }
+    w.status = w.act === 'check' ? 'Waiting for an order · checking the handheld' : w.act === 'talk' ? 'Waiting for an order' : 'At the table · waiting for an order'
+  }
+
   // ---- Read-outs ----
   count(stages: Stage[]) { return this.open.filter(o => stages.includes(o.stage)).length }
   age(o: SOrder) { return (o.tOut ?? this.t) - o.t0 }
@@ -697,7 +759,8 @@ export class Sim {
   recent(secs = 3600) { return this.done.filter(o => this.t - o.tOut! <= secs) }
   o2d(list: SOrder[]) { return list.length ? list.reduce((a, o) => a + (o.tOut! - o.t0), 0) / list.length : 0 }
   slaHit(list: SOrder[]) { return list.length ? list.filter(o => o.tOut! - o.t0 <= this.cfg.sla).length / list.length : 1 }
-  ridersIn() { return this.workers.filter(w => w.role === 'rider' && !w.order).length }
+  ridersIn() { return this.workers.filter(w => w.role === 'rider' && w.onShift && !w.order).length }
+  ridersOnShift() { return this.workers.filter(w => w.role === 'rider' && w.onShift).length }
   pickersBusy() { return this.workers.filter(w => w.role === 'picker' && (w.order || w.task)).length }
   inbound() {
     const n = (s: CaseState) => this.cases.filter(c => c.state === s).length

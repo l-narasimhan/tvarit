@@ -5,7 +5,7 @@
 import * as THREE from 'three'
 
 export type Role = 'sm' | 'asm' | 'picker' | 'rider'
-export type Pose = 'stand' | 'walk' | 'scan' | 'pack' | 'sit' | 'ride' | 'phone' | 'reach' | 'carry'
+export type Pose = 'stand' | 'walk' | 'scan' | 'pack' | 'sit' | 'ride' | 'phone' | 'reach' | 'carry' | 'check' | 'talk'
 
 export const ROLE_NAME: Record<Role, string> = { sm: 'Store Manager', asm: 'Area Sales Manager', picker: 'Picker', rider: 'Rider' }
 export const ROLE_COLOR: Record<Role, string> = { sm: '#0f766e', asm: '#1e3a8a', picker: '#ea580c', rider: '#dc2626' }
@@ -189,6 +189,16 @@ export class Figure {
     } else if (p === 'pack') {
       al = -0.55 + Math.sin(t * 3) * 0.2; ar = -0.55 + Math.sin(t * 3 + 1.8) * 0.2
       el = -0.95 + Math.sin(t * 3 + 0.6) * 0.2; er = -0.95 + Math.sin(t * 3 + 2.4) * 0.2; alz = 0.15; arz = -0.15
+    } else if (p === 'check') {
+      // Looking down at the handheld held at the chest.
+      ar = -0.45; er = -1.45 + Math.sin(t * 0.7) * 0.05; arz = -0.1; al = -0.2; el = -0.5
+      y = Math.sin(t) * 0.004
+    } else if (p === 'talk') {
+      // Weight on one leg, a hand gesturing now and then.
+      hl = 0.06; kl = 0.12
+      const g = Math.max(0, Math.sin(t * 0.9))
+      ar = -0.25 - g * 0.5; er = -0.5 - g * 0.6 + Math.sin(t * 3) * 0.08 * g; al = -0.15; el = -0.4
+      y = Math.sin(t) * 0.004
     } else if (p === 'phone') {
       ar = -0.35; arz = -0.45; er = -2.35; y = Math.sin(t) * 0.004
     } else {

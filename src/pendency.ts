@@ -28,6 +28,7 @@ export class Pendency {
   slaHit() { return this.sim.slaHit(this.lastHour()) }
   pickersBusy() { return this.sim.pickersBusy() }
   ridersIn() { return this.sim.ridersIn() }
+  ridersOnShift() { return this.sim.ridersOnShift() }
 
   /** The traced order first, then the oldest open orders. */
   oldest(n: number): TVOrder[] {

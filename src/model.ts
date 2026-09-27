@@ -331,7 +331,7 @@ export function buildStore(L: SheetLayout, bins?: BinRow[]): Store {
   const riderBays: [number, number][] = []
   if (ent) {
     const cz = (ent.z0 + ent.z1) / 2
-    for (const x of [-8.6, -6.3, -4.0]) for (let z = cz - 5; z <= cz + 5.01; z += 1.0) riderBays.push([x, z])
+    for (const x of [-8.6, -6.3, -4.0]) for (let z = cz - 5.5; z <= cz + 5.51; z += 1.0) riderBays.push([x, z])
   }
 
   // Inbound: GRN staging just inside the entrance, clear of the desks and leaving a walkway along them; the lorry
