@@ -206,3 +206,11 @@ table.kpis td.same { color: var(--mute); }
 #replay { position: fixed; left: 50%; top: 104px; transform: translateX(-50%); background: rgba(124,58,237,0.9); color: #fff; padding: 6px 12px; border-radius: 99px; font-size: 12.5px; font-weight: 700; z-index: 5; }
 #replay a { color: #fff; margin-left: 8px; }
 @media (max-width: 900px) { #lab .lgrid { grid-template-columns: 1fr; } }
+
+/* ---- Pendency TV, full size ---- */
+#tvpanel { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 15; display: flex; align-items: center; justify-content: center; padding: 16px; }
+#tvpanel[hidden] { display: none; }
+#tvpanel .frame { width: min(1100px, 100%); background: #0b0d10; border: 1px solid #2a2f37; border-radius: 12px; padding: 10px 12px 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+#tvpanel .tvbar { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+#tvpanel .tvbar span { color: var(--mute); font-size: 12px; margin-right: auto; }
+#tvpanel .screen canvas { width: 100%; height: auto; display: block; border-radius: 6px; }

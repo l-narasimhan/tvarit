@@ -9,7 +9,7 @@ import { boxAt, merged } from './util'
 const PX_W = 1280, PX_H = 720
 const SCREEN_W = 1.22, SCREEN_H = 0.69          // 55" 16:9 active area
 
-export interface TV { group: THREE.Group; pos: THREE.Vector3; normal: THREE.Vector3; update(dt: number): void }
+export interface TV { group: THREE.Group; pos: THREE.Vector3; normal: THREE.Vector3; canvas: HTMLCanvasElement; update(dt: number): void }
 
 const COLOR: Record<Stage, string> = { queued: '#3b82f6', picking: '#f59e0b', ready: '#22c55e' }
 
@@ -77,8 +77,9 @@ export function buildTV(store: Store, feed: Pendency): TV {
       txt(v, x + 146, y + 70, 70, col, 'center', 800)
       txt(label, x + 146, y + 128, 19, '#94a3b8', 'center', 700)
     })
-    txt(`Dispatched last hour: ${f.lastHour().length}  ·  Pickers ${f.pickersBusy()}/${f.pickers} busy  ·  Riders in bay ${f.ridersIn()} of ${f.ridersOnShift()} on shift`,
-      20 + 300, 632, 19, '#94a3b8', 'center', 600)
+    // Two short lines, left-aligned under the KPI tiles, so neither can run off the screen.
+    txt(`Dispatched last hour: ${f.lastHour().length}  ·  Pickers busy ${f.pickersBusy()} of ${f.pickers}`, 24, 624, 19, '#94a3b8', 'left', 600)
+    txt(`Riders in bay ${f.ridersIn()} of ${f.ridersOnShift()} on shift`, 24, 652, 19, '#94a3b8', 'left', 600)
 
     // Oldest open orders.
     const x0 = 650, w = PX_W - x0 - 20
@@ -114,7 +115,7 @@ export function buildTV(store: Store, feed: Pendency): TV {
   draw()
   let acc = 0
   return {
-    group, pos, normal,
+    group, pos, normal, canvas,
     update(dt) {
       acc += dt
       if (acc < 0.5) return

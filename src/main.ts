@@ -156,6 +156,7 @@ function fly(pos: THREE.Vector3, target: THREE.Vector3, instant = false) {
 
 const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z)
 function view(name: string, instant = false) {
+  if (name !== 'tv') document.querySelector<HTMLElement>('#tvpanel')!.hidden = true
   if (walk.active) setWalk(false)
   const { W, D } = store
   const zone = (k: string) => store.zones.find(z => z.kind === k)
@@ -173,18 +174,17 @@ function view(name: string, instant = false) {
     return fly(V(p.cx + 4.5, 2.6, p.cz - 3), V(p.cx, 1, p.cz), instant)
   }
   if (name === 'tv') {
-    // Step back from the screen, slightly off-axis, until the next step would enter a wall or a rack —
-    // however far that is in this store (a fixed offset put the camera inside the generic store's chiller).
+    // Head-on, from just above the pigeon holes, close enough that the screen fills the view. Walls and
+    // racks between here and the screen shorten the distance, so no layout can put the camera behind one.
     const p = tv.pos.clone()
-    const dir = tv.normal.clone().add(V(0, 0, 0.22)).normalize()
+    const n = tv.normal
     const blockers = [...store.walls, ...store.racks.map(r => r.foot)]
-    const hit = (x: number, z: number) => blockers.some(b => x > b.x0 - 0.35 && x < b.x1 + 0.35 && z > b.z0 - 0.35 && z < b.z1 + 0.35)
-    // Start at the screen itself, so even a wall under a metre away cannot trap the camera behind it.
-    let s = 0.4
-    while (s < 6.2 && !hit(p.x + dir.x * (s + 0.1), p.z + dir.z * (s + 0.1))) s += 0.1
-    s = Math.max(0.6, s)
-    const eye = V(p.x + dir.x * s, 1.75, p.z + dir.z * s)
-    return fly(eye, p.clone().add(V(0, -0.2, 0)), instant)
+    const hit = (x: number, z: number) => blockers.some(b => x > b.x0 - 0.3 && x < b.x1 + 0.3 && z > b.z0 - 0.3 && z < b.z1 + 0.3)
+    let s = 0.5
+    while (s < 2.4 && !hit(p.x + n.x * (s + 0.1), p.z + n.z * (s + 0.1))) s += 0.1
+    fly(V(p.x + n.x * s, p.y - 0.15, p.z + n.z * s), p.clone(), instant)
+    openTvPanel()
+    return
   }
   if (name === 'aisle') return fly(V(W * 0.2, 1.7, D * 0.26), V(W * 0.32, 1.1, D * 0.26), instant)
   return fly(V(W * 0.5 + 6, 26, D + 16), V(W / 2, 0, D / 2 - 1), instant)
@@ -398,6 +398,16 @@ function followActor(dt: number) {
   controls.target.add(d)
   camera.position.add(d)
 }
+
+// ---- Pendency TV, full size ----------------------------------------------------------------------------
+const tvPanel = document.querySelector<HTMLElement>('#tvpanel')!
+function openTvPanel() {
+  tvPanel.querySelector('.screen')!.replaceChildren(tv.canvas)   // the very canvas the 3D screen shows
+  tvPanel.hidden = false
+}
+function closeTvPanel() { tvPanel.hidden = true }
+tvPanel.addEventListener('click', e => { if (e.target === tvPanel || (e.target as HTMLElement).closest('.x')) closeTvPanel() })
+addEventListener('keydown', e => { if (e.key === 'Escape' && !tvPanel.hidden) closeTvPanel() })
 
 // ---- Chiller ambience ----------------------------------------------------------------------------------------
 const chip = document.querySelector<HTMLDivElement>('#chip')!
