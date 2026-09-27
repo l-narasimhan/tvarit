@@ -5,7 +5,7 @@
 import * as THREE from 'three'
 
 export type Role = 'sm' | 'asm' | 'picker' | 'rider'
-export type Pose = 'stand' | 'walk' | 'scan' | 'pack' | 'sit' | 'ride' | 'phone' | 'reach'
+export type Pose = 'stand' | 'walk' | 'scan' | 'pack' | 'sit' | 'ride' | 'phone' | 'reach' | 'carry'
 
 export const ROLE_NAME: Record<Role, string> = { sm: 'Store Manager', asm: 'Area Sales Manager', picker: 'Picker', rider: 'Rider' }
 export const ROLE_COLOR: Record<Role, string> = { sm: '#0f766e', asm: '#1e3a8a', picker: '#ea580c', rider: '#dc2626' }
@@ -47,6 +47,8 @@ export class Figure {
   private crate: THREE.Group | null = null
   private crateItems = new THREE.Group()
   private bag: THREE.Mesh
+  private held = new THREE.Group()
+  private heldN = 0
 
   constructor(readonly role: Role, seed: number) {
     const skin = mat(SKIN[seed % SKIN.length], 0.6)
@@ -119,6 +121,9 @@ export class Figure {
     this.bag = m(new THREE.BoxGeometry(0.24, 0.3, 0.14), mat(0xc09562, 0.85), 0, -0.44, 0.04)
     this.bag.visible = false
     this.elR.add(this.bag)
+    // Inbound cases, held in front against the chest.
+    this.held.position.set(0, 0.98, 0.3)
+    this.body.add(this.held)
 
     this.hit = new THREE.Mesh(new THREE.BoxGeometry(0.55, 1.8, 0.55), new THREE.MeshBasicMaterial({ visible: false }))
     this.hit.position.y = 0.9
@@ -138,6 +143,22 @@ export class Figure {
 
   setBag(on: boolean) { this.bag.visible = on }
 
+  /** Cartons carried in both arms, stacked. */
+  setCases(colors: number[]) {
+    if (colors.length === this.heldN) return
+    this.heldN = colors.length
+    this.held.clear()
+    colors.slice(0, 3).forEach((c, i) => {
+      const box = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.26, 0.3), mat(0xb98b57, 0.85))
+      box.position.y = i * 0.27
+      box.castShadow = true
+      const band = new THREE.Mesh(new THREE.BoxGeometry(0.405, 0.05, 0.305), mat(c, 0.6))
+      box.add(band)
+      this.held.add(box)
+    })
+    if (this.crate) this.crate.visible = colors.length === 0
+  }
+
   /** Drives the joints for this frame. `speed` is metres per second when walking. */
   pose(p: Pose, dt: number, speed = 1.2) {
     this.phase += dt * (p === 'walk' ? speed * 5.2 : 2)
@@ -151,6 +172,12 @@ export class Figure {
       al = -0.35 * s; ar = 0.35 * s
       el = -0.25 - Math.max(0, s) * 0.3; er = -0.25 - Math.max(0, -s) * 0.3
       y = Math.abs(Math.cos(t)) * 0.025 - 0.015
+    } else if (p === 'carry') {
+      const s = Math.sin(t)
+      hl = 0.36 * s; hr = -0.36 * s
+      kl = Math.max(0, -Math.sin(t - 0.9)) * 0.65; kr = Math.max(0, Math.sin(t - 0.9)) * 0.65
+      al = ar = -0.75; el = er = -0.75; alz = 0.28; arz = -0.28
+      y = Math.abs(Math.cos(t)) * 0.02 - 0.015
     } else if (p === 'sit') {
       hl = hr = -1.5; kl = kr = 1.5; y = -0.43; al = ar = -0.35; el = er = -1.1
     } else if (p === 'ride') {

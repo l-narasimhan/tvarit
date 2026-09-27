@@ -12,3 +12,4 @@ Layout-driven 3D twin of a quick-commerce darkstore. `npm run dev` → http://lo
 - `src/sim/engine.ts` — the simulation engine: headless, fixed 0.2 s steps, seeded; owns time, orders, pickers, riders, stock
 - `npx tsx scripts/sim-day.ts [seed] [pickers] [riders]` — run a full 24 h day headless (~3 s) and print hour-by-hour KPIs
 - URL: `?hour=19&seed=1` start time and seed; `?order=1&skip=60` trace an order and fast-forward (checks)
+- Inbound (M5): lorries at 01:00/02:00/03:00 (`inboundTimes`), unload + GRN into the INBOUND · GRN area, putaway by pickers; header ⏭ Night inbound, URL `?night=1&skip=S`

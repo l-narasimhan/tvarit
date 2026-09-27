@@ -81,6 +81,8 @@ aside { position: fixed; background: var(--panel); border-radius: 10px; padding:
 .grid.kp b.good { color: #4ade80; }
 .grid.kp b.bad { color: #f87171; }
 #kpis { margin-top: 8px; }
+.inb { font-size: 12px; color: var(--mute); background: rgba(20,184,166,0.12); border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; }
+.inb b { color: #5eead4; }
 button.go { background: #16a34a; border-color: #16a34a; color: #fff; font-weight: 700; }
 button.go:hover { background: #15803d; }
 #order { right: 12px; bottom: 12px; width: 400px; max-height: 58vh; overflow: auto; padding: 0; }

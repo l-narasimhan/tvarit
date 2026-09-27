@@ -52,6 +52,26 @@ export function buildShell(store: Store): { floor: THREE.Object3D; walls: THREE.
     if (f.kind === 'dropzone' && vert) floor.add(floorText('DROP ZONE', cx, f.z0 - 0.4, 0.3, '#5a4a00'))
   }
 
+  // Inbound: the GRN staging area inside the entrance, and the lorry dock outside it.
+  if (store.grn) {
+    const g = store.grn
+    const edge: THREE.BufferGeometry[] = []
+    const t = 0.06, w = g.x1 - g.x0, d = g.z1 - g.z0
+    edge.push(boxAt(w, 0.004, t, (g.x0 + g.x1) / 2, 0.006, g.z0), boxAt(w, 0.004, t, (g.x0 + g.x1) / 2, 0.006, g.z1))
+    edge.push(boxAt(t, 0.004, d, g.x0, 0.006, (g.z0 + g.z1) / 2), boxAt(t, 0.004, d, g.x1, 0.006, (g.z0 + g.z1) / 2))
+    floor.add(merged(edge, std(0x14b8a6, 0.6), false))
+    tint(g.x0, g.z0, g.x1, g.z1, 0xcfe9e4, 0.003)
+    floor.add(floorText('INBOUND · GRN', (g.x0 + g.x1) / 2, g.z0 + 0.35, 0.34, '#0f766e'))
+  }
+  if (store.dock) {
+    const k = store.dock
+    const lines: THREE.BufferGeometry[] = []
+    for (const dx of [-1.25, 1.25]) lines.push(boxAt(0.1, 0.004, 6.2, k.x + dx, 0.0, k.z))
+    lines.push(boxAt(2.6, 0.004, 0.1, k.x, 0.0, k.tail[1] + 0.1))
+    floor.add(merged(lines, std(0xf2c200, 0.7), false))
+    floor.add(floorText('LORRY DOCK', k.x, k.z - 1.2, 0.45, '#f2c200', Math.PI))
+  }
+
   // Rider bay: outside the entrance, marked bays for the bikes.
   const ent = store.fixtures.find(f => f.kind === 'entrance')
   if (ent) {

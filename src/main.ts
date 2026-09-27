@@ -14,6 +14,7 @@ import { renderOrder } from './ui'
 import { NavGrid } from './nav'
 import { Sim, STEP, clock as simClock } from './sim/engine'
 import { Crew } from './scene/crew'
+import { Inbound } from './scene/lorry'
 import { Walk } from './walk'
 import { ChillerAudio } from './audio'
 import { Pendency } from './pendency'
@@ -57,6 +58,8 @@ let sim: Sim
 let crew: Crew
 let trace: Trace
 let simAcc = 0
+let inbound: Inbound
+let goodsAll: Goods
 let speed = 1
 let follow = true
 let tv: TV
@@ -81,6 +84,7 @@ function load(layout = STORE01) {
   const goods = new Goods()
   for (const s of store.slots) if (s.kind === 'bin') goods.stockBin(s)
   sim.onPick = s => goods.setBinQty(s)
+  goodsAll = goods
   const shell = buildShell(store)
   walls = shell.walls
   world.add(shell.floor, walls, buildRacks(store, atlas), rackHeaders(store), buildFixtures(store, atlas, goods))
@@ -91,7 +95,8 @@ function load(layout = STORE01) {
   people = new People(store, { picker: 0, rider: 0 })        // store manager and ASM; the engine runs the rest
   crew = new Crew(sim)
   trace = new Trace(sim)
-  world.add(coolers.group, tv.group, people.group, crew.group, trace.group)
+  inbound = new Inbound(sim)
+  world.add(coolers.group, tv.group, people.group, crew.group, trace.group, inbound.group)
   renderStaff([...people.list, ...crew.members])
   labelMeshes = atlas.meshes()
   labelMeshes.forEach(m => world.add(m))
@@ -313,6 +318,21 @@ tagBtn.addEventListener('click', () => {
 // ---- Sim clock -------------------------------------------------------------------------------------------
 const simClockEl = document.querySelector<HTMLElement>('#simclock')!
 
+// ---- Jump to the night inbound ------------------------------------------------------------------------
+/** Runs the engine headless up to five minutes before `hour`, then redraws everything that moved. */
+function jumpTo(hour: number) {
+  const target = hour * 3600 - 300
+  const now = sim.t % 86400
+  const ahead = (target - now + 86400) % 86400
+  sim.advance(ahead)
+  goodsAll.refreshAll()
+  crew.resyncBags()
+  trace.clear(); pendency.trace = null; renderOrder(null, null)
+  simClockEl.textContent = simClock(sim.t)
+  if (store.dock) fly(V(store.dock.x - 9, 9.5, store.dock.z - 7), V(store.dock.x + 3.5, 0.5, store.dock.z + 4.5))
+}
+document.querySelector('#jump')!.addEventListener('click', e => { (e.currentTarget as HTMLElement).blur(); jumpTo(1) })
+
 // ---- Live order ------------------------------------------------------------------------------------------
 const orderBtn = document.querySelector<HTMLButtonElement>('#neworder')!
 const followBtn = document.querySelector<HTMLButtonElement>('#follow')!
@@ -409,6 +429,7 @@ renderer.setAnimationLoop(() => {
   if (n >= 400) simAcc = 0
   people.update(Math.min(dt, 0.1) * Math.min(speed, 4))
   crew.sync(Math.min(dt, 0.1), speed)
+  inbound.sync()
   trace.update(clock.elapsedTime)
   pendency.trace = trace.order
   followActor(dt)
@@ -463,3 +484,6 @@ if (skip) setTimeout(() => {
   renderKpis(sim)
   lastActor = null
 }, 900)
+
+// ?night=1 jumps to 00:55 on load; with ?skip=S, then runs S more seconds (checks).
+if (qs.get('night')) jumpTo(1)

@@ -88,6 +88,10 @@ export interface Store {
   pigeon: PigeonWall | null
   /** Scooter parking outside the entrance: where each scooter stands, nose out (west). */
   riderBays: [number, number][]
+  /** Inbound: the floor area inside the entrance where cases are staged and received (GRN). */
+  grn: Rect | null
+  /** Where a lorry parks to unload: body centre, heading (cab end), and the tail point people unload from. */
+  dock: { x: number; z: number; yaw: number; tail: [number, number] } | null
   warnings: string[]
 }
 
@@ -285,6 +289,25 @@ export function buildStore(L: SheetLayout): Store {
     for (const x of [-8.6, -6.3, -4.0]) for (let z = cz - 5; z <= cz + 5.01; z += 1.0) riderBays.push([x, z])
   }
 
+  // Inbound: GRN staging just inside the entrance, clear of the desks and leaving a walkway along them; the lorry
+  // backs up beside the entrance with its tail towards the door.
+  let grn: Rect | null = null, dock: Store['dock'] = null
+  if (ent) {
+    const deskX = Math.max(0, ...fixtures.filter(f => f.kind === 'desk' || f.kind === 'wms').map(f => f.x1))
+    const x0 = deskX + 1.3
+    grn = { x0, x1: x0 + 3.6, z0: ent.z0 - 2.6, z1: ent.z1 - 0.4 }
+    const hit = solidsFor(grn)
+    if (hit) warnings.push(`GRN staging overlaps ${hit}; inbound cases will sit in the way`)
+    dock = { x: -2.4, z: ent.z0 - 3.4, yaw: Math.PI, tail: [-2.4, ent.z0 - 0.6] }
+  } else warnings.push('No entrance: lorries cannot unload')
+
+  function solidsFor(r: Rect) {
+    const f = fixtures.find(f => f.kind !== 'entrance' && touches(f, r, 0))
+    if (f) return f.id
+    const k = racks.find(k => touches(k.foot, r, 0))
+    return k ? k.id : null
+  }
+
   if (!CATALOG.length) warnings.push('Empty catalogue')
-  return { name: L.name, W, D, racks, slots, walls, doors, fixtures, zones, pigeon, riderBays, warnings }
+  return { name: L.name, W, D, racks, slots, walls, doors, fixtures, zones, pigeon, riderBays, grn, dock, warnings }
 }

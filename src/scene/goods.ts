@@ -15,6 +15,7 @@ export class Goods {
   private meshByKey = new Map<string, THREE.InstancedMesh>()
   /** Each bin's instances in fill order (front row first), so stock changes can hide units. */
   private binUnits = new Map<string, { key: string; i: number; m: THREE.Matrix4 }[]>()
+  private binSlot = new Map<string, Slot>()
   private q = new THREE.Quaternion()
   private up = new THREE.Vector3(0, 1, 0)
 
@@ -33,10 +34,10 @@ export class Goods {
     return { key, i: b.list.length - 1, m }
   }
 
-  /** Fills a shelf bin with its on-hand quantity. */
+  /** Lays out a bin's full face (every unit it can show), then shows as many as it holds. Putaway can refill it. */
   stockBin(s: Slot) {
     const p = s.sku
-    if (!p || s.qty <= 0) return
+    if (!p) return
     const floor = s.y - s.h / 2
     // Shrink oversize packs to fit the bin; real planograms would not slot them here, but the layout decides.
     const k = Math.min(1, (s.w - 0.02) / p.w, (s.h - 0.03) / p.h, (s.d - 0.02) / p.d)
@@ -47,9 +48,10 @@ export class Goods {
     // Flat cartons stack; bottles, jars, pouches stand one high.
     const stack = p.shape === 'box' || p.shape === 'tray'
     const ny = stack ? Math.max(1, Math.min(4, Math.floor((s.h - 0.03) / (ph + 0.002)))) : 1
-    const show = Math.min(s.qty, nx * ny * nz)
+    const show = nx * ny * nz
     const units: { key: string; i: number; m: THREE.Matrix4 }[] = []
     this.binUnits.set(s.code, units)
+    this.binSlot.set(s.code, s)
     const c = Math.cos(s.ry), sn = Math.sin(s.ry)
     const x0 = -(nx - 1) / 2 * (pw + gap)
     for (let i = 0; i < show; i++) {
@@ -59,6 +61,8 @@ export class Goods {
       units.push(this.push(p, s.x + lx * c + lz * sn, floor + ph / 2 + iy * (ph + 0.002), s.z - lx * sn + lz * c, pw, ph, pd, s.ry))
     }
   }
+
+  refreshAll() { for (const s of this.binSlot.values()) this.setBinQty(s) }
 
   /** Shows only as many units as the bin now holds; the last-filled (back, top) go first. */
   setBinQty(s: Slot) {
@@ -76,7 +80,7 @@ export class Goods {
   }
 
   meshes(): THREE.Object3D[] {
-    return [...this.batches.entries()].map(([key, b]) => {
+    const out = [...this.batches.entries()].map(([key, b]) => {
       const mesh = new THREE.InstancedMesh(b.geo, b.mat, b.list.length)
       this.meshByKey.set(key, mesh)
       b.list.forEach((m, i) => mesh.setMatrixAt(i, m))
@@ -84,6 +88,9 @@ export class Goods {
       mesh.computeBoundingSphere()
       return mesh
     })
+    // Every bin's face is laid out in full; show only what each holds.
+    for (const s of this.binSlot.values()) this.setBinQty(s)
+    return out
   }
 
   get count() { let n = 0; for (const b of this.batches.values()) n += b.list.length; return n }

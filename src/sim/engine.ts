@@ -37,6 +37,20 @@ export interface SimConfig {
   riderScan: number       // seconds for a rider to scan the pigeon hole and take the bag
   tripMin: number         // delivery round trip, seconds
   tripMax: number
+  /** Lorry arrival times, seconds after midnight. */
+  inboundTimes: number[]
+  casesPerLorry: number
+  caseUnits: number       // units per case (capped by the bin's free space)
+  unloadPick: number      // seconds to take a case off the tail
+  unloadCarry: number     // cases carried per unloading trip
+  grnScan: number         // seconds to scan a case in at GRN
+  putBase: number         // seconds per bin at putaway: locate, scan bin
+  putPerUnit: number      // seconds per unit placed
+  putawayBatch: number    // cases a picker carries per putaway trip
+  /** Most pickers on inbound work at once; the rest stay free for orders. */
+  inboundMaxPickers: number
+  /** Pickers only take inbound work when this many orders or fewer are waiting for a picker. */
+  inboundQueueMax: number
 }
 
 /** A non-heavy darkstore: 60–80 orders an hour in the day, a trickle overnight, 2-minute O2D target. */
@@ -59,12 +73,38 @@ export const DEFAULTS: SimConfig = {
   riderScan: 4,
   tripMin: 15 * 60,
   tripMax: 25 * 60,
+  inboundTimes: [1 * 3600, 2 * 3600, 3 * 3600],
+  casesPerLorry: 90,
+  caseUnits: 12,
+  unloadPick: 3,
+  unloadCarry: 2,
+  grnScan: 5,
+  putBase: 5,
+  putPerUnit: 0.4,
+  putawayBatch: 3,
+  inboundMaxPickers: 6,
+  inboundQueueMax: 0,
 }
 
 // ---- Model ---------------------------------------------------------------------------------------------------
 
 export type Stage = 'queued' | 'picking' | 'bagging' | 'ready' | 'collecting' | 'out'
 export type Act = 'idle' | 'walk' | 'scan' | 'reach' | 'pack' | 'ride' | 'phone' | 'away'
+
+export type CaseState = 'lorry' | 'unloading' | 'staged' | 'putaway' | 'done'
+export interface Case { id: number; slot: Slot; units: number; color: number; state: CaseState; spot: number; lorry: Lorry }
+export interface Lorry {
+  id: string
+  tArrive: number
+  state: 'arriving' | 'docked' | 'leaving' | 'gone'
+  x: number
+  z: number
+  yaw: number
+  route: { to: P2; reverse: boolean; speed: number }[]
+  cases: Case[]
+  tDocked?: number
+  tLeft?: number
+}
 export interface OLine { slot: Slot; qty: number; before: number; picked: boolean }
 export interface OEvent { t: number; kind: 'order' | 'pick' | 'bag' | 'ph' | 'rider' | 'done'; text: string }
 
@@ -103,6 +143,11 @@ export interface Worker {
   /** Colours of the units in the picking crate. */
   carry: number[]
   bag: boolean
+  /** Colours of inbound cases being carried. */
+  cases: number[]
+  task: 'unload' | 'putaway' | null
+  /** Walking back to the table with nothing to do: can be interrupted by work. */
+  homing: boolean
   visible: boolean
   idleSince: number
   busyTime: number
@@ -134,6 +179,17 @@ export class Sim {
   /** Seconds the pigeon-hole wall was full with a bag waiting to go in. */
   phFullWait = 0
   onPick: (s: Slot) => void = () => {}
+  /** Inbound. */
+  lorries: Lorry[] = []
+  cases: Case[] = []
+  /** GRN staging spots (floor positions) and how many cases each holds (stacked). */
+  readonly spots: P2[] = []
+  spotLoad: number[] = []
+  private pendingIn = new Map<Slot, number>()
+  private lorryDone = new Set<string>()
+  private caseSeq = 1
+  /** When the last case went onto a shelf. */
+  lastPutaway = 0
   onPH: (s: Slot) => void = () => {}
 
   private rand: () => number
@@ -142,7 +198,7 @@ export class Sim {
   private paths = new Map<string, P2[]>()
   private weights: Record<string, { bins: Slot[]; cum: number[] }> = {}
   private ph: Slot[]
-  private spots: { loadX: number; collectX: number; faceLoad: number; faceCollect: number }
+  private table: { loadX: number; collectX: number; faceLoad: number; faceCollect: number }
 
   constructor(readonly store: Store, readonly nav: NavGrid, cfg: Partial<SimConfig> = {}, startHour = 19) {
     this.cfg = { ...DEFAULTS, ...cfg }
@@ -159,7 +215,7 @@ export class Sim {
     const loadX = pig ? (pack ? (side > 0 ? pack.x1 + 0.35 : pack.x0 - 0.35) : pig.cx + side * (pig.depth / 2 + 0.4)) : store.W / 2
     const collectX = pig ? pig.cx - side * (pig.depth / 2 + 0.4) : store.W / 2
     const faceLoad = side > 0 ? -Math.PI / 2 : Math.PI / 2
-    this.spots = { loadX, collectX, faceLoad, faceCollect: -faceLoad }
+    this.table = { loadX, collectX, faceLoad, faceCollect: -faceLoad }
 
     // Popularity: within each zone, bins get a Zipf weight by a seeded rank — a few fast movers, a long tail.
     for (const zone of ['ambient', 'chiller', 'hv']) {
@@ -168,6 +224,14 @@ export class Sim {
       let c = 0
       const cum = bins.map((_, r) => (c += 1 / Math.pow(r + 1, 0.9)))
       this.weights[zone] = { bins, cum }
+    }
+
+    // GRN staging: a grid of floor spots in the inbound area, cases stacked up to four high.
+    if (store.grn) {
+      const g = store.grn, cols = 3, rows = 5
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
+        this.spots.push([g.x0 + 0.6 + c * ((g.x1 - g.x0 - 1.2) / (cols - 1)), g.z0 + 0.6 + r * ((g.z1 - g.z0 - 1.2) / (rows - 1))])
+      this.spotLoad = this.spots.map(() => 0)
     }
 
     // Pickers wait along the packing table; riders in the bay.
@@ -191,9 +255,9 @@ export class Sim {
   private worker(role: Worker['role'], name: string, home: P2, bay: P2 | null): Worker {
     const n = this.workers.filter(w => w.role === role).length
     return {
-      id: `${role}-${n}`, role, name, x: home[0], z: home[1], yaw: role === 'picker' ? this.spots.faceLoad + Math.PI : 0,
+      id: `${role}-${n}`, role, name, x: home[0], z: home[1], yaw: role === 'picker' ? this.table.faceLoad + Math.PI : 0,
       act: role === 'rider' ? 'ride' : 'idle', status: role === 'rider' ? 'In rider bay · waiting' : 'At the table · waiting for an order',
-      order: null, plan: [], carry: [], bag: false, visible: true, idleSince: this.t, busyTime: 0, done: 0, home, bay, scooter: null,
+      order: null, plan: [], carry: [], bag: false, cases: [], task: null, homing: false, visible: true, idleSince: this.t, busyTime: 0, done: 0, home, bay, scooter: null,
     }
   }
 
@@ -212,8 +276,10 @@ export class Sim {
   step() {
     this.t += STEP
     while (this.t >= this.nextArrival) { this.arrive(); this.nextArrival += this.gap() }
+    this.inboundArrivals()
     this.dispatch()
     for (const w of this.workers) this.move(w)
+    for (const l of this.lorries) this.drive(l)
   }
 
   private gap() {
@@ -272,7 +338,7 @@ export class Sim {
   // ---- Dispatch: oldest order to the longest-idle picker; ready bags to the longest-waiting rider ----
   private dispatch() {
     const idle = (role: Worker['role']) => this.workers
-      .filter(w => w.role === role && !w.order && !w.plan.length)
+      .filter(w => w.role === role && !w.order && !w.task && (!w.plan.length || w.homing))
       .sort((a, b) => a.idleSince - b.idleSince)
     for (const o of this.open) {
       if (o.stage !== 'queued') continue
@@ -286,6 +352,140 @@ export class Sim {
       if (!r) break
       this.assignRider(o, r)
     }
+    this.dispatchInbound(idle('picker'))
+    // Anyone with nothing to do walks back to the table, where orders start.
+    for (const w of this.workers) {
+      if (w.role !== 'picker' || w.order || w.task || w.plan.length) continue
+      if (Math.hypot(w.x - w.home[0], w.z - w.home[1]) > 1.5) {
+        w.homing = true
+        w.plan.push({ kind: 'go', to: w.home, status: 'Back to the table' }, { kind: 'call', fn: () => { w.homing = false; w.status = 'At the table · waiting for an order' } })
+      }
+    }
+  }
+
+  // ---- Inbound: lorries, unload + GRN, putaway ----
+  private inboundArrivals() {
+    const day = Math.floor(this.t / 86400)
+    this.cfg.inboundTimes.forEach((at, i) => {
+      const key = `${day}-${i}`
+      const t = day * 86400 + at
+      if (this.t >= t && this.t < t + 60 && !this.lorryDone.has(key) && this.store.dock) {
+        this.lorryDone.add(key)
+        this.newLorry(i + 1)
+      }
+    })
+  }
+
+  private newLorry(n: number) {
+    const d = this.store.dock!
+    const l: Lorry = {
+      id: `L${n}`, tArrive: this.t, state: 'arriving', x: -11, z: d.z - 30, yaw: 0, cases: [],
+      route: [
+        { to: [-11, d.z - 8], reverse: false, speed: 6 },
+        { to: [d.x, d.z - 8], reverse: false, speed: 3 },
+        { to: [d.x, d.z], reverse: true, speed: 1.2 },
+      ],
+    }
+    // What the lorry brings: a case for each of the emptiest bins, as the replenishment order would.
+    const need = this.store.slots
+      .filter(s => s.kind === 'bin' && s.sku)
+      .map(s => ({ s, free: s.cap - s.qty - (this.pendingIn.get(s) ?? 0) }))
+      .filter(x => x.free >= Math.min(6, x.s.cap / 2))
+      .sort((a, b) => (a.s.qty + (this.pendingIn.get(a.s) ?? 0)) / a.s.cap - (b.s.qty + (this.pendingIn.get(b.s) ?? 0)) / b.s.cap)
+      .slice(0, this.cfg.casesPerLorry)
+    for (const { s, free } of need) {
+      const units = Math.min(this.cfg.caseUnits, free)
+      this.pendingIn.set(s, (this.pendingIn.get(s) ?? 0) + units)
+      l.cases.push({ id: this.caseSeq++, slot: s, units, color: s.sku!.color, state: 'lorry', spot: -1, lorry: l })
+    }
+    this.cases.push(...l.cases)
+    this.lorries.push(l)
+  }
+
+  private drive(l: Lorry) {
+    const leg = l.route[0]
+    if (!leg) {
+      if (l.state === 'arriving') { l.state = 'docked'; l.tDocked = this.t }
+      else if (l.state === 'leaving') l.state = 'gone'
+      else if (l.state === 'docked' && l.cases.every(c => c.state !== 'lorry' && c.state !== 'unloading')) {
+        l.state = 'leaving'; l.tLeft = this.t
+        l.route = [{ to: [l.x, l.z - 8], reverse: false, speed: 2 }, { to: [-11, l.z - 8], reverse: false, speed: 4 }, { to: [-11, l.z - 40], reverse: false, speed: 7 }]
+      }
+      return
+    }
+    const dx = leg.to[0] - l.x, dz = leg.to[1] - l.z, d = Math.hypot(dx, dz), step = leg.speed * STEP
+    if (d <= step) { l.x = leg.to[0]; l.z = leg.to[1]; l.route.shift() }
+    else {
+      l.x += (dx / d) * step; l.z += (dz / d) * step
+      l.yaw = leg.reverse ? yawTo(-dx, -dz) : yawTo(dx, dz)
+    }
+  }
+
+  private dispatchInbound(idle: Worker[]) {
+    if (!this.spots.length) return
+    if (this.open.filter(o => o.stage === 'queued').length > this.cfg.inboundQueueMax) return
+    let busy = this.workers.filter(w => w.task).length
+    for (const w of idle) {
+      if (busy >= this.cfg.inboundMaxPickers) break
+      if (w.homing) { w.plan = []; w.homing = false }
+      const dock = this.lorries.find(l => l.state === 'docked' && l.cases.some(c => c.state === 'lorry'))
+      const spot = this.spotLoad.findIndex(n => n < 4)
+      if (dock && spot >= 0) { this.assignUnload(w, dock, spot); busy++; continue }
+      if (this.cases.some(c => c.state === 'staged')) { this.assignPutaway(w); busy++; continue }
+      break
+    }
+  }
+
+  private assignUnload(w: Worker, l: Lorry, spot: number) {
+    const room = 4 - this.spotLoad[spot]
+    const batch = l.cases.filter(c => c.state === 'lorry').slice(0, Math.min(room, this.cfg.unloadCarry))
+    const d = this.store.dock!
+    for (const c of batch) { c.state = 'unloading'; c.spot = spot }
+    this.spotLoad[spot] += batch.length
+    w.task = 'unload'
+    const at = this.spots[spot]
+    const n = batch.length
+    w.plan.push(
+      { kind: 'go', to: d.tail, status: `Inbound · to lorry ${l.id}` },
+      { kind: 'do', secs: this.cfg.unloadPick * n, act: 'reach', yaw: Math.PI, status: `Inbound · unloading ${n} case${n > 1 ? 's' : ''} from lorry ${l.id}` },
+      { kind: 'call', fn: () => { w.cases = batch.map(c => c.color) } },
+      { kind: 'go', to: at, status: `Inbound · carrying ${n} case${n > 1 ? 's' : ''} to GRN` },
+      { kind: 'do', secs: this.cfg.grnScan * n, act: 'scan', status: `GRN · scanning ${n} case${n > 1 ? 's' : ''} in` },
+      { kind: 'call', fn: () => { w.cases = []; for (const c of batch) c.state = 'staged'; w.task = null; w.idleSince = this.t; w.done++ } },
+    )
+  }
+
+  private assignPutaway(w: Worker) {
+    const staged = this.cases.filter(c => c.state === 'staged')
+    const first = staged[0]
+    const rest = staged.slice(1).sort((a, b) =>
+      Math.hypot(a.slot.x - first.slot.x, a.slot.z - first.slot.z) - Math.hypot(b.slot.x - first.slot.x, b.slot.z - first.slot.z))
+    const batch = [first, ...rest.slice(0, this.cfg.putawayBatch - 1)]
+    for (const c of batch) c.state = 'putaway'
+    w.task = 'putaway'
+    // Collect from the staging spots, then put away nearest-first.
+    w.plan.push({ kind: 'go', to: this.spots[first.spot], status: `Putaway · collecting ${batch.length} case${batch.length > 1 ? 's' : ''} from GRN` })
+    w.plan.push({ kind: 'do', secs: 2 + batch.length, act: 'reach', status: 'Putaway · loading cases' })
+    w.plan.push({ kind: 'call', fn: () => { for (const c of batch) this.spotLoad[c.spot]--; w.cases = batch.map(c => c.color) } })
+    const left = [...batch]
+    let at: P2 = this.spots[first.spot]
+    while (left.length) {
+      let bi = 0, bd = Infinity
+      left.forEach((c, i) => { const f = this.front(c.slot); const d = Math.hypot(f[0] - at[0], f[1] - at[1]); if (d < bd) { bd = d; bi = i } })
+      const c = left.splice(bi, 1)[0]
+      at = this.front(c.slot)
+      w.plan.push({ kind: 'go', to: at, status: `Putaway · to ${c.slot.code}` })
+      w.plan.push({ kind: 'do', secs: this.cfg.putBase + this.cfg.putPerUnit * c.units, act: c.slot.y > 1.4 ? 'reach' : 'scan', yaw: this.facing(c.slot), status: `Putaway · ${c.units} × ${c.slot.sku!.name} into ${c.slot.code}` })
+      w.plan.push({ kind: 'call', fn: () => {
+        c.slot.qty = Math.min(c.slot.cap, c.slot.qty + c.units)
+        this.pendingIn.set(c.slot, Math.max(0, (this.pendingIn.get(c.slot) ?? 0) - c.units))
+        c.state = 'done'
+        this.lastPutaway = this.t
+        w.cases = w.cases.slice(0, -1)
+        this.onPick(c.slot)
+      } })
+    }
+    w.plan.push({ kind: 'call', fn: () => { w.task = null; w.idleSince = this.t; w.done++ } })
   }
 
   private front(s: Slot, gap = 0.55): P2 {
@@ -294,6 +494,7 @@ export class Sim {
   private facing(s: Slot) { return yawTo(-Math.sin(s.ry), -Math.cos(s.ry)) }
 
   private assignPick(o: SOrder, p: Worker) {
+    if (p.homing) { p.plan = []; p.homing = false }
     o.stage = 'picking'; o.picker = p; o.tAssign = this.t
     p.order = o
     this.log(o, 'order', `Assigned to ${p.name}`)
@@ -342,7 +543,7 @@ export class Sim {
     const ph = free.slice(0, 40).sort((a, b) => Math.abs(a.z - p.z) - Math.abs(b.z - p.z))[0]
     ph.qty = 1                                                         // reserved
     o.ph = ph
-    const { loadX, faceLoad } = this.spots
+    const { loadX, faceLoad } = this.table
     const c = this.cfg
     p.plan.unshift(
       { kind: 'go', to: [loadX, ph.z], status: `Order ${o.id} · to the packing table` },
@@ -363,7 +564,7 @@ export class Sim {
 
   private assignRider(o: SOrder, r: Worker) {
     const ph = o.ph!, bay = r.bay!
-    const { collectX, faceCollect } = this.spots
+    const { collectX, faceCollect } = this.table
     o.rider = r; r.order = o
     this.log(o, 'rider', `Rider ${r.name} assigned`)
     const seat: P2 = [bay[0] + 0.3, bay[1]], stand: P2 = [bay[0] + 0.3, bay[1] + 0.55]
@@ -416,7 +617,7 @@ export class Sim {
   }
 
   private move(w: Worker) {
-    if (w.order) w.busyTime += STEP
+    if (w.order || w.task) w.busyTime += STEP
     while (w.plan[0]?.kind === 'call') (w.plan.shift() as { fn: () => void }).fn()
     const s = w.plan[0]
     if (!s) { if (w.role === 'picker') w.act = 'idle'; return }
@@ -458,7 +659,15 @@ export class Sim {
   o2d(list: SOrder[]) { return list.length ? list.reduce((a, o) => a + (o.tOut! - o.t0), 0) / list.length : 0 }
   slaHit(list: SOrder[]) { return list.length ? list.filter(o => o.tOut! - o.t0 <= this.cfg.sla).length / list.length : 1 }
   ridersIn() { return this.workers.filter(w => w.role === 'rider' && !w.order).length }
-  pickersBusy() { return this.workers.filter(w => w.role === 'picker' && w.order).length }
+  pickersBusy() { return this.workers.filter(w => w.role === 'picker' && (w.order || w.task)).length }
+  inbound() {
+    const n = (s: CaseState) => this.cases.filter(c => c.state === s).length
+    return {
+      lorry: this.lorries.find(l => l.state !== 'gone') ?? null,
+      onLorry: n('lorry') + n('unloading'), staged: n('staged'), moving: n('putaway'), done: n('done'), total: this.cases.length,
+      onInbound: this.workers.filter(w => w.task).length,
+    }
+  }
 }
 
 export const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`

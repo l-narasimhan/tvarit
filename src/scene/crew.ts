@@ -29,7 +29,7 @@ class Member implements Person {
   get shift() { return this.w.role === 'picker' ? '17:00–01:00' : '16:00–00:00' }
   get status() { return this.w.status }
   get done() { return this.w.done }
-  get doneLabel() { return this.w.role === 'picker' ? 'orders picked this run' : 'trips this run' }
+  get doneLabel() { return this.w.role === 'picker' ? 'orders + inbound trips this run' : 'trips this run' }
   get x() { return this.w.x }
   get z() { return this.w.z }
   get yaw() { return this.w.yaw }
@@ -40,7 +40,9 @@ class Member implements Person {
     this.fig.root.visible = w.visible
     this.fig.root.position.set(w.x, 0, w.z)
     this.fig.root.rotation.y = w.yaw
-    this.fig.pose(POSE[w.act], dt * Math.min(speed, 4), w.role === 'rider' ? 1.25 : 1.3)
+    const pose = w.cases.length ? (w.act === 'walk' ? 'carry' : w.act === 'reach' ? 'reach' : 'carry') : POSE[w.act]
+    this.fig.pose(pose, dt * Math.min(speed, 4), w.role === 'rider' ? 1.25 : 1.3)
+    this.fig.setCases(w.cases)
     if (w.carry.length !== this.lastCarry) { this.lastCarry = w.carry.length; this.fig.setCrate(w.carry) }
     if (w.bag !== this.lastBag) { this.lastBag = w.bag; this.fig.setBag(w.bag) }
     if (this.scooter && w.scooter) {
@@ -89,6 +91,8 @@ export class Crew {
   }
 
   sync(dt: number, speed: number) { for (const m of this.members) m.sync(dt, speed) }
+  /** After a jump in time: redraw every pigeon hole's bag from scratch. */
+  resyncBags() { for (const s of this.sim.store.slots) if (s.kind === 'ph') this.setBag(s) }
   setTags(on: boolean) { for (const m of this.members) m.tag.visible = on }
   get hitMeshes() { return this.members.map(m => m.fig.hit) }
   byWorker(w: Worker) { return this.members.find(m => m.w === w) ?? null }

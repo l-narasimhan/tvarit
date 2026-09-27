@@ -136,11 +136,15 @@ export function renderOrder(o: SOrder | null, sim: Sim | null, waiting = false) 
 export function renderKpis(sim: Sim) {
   const d = sim.done
   const hr = sim.recent(3600)
+  const ib = sim.inbound()
+  const inbound = ib.total && (ib.lorry || ib.staged || ib.moving || ib.onLorry)
+    ? `<div class="inb"><b>Inbound</b> ${ib.lorry ? `lorry ${ib.lorry.id} ${ib.lorry.state}` : ''} · ${ib.onLorry} on lorry · ${ib.staged} at GRN · ${ib.moving} being put away · ${ib.done}/${ib.total} done · ${ib.onInbound} pickers on inbound</div>`
+    : ib.total ? `<div class="inb"><b>Inbound</b> ${ib.done}/${ib.total} cases put away · last at ${clock(sim.lastPutaway)}</div>` : ''
   $('#kpis').innerHTML = `<div class="sub">Since the run started · last hour</div>
     <div class="grid kp">
       <div><b>${d.length}</b><span>dispatched · ${hr.length}/h</span></div>
       <div><b class="${sim.o2d(hr) > sim.cfg.sla ? 'bad' : 'good'}">${fmt(sim.o2d(hr))}</b><span>avg O2D, last hour</span></div>
       <div><b class="${sim.slaHit(hr) < 0.8 ? 'bad' : 'good'}">${Math.round(sim.slaHit(hr) * 100)}%</b><span>≤ ${fmt(sim.cfg.sla)}, last hour</span></div>
       <div><b>${sim.open.length}</b><span>open now</span></div>
-    </div>`
+    </div>${inbound}`
 }
